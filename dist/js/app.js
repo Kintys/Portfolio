@@ -13,6 +13,29 @@
             document.documentElement.classList.add(className);
         }));
     }
+    let isMobile = {
+        Android: function() {
+            return navigator.userAgent.match(/Android/i);
+        },
+        BlackBerry: function() {
+            return navigator.userAgent.match(/BlackBerry/i);
+        },
+        iOS: function() {
+            return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+        },
+        Opera: function() {
+            return navigator.userAgent.match(/Opera Mini/i);
+        },
+        Windows: function() {
+            return navigator.userAgent.match(/IEMobile/i);
+        },
+        any: function() {
+            return isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows();
+        }
+    };
+    function addTouchClass() {
+        if (isMobile.any()) document.documentElement.classList.add("touch");
+    }
     let _slideUp = (target, duration = 500, showmore = 0) => {
         if (!target.classList.contains("_slide")) {
             target.classList.add("_slide");
@@ -3626,11 +3649,22 @@
             spaceBetween: 20,
             autoHeight: false,
             speed: 1e3,
-            allowTouchMove: true,
             pagination: {
                 el: ".swiper-pagination",
                 clickable: true,
                 type: "bullets"
+            },
+            navigation: {
+                prevEl: ".swiper-button-prev",
+                nextEl: ".swiper-button-next"
+            },
+            breakpoints: {
+                320: {
+                    spaceBetween: 70
+                },
+                520: {
+                    spaceBetween: 20
+                }
             },
             on: {}
         });
@@ -3759,6 +3793,7 @@
     da.init();
     window["FLS"] = true;
     isWebp();
+    addTouchClass();
     menuInit();
     spollers();
     headerScroll();
