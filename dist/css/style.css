@@ -653,11 +653,29 @@ body {
           flex: 0 1 33.25rem;
 }
 
+.content-fitness__title {
+  -webkit-transform: translate(-100%, 0);
+      -ms-transform: translate(-100%, 0);
+          transform: translate(-100%, 0);
+  opacity: 0;
+}
+
+.content-fitness__title._watcher-view {
+  -webkit-transform: translate(0px, 0px);
+      -ms-transform: translate(0px, 0px);
+          transform: translate(0px, 0px);
+  opacity: 1;
+  -webkit-transition: all 1.3s ease 0s;
+  -o-transition: all 1.3s ease 0s;
+  transition: all 1.3s ease 0s;
+}
+
 .content-fitness__title img {
   max-width: 100%;
 }
 
 .content-fitness__subtitle {
+  position: relative;
   font-weight: 700;
   line-height: 1.25;
 }
@@ -666,8 +684,47 @@ body {
   margin-bottom: 1.9375rem;
 }
 
+.content-fitness__subtitle::after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: #fff;
+  -webkit-transition: all 3s ease 0s;
+  -o-transition: all 3s ease 0s;
+  transition: all 3s ease 0s;
+}
+
+.content-fitness__subtitle._watcher-view::after {
+  content: "";
+  width: 100%;
+  height: 0;
+}
+
 .content-fitness__text {
+  position: relative;
   max-width: 29.25rem;
+}
+
+.content-fitness__text::after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: #fff;
+  -webkit-transition: all 3s ease 0.5s;
+  -o-transition: all 3s ease 0.5s;
+  transition: all 3s ease 0.5s;
+}
+
+.content-fitness__text._watcher-view::after {
+  content: "";
+  width: 100%;
+  height: 0;
 }
 
 .content-fitness__form {
@@ -2522,9 +2579,9 @@ button.swiper-pagination-bullet {
     padding-bottom: 56.25%;
     top: 0;
     right: 0;
-    -webkit-transform: translate(43.8%, 0);
-        -ms-transform: translate(43.8%, 0);
-            transform: translate(43.8%, 0);
+    -webkit-transform: translate(43.8%, -3.254438%);
+        -ms-transform: translate(43.8%, -3.254438%);
+            transform: translate(43.8%, -3.254438%);
     background: url("../img/health-section/decor/01.svg") 0 0/100% no-repeat;
   }
 
@@ -3094,6 +3151,7 @@ button.swiper-pagination-bullet {
     z-index: 2;
     overflow: auto;
     padding-top: 7.375rem;
+    padding-bottom: 1.25rem;
     display: -ms-grid;
     display: grid;
     justify-items: center;
@@ -3117,9 +3175,9 @@ button.swiper-pagination-bullet {
     background-color: #fff;
     top: -100%;
     left: 0;
-    -webkit-transition: left 0s ease 0.8s;
-    -o-transition: left 0s ease 0.8s;
-    transition: left 0s ease 0.8s;
+    -webkit-transition: top 1s ease 0.8s;
+    -o-transition: top 1s ease 0.8s;
+    transition: top 1s ease 0.8s;
   }
 
   .menu__list {
@@ -3209,6 +3267,10 @@ button.swiper-pagination-bullet {
     -webkit-transform: rotate(180deg);
         -ms-transform: rotate(180deg);
             transform: rotate(180deg);
+  }
+
+  .footer__list {
+    padding-top: 1.25rem;
   }
 
   .fitness-health__body {

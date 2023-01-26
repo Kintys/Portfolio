@@ -6,7 +6,7 @@
 	<meta charset="UTF-8">
 	<meta name="format-detection" content="telephone=no">
 	<!-- <style>body{opacity: 0;}</style> -->
-	<link rel="stylesheet" href="css/style.min.css?_v=20230122204557">
+	<link rel="stylesheet" href="css/style.min.css?_v=20230126175608">
 	<link rel="shortcut icon" href="favicon.ico">
 	<!-- <meta name="robots" content="noindex, nofollow"> -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,12 +39,12 @@
 				<div class="fitness-health__container">
 					<div class="fitness-health__body">
 						<article class="fitness-health__content content-fitness">
-							<h2 class="content-fitness__title">
+							<h2 data-watch-once data-watch class="content-fitness__title">
 								<picture><source srcset="img/health-section/02.webp" type="image/webp"><img src="img/health-section/02.png" alt="Health & Fitness"></picture>
 							</h2>
-							<div class="content-fitness__subtitle">Always get adieus nature day course for common.</div>
-							<p class="content-fitness__text page-text">Why sir end believe uncivil respect. Always get adieus nature day course for common. My little garret repair to desire he esteem.</p>
-							<form action="#" class="content-fitness__form">
+							<div data-watch-once data-watch class="content-fitness__subtitle">Always get adieus nature day course for common.</div>
+							<p data-watch-once data-watch class="content-fitness__text page-text">Why sir end believe uncivil respect. Always get adieus nature day course for common. My little garret repair to desire he esteem.</p>
+							<form data-watch-once data-watch action="#" class="content-fitness__form">
 								<input class="content-fitness__input" autocomplete="off" type="email" name="email" data-error="Error" placeholder="Enter your email to get started" class="input">
 								<button type="submit" class="content-fitness__button button button--big"><span>Get Started</span></button>
 							</form>
@@ -92,7 +92,7 @@
 					</div>
 				</div>
 			</section>
-			<section data-watch-once data-watch class="page__about-us about-us">
+			<section data-watch-threshold="0.1" data-watch-once data-watch class="page__about-us about-us">
 				<div class="about-us__container">
 					<div class="about-us__body">
 						<article class="about-us__about-content about-content">
@@ -125,7 +125,7 @@
 					</div>
 				</div>
 			</section>
-			<section data-watch-once data-watch class="page__hwo-it-works hwo-it-works">
+			<section data-watch-threshold="0.1" data-watch-once data-watch class="page__hwo-it-works hwo-it-works">
 				<div class="hwo-it-works__container">
 					<div class="hwo-it-works__body">
 						<div class="hwo-it-works__block">
@@ -165,7 +165,7 @@
 					</div>
 				</div>
 			</section>
-			<section data-watch-once data-watch class="page__blog-media blog-media">
+			<section data-watch-threshold="0.1" data-watch-once data-watch class="page__blog-media blog-media">
 				<div class="blog-media__container">
 					<div class="blog-media__headline">
 						<h2 class="blog-media__title title">Our Regurlar Updated
@@ -199,7 +199,7 @@
 					</div>
 				</div>
 			</section>
-			<section data-watch-once data-watch class="page__faqs faqs">
+			<section data-watch-threshold="0.1" data-watch-once data-watch class="page__faqs faqs">
 				<div class="faqs__container">
 					<header class="faqs__headline">
 						<h3 class="faqs__title title">
@@ -303,9 +303,9 @@
 						<h3 class="subscribe__title title">Subscribe to our
 							Newsletter</h3>
 					</div>
-					<form class="subscribe__form" action="#">
-						<input class="subscribe__input" type="email" name="sumemail" placeholder="Enter your mail here">
-						<button class="subscribe__botton border-button  border-button--small">
+					<form class="subscribe__form" action="files/sendmail/sendmail.php" method="POST">
+						<input class="subscribe__input" type="email" name="form[email]" data-error="Error" placeholder="Enter your mail here">
+						<button type="submit" class="subscribe__botton border-button  border-button--small">
 							<spa>Subscribe</spa>
 						</button>
 					</form>
@@ -379,7 +379,7 @@
 			</div>
 		</footer>
 	</div>
-	<script src="js/app.min.js?_v=20230122204557"></script>
+	<script src="js/app.min.js?_v=20230126175608"></script>
 </body>
 
 </html>
