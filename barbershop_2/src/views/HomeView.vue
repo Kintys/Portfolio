@@ -1,12 +1,8 @@
-<script setup></script>
+<script setup>
+import MasterPage from '@/page/master-page/MasterPage.vue'
+</script>
 
 <template>
-    <main>
-        <div id="main" class="item">dasdadasdasdasdasdasd</div>
-    </main>
+    <MasterPage></MasterPage>
 </template>
-<style lang="scss">
-.item {
-    margin-top: 3000px;
-}
-</style>
+<style lang="scss"></style>

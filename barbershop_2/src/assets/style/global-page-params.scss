@@ -1,0 +1,28 @@
+// Default Font ==============================================================================================================================================================================================================================================================================
+
+$fontFamily: "Montserrat Variable", sans-serif;
+$fontSize: toRem(14); // where 14(px) is the default font size from the layout
+
+// Main Colors
+$mainColor: #666; // Default font color
+
+// Adaptive Grid Settings ===============================================================================================================================================================================================================================================================================================
+
+// Minimum page width
+$minWidth: 320;
+// Canvas width (layout)
+$maxWidth: 1920;
+// Width of the bounding container (0 = no limit)
+$maxWidthContainer: 1180;
+// General container padding
+// (30 = 15px left and right, 0 = no padding)
+$containerPadding: 30;
+
+// Width of the first breakpoint trigger
+$containerWidth: $maxWidthContainer + $containerPadding;
+
+// Breakpoints
+$pc: em($containerWidth); // PC, laptops, some horizontal tablets
+$tablet: em(991.98); // Tablets, some horizontal phones
+$mobile: em(767.98); // Phones L
+$mobileSmall: em(479.98); // Phones S
