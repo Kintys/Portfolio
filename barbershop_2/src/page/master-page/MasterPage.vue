@@ -1,15 +1,16 @@
 <template>
     <div class="wrapper">
-        <HeaderComp />
+        <HeaderContainer />
         <main class="main">
             <slot>213213</slot>
         </main>
-        <footer>213213</footer>
+        <FooterContainer />
     </div>
 </template>
 
 <script setup>
-import HeaderComp from '@/page/master-page/header/HeaderBlock.vue'
+import HeaderContainer from '@/page/master-page/header/HeaderContainer.vue'
+import FooterContainer from '@/page/master-page/footer/FooterContainer.vue'
 </script>
 
 <style lang="scss" scoped>
