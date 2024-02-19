@@ -1,4 +1,8 @@
 @import "./font/fonts";
-
+@import "./global-page-params";
 @import "./base-style";
 @import "./lib/null";
+
+$tablet: em(991.98); // Tablets, some horizontal phones
+$mobile: em(767.98); // Phones L
+$mobileSmall: em(479.98); // Phones S

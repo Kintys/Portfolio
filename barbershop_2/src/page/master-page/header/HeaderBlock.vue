@@ -12,7 +12,7 @@ import { reactive, onMounted, onBeforeUnmount } from 'vue'
 const props = defineProps({
     limitPosition: {
         type: Number,
-        default: 200
+        default: 500
     },
     timer: {
         type: Number,
@@ -55,13 +55,13 @@ onBeforeUnmount(() => {
     left: 0;
     width: 100%;
     z-index: 30;
-    transition: all 300ms linear;
+    transition: top 500ms linear;
 }
 
 .headroom--pinned {
-    transform: translateY(0%);
+    top: 0;
 }
 .headroom--unpinned {
-    transform: translateY(-100%);
+    top: -100%;
 }
 </style>

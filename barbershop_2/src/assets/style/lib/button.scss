@@ -1,0 +1,34 @@
+.button-transparent {
+    padding: toRem(10) toRem(25);
+    background-color: transparent;
+    border: toRem(1) solid rgb(239, 231, 226);
+    border-radius: 0;
+    color: rgb(239, 231, 226);
+    display: flex;
+    align-items: center;
+    font-family: "Playfair Display Variable", serif;
+    font-size: toRem(14);
+    font-weight: 700;
+    line-height: 150%;
+    letter-spacing: toRem(1.4);
+    box-shadow: none;
+}
+.button-main {
+    padding: toRem(25) toRem(51);
+    color: rgb(255, 255, 255);
+    font-family: "Playfair Display Variable", serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: toRem(16);
+    line-height: 152%;
+    background-color: rgb(255, 110, 64);
+    font-weight: 700;
+    border-radius: 0;
+    transition: all 0.4s;
+    @media (any-hover: hover) {
+        &:hover {
+            background: rgba(37, 29, 26, 0.748);
+        }
+    }
+}

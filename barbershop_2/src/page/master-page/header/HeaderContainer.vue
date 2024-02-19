@@ -5,8 +5,9 @@
                 <v-img width="42" max-height="44" aspect-ratio="1" cover :src="logoImg"></v-img>
                 <h2>Cool Barber</h2>
             </RouterLink>
-            <NavBar class="nav" />
-            <DynamicAdapt destination=".nav" breakpoint="998">
+            <NavBar class="nav" :class="{ 'menu-open': showMenu }" />
+            <div class="icon-menu" :class="{ 'open-icon': showMenu }" @click="activeMenu()"><span></span></div>
+            <DynamicAdapt destination=".nav" breakpoint="992">
                 <div class="contacts">
                     <div class="address">
                         <a href="302 W 50th St, NY, NY 10019" class="address-text">302 W 50th St, NY, NY 10019</a>
@@ -32,36 +33,51 @@ import logoImg from '@/assets/img/header/logo/logo.svg'
 import localImg from '@/assets/img/header/icon/local.svg'
 import phoneImg from '@/assets/img/header/icon/phone.svg'
 import DynamicAdapt from '@/components/DynamicAdapt.vue'
+
+import { burgerMenu } from '@/helpersFunc/burger'
+const { activeMenu, showMenu } = burgerMenu()
 </script>
 
 <style lang="scss" scoped>
 @import '@/assets/style/lib/mixins';
+@import '@/assets/style/lib/burger';
 .header {
-    max-height: toRem(120);
-    background-color: #666;
+    background-color: transparent;
     color: white;
+    @media (max-width: em(991.98)) {
+        background-color: #251d1a;
+    }
 }
 .container {
     font-family: Fira Sans;
-    @include adaptiveValue('padding-top', 40, 30);
-    @include adaptiveValue('padding-bottom', 40, 30);
     display: grid;
     grid-template-columns: auto 1fr auto;
+    @include adaptiveValue('height', 120, 50);
     align-items: center;
     @include adaptiveValue('column-gap', 10, 8);
+    @media (max-width: em(991.98)) {
+        grid-template-columns: auto 1fr;
+    }
 }
 .logo {
     display: flex;
     @include adaptiveValue('column-gap', 15, 10);
     align-items: center;
     @include adaptiveValue('margin-right', 30, 10);
-}
-.nav-bar {
+    z-index: 5;
 }
 .contacts {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    // display: flex;
     align-items: center;
     @include adaptiveValue('column-gap', 54, 20);
+    @media (max-width: em(991.98)) {
+        grid-template-columns: auto;
+        row-gap: toRem(20);
+        justify-items: end;
+        justify-content: center;
+    }
 }
 .address,
 .phone {
@@ -78,5 +94,8 @@ import DynamicAdapt from '@/components/DynamicAdapt.vue'
     display: grid;
     justify-items: end;
     row-gap: toRem(8);
+}
+.icon-menu {
+    justify-self: end;
 }
 </style>

@@ -39,6 +39,8 @@ onMounted(() => {
 
     matchMedia.value = window.matchMedia(`(${props.displayWidth}-width: ${props.breakpoint}px)`)
 
+    if (matchMedia.value.matches) moveTo()
+
     matchMedia.value.addEventListener('change', () => {
         if (matchMedia.value.matches) moveTo()
         else moveBack()

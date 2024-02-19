@@ -1,8 +1,10 @@
 <template>
-    <nav class="nav">
-        <router-link v-for="router in routes" :key="router.name" :to="{ name: router.name }" class="nav-link">{{
-            router.name
-        }}</router-link>
+    <nav class="nav-menu">
+        <div class="nav-list">
+            <router-link v-for="router in routes" :key="router.name" :to="{ name: router.name }" class="nav-link">{{
+                router.name
+            }}</router-link>
+        </div>
     </nav>
 </template>
 
@@ -12,11 +14,46 @@ import { routes } from '@/router/index'
 
 <style lang="scss" scoped>
 @import '@/assets/style/lib/mixins';
-.nav {
+.nav-menu {
+    @media (max-width: em(991.98)) {
+        position: fixed;
+        padding: toRem(0) toRem(30) toRem(30) toRem(30);
+        @include adaptiveValue('padding-top', 140, 70);
+        flex-wrap: nowrap;
+        bottom: -100%;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #3b322d;
+        transition: bottom 0.4s linear;
+        overflow: auto;
+        &::before {
+            content: '';
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            background-color: #251d1a;
+            @include adaptiveValue('min-height', 120, 50);
+        }
+    }
+}
+.nav-list {
     display: flex;
     flex-wrap: wrap;
     @include adaptiveValue('column-gap', 20, 5);
     @include adaptiveValue('row-gap', 10, 8);
+    @media (max-width: em(991.98)) {
+        flex-direction: column;
+        row-gap: toRem(20);
+        font-size: toRem(20);
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: center;
+        &:not(:last-child) {
+            margin-bottom: toRem(20);
+        }
+    }
 }
 .nav-link {
 }
