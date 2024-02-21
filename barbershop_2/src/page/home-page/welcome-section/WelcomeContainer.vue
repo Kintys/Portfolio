@@ -24,13 +24,11 @@ import barbershopImg from '@/assets/img/main/section-one/barbershop.webp'
 @import '@/assets/style/lib/mixins';
 @import '@/assets/style/lib/button';
 .welcome {
-    // height: 100vh;
 }
 .container {
     padding-left: toRem(10);
     padding-right: toRem(10);
     @include adaptiveValue('padding-top', 140, 70);
-    @include adaptiveValue('padding-bottom', 30, 15);
 }
 .body {
     max-width: toRem(1180); /* 1180/1210 */
