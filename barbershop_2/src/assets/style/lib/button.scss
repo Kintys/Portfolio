@@ -1,3 +1,4 @@
+@import "@/assets/style/lib/mixins";
 .button-transparent {
     padding: toRem(10) toRem(25);
     background-color: transparent;
@@ -20,7 +21,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: toRem(16);
+    @include adaptiveValue("font-size", 16, 13);
     line-height: 152%;
     background-color: rgb(255, 110, 64);
     font-weight: 700;
