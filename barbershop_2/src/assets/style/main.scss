@@ -2,7 +2,30 @@
 @import "./global-page-params";
 @import "./base-style";
 @import "./lib/null";
+@import "@/assets/style/lib/mixins";
 
 $tablet: em(991.98); // Tablets, some horizontal phones
 $mobile: em(767.98); // Phones L
 $mobileSmall: em(479.98); // Phones S
+.main-title {
+    color: rgb(255, 255, 255);
+    font-family: Fira Sans;
+    font-size: toRem(48);
+    font-weight: 700;
+    line-height: 125%;
+}
+.main-subtitle {
+    color: rgb(239, 231, 226);
+    font-family: Fira Sans;
+    font-size: toRem(15);
+    font-weight: 400;
+    line-height: 160%;
+}
+.main-headline {
+    display: grid;
+    grid-template-rows: repeat(2, auto);
+    row-gap: toRem(12);
+    text-align: center;
+    grid-template-columns: minmax(toRem(200), toRem(580));
+    justify-content: center;
+}

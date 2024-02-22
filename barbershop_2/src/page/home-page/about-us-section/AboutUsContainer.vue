@@ -1,7 +1,7 @@
 <template>
     <div class="container">
-        <header class="head">
-            <h4 class="title">About Us</h4>
+        <header class="head main-headline">
+            <h4 class="main-title">About Us</h4>
             <p class="subtitle">
                 Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis
                 enim velit mollit. Exercitation veniam consequat sunt nostrud amet. Amet minim mollit non deserunt
@@ -26,31 +26,17 @@ import ImageBoxComponent from '@/page/home-page/about-us-section/ImageBoxCompone
     @include adaptiveValue('padding-top', 245, 100);
 }
 .head {
-    display: grid;
-    grid-template-rows: repeat(2, auto);
-    row-gap: toRem(12);
-    text-align: center;
-    grid-template-columns: minmax(200, 580);
-    justify-content: center;
     &:not(:last-child) {
         margin-bottom: toRem(60);
     }
 }
-.title {
-    color: rgb(255, 255, 255);
-    font-family: Fira Sans;
-    font-size: toRem(48);
-    font-weight: 700;
-    line-height: 125%;
-}
+
 .subtitle {
     color: rgb(239, 231, 226);
     font-family: Fira Sans;
-    font-size: 15px;
+    font-size: toRem(15);
     font-weight: 400;
     line-height: 160%;
-    letter-spacing: 0%;
-    text-align: center;
 }
 .image-box {
     @include adaptiveValue('margin-bottom', 163, 50);
