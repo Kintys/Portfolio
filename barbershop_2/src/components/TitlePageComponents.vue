@@ -1,13 +1,26 @@
-@use "vuetify/settings" with (
-    $checkbox-flex: 0 1 auto,
-    $checkbox-disabled-color: #000,
-    $checkbox-error-color: #000
-);
-@import "./font/fonts";
-@import "./global-page-params";
-@import "./base-style";
-@import "./lib/null";
-@import "@/assets/style/lib/mixins";
+<template>
+    <header class="main-headline">
+        <h4 class="main-title">{{ title }}</h4>
+        <p class="main-subtitle">
+            {{ subtitle }}
+        </p>
+    </header>
+</template>
+
+<script setup>
+defineProps({
+    title: {
+        type: String,
+        default: ''
+    },
+    subtitle: {
+        type: String,
+        default: ''
+    }
+})
+</script>
+
+<style lang="scss" scoped>
 .main-title {
     color: rgb(255, 255, 255);
     font-family: Fira Sans;
@@ -30,3 +43,4 @@
     grid-template-columns: minmax(toRem(200), toRem(580));
     justify-content: center;
 }
+</style>

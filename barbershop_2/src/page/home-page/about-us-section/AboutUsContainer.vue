@@ -1,12 +1,11 @@
 <template>
     <div class="container">
-        <header class="head main-headline">
-            <h4 class="main-title">About Us</h4>
-            <p class="subtitle">
-                Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis
-                enim velit mollit. Exercitation veniam consequat sunt nostrud amet. Amet minim mollit non deserunt
-            </p>
-        </header>
+        <TitlePageComponents
+            class="head"
+            title="About Us"
+            subtitle=" Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis
+                enim velit mollit. Exercitation veniam consequat sunt nostrud amet. Amet minim mollit non deserunt"
+        />
         <ImageBoxComponent class="image-box" />
         <footer class="actions">
             <v-btn class="button-main">Our masters and their masterpieces</v-btn>
@@ -17,13 +16,14 @@
 
 <script setup>
 import ImageBoxComponent from '@/page/home-page/about-us-section/ImageBoxComponent.vue'
+import TitlePageComponents from '@/components/TitlePageComponents.vue'
 </script>
 
 <style lang="scss" scoped>
 @import '@/assets/style/lib/button';
 @import '@/assets/style/lib/mixins';
 .container {
-    @include adaptiveValue('padding-top', 245, 100);
+    @include adaptiveValue('padding-top', 240, 100);
 }
 .head {
     &:not(:last-child) {
@@ -31,13 +31,6 @@ import ImageBoxComponent from '@/page/home-page/about-us-section/ImageBoxCompone
     }
 }
 
-.subtitle {
-    color: rgb(239, 231, 226);
-    font-family: Fira Sans;
-    font-size: toRem(15);
-    font-weight: 400;
-    line-height: 160%;
-}
 .image-box {
     @include adaptiveValue('margin-bottom', 163, 50);
 }

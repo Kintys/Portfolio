@@ -103,7 +103,7 @@ const getImageUrl = (name) => {
     color: rgb(255, 255, 255);
     display: grid;
     grid-template-rows: auto, auto, 1fr, auto;
-    grid-template-columns: minmax(200, 280);
+    grid-template-columns: minmax(200, 270);
     row-gap: toRem(24);
     @media (max-width: em(920)) {
         text-align: center;
@@ -111,8 +111,8 @@ const getImageUrl = (name) => {
     }
 }
 .img {
-    width: toRem(280);
-    height: toRem(280);
+    width: toRem(270);
+    height: toRem(270);
 }
 .name {
     font-size: toRem(14);
@@ -147,7 +147,7 @@ const getImageUrl = (name) => {
 
 .next-arrow {
     transform: rotate(180deg);
-    right: -4%;
+    right: -5%;
     margin-left: toRem(10);
     @media (max-width: em(500)) {
         right: 30%;
@@ -155,7 +155,7 @@ const getImageUrl = (name) => {
     }
 }
 .prev-arrow {
-    left: -4%;
+    left: -5%;
     @media (max-width: em(500)) {
         left: 30%;
         margin-right: toRem(10);
