@@ -1,38 +1,62 @@
 <template>
-    <form class="send-form">
+    <v-form class="send-form" ref="form">
+        <form class="form" ref="formTemplate" @submit.prevent="sendEmail">
+            <input type="phone" name="user_phone" :value="phone" />
+            <input type="email" name="user_email" :value="email" />
+        </form>
         <div class="send-form-field">
             <v-text-field
                 variant="outlined"
-                :rules="rules"
                 label="Your phone"
                 placeholder="+1(__)___-__-__"
                 class="input"
-                hide-details="auto"
-                clearable
-                max-width="320"
+                :rules="nameRules.phoneRules"
                 base-color="#000"
+                clearable
                 color="#000"
+                maxlength="10"
+                v-model="phone"
+                :value="getDividedPhoneNumber"
+                @click:clear="onClear"
+                name="user_phone"
             ></v-text-field>
             <v-text-field
                 variant="outlined"
                 base-color="#000"
                 color="#000"
-                :rules="rules"
                 label="Your email"
+                :rules="nameRules.emailRules"
                 placeholder="Email"
                 class="input"
                 hide-details="auto"
                 clearable
+                v-model="email"
+                name="user_email"
             ></v-text-field>
-            <v-btn class="button-main">Send email</v-btn>
+            <v-btn class="button-main" @click.prevent="sendEmail"
+                >Send email</v-btn
+            >
         </div>
-        <v-checkbox v-model="checkbox" class="checkbox" :focused="focused" color="#000">
+        <v-checkbox
+            v-model="checkbox"
+            class="checkbox"
+            color="#000"
+            :rules="nameRules.checkboxRules"
+            required
+            name="user_agree"
+        >
             <template v-slot:label>
                 <div class="checkbox-text">
                     By clicking on the button,you agree to the
                     <v-tooltip location="bottom">
                         <template v-slot:activator="{ props }">
-                            <a target="_blank" href="#" v-bind="props" @click.stop class="personal-rules">
+                            <a
+                                target="_blank"
+                                href="#"
+                                v-bind="props"
+                                @click.stop
+                                class="personal-rules"
+                            >
                                 terms of processing personal data
                             </a>
                         </template>
@@ -41,28 +65,85 @@
                 </div>
             </template>
         </v-checkbox>
-    </form>
+    </v-form>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-const checkbox = ref(false)
-const focused = ref(true)
+import { ref, computed } from "vue";
+import emailjs from "@emailjs/browser";
+const checkbox = ref(false);
+const phone = ref(null);
+const form = ref(null);
+const formTemplate = ref(null);
+const email = ref(null);
+const validRegex =
+    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+const nameRules = ref({
+    phoneRules: [
+        (value) => {
+            if (value?.length <= 10) return true;
+            return "Phone number needs to be at least 10 digits!";
+        },
+    ],
+    emailRules: [
+        (value) => {
+            if (validRegex.test(value)) return true;
+            return "Must be a valid e-mail!";
+        },
+    ],
+    checkboxRules: [(v) => !!v || "You must agree to continue!"],
+});
+
+const getDividedPhoneNumber = computed(() =>
+    (phone.value ?? "").replace(
+        /(\d{3})(\d{3})(\d{2})(\d{2})/g,
+        "+1($1)$2-$3-$4"
+    )
+);
+
+function onClear() {
+    phone.value = null;
+}
+
+async function sendEmail() {
+    const { valid } = await form.value.validate();
+    if (valid) createForm();
+}
+
+function createForm() {
+    emailjs
+        .sendForm("service_jk5a3z3", "template_b0r95zp", formTemplate.value, {
+            publicKey: "IgXLm12XkrQHhfgEt",
+        })
+        .then(
+            () => {
+                console.log("SUCCESS!");
+            },
+            (error) => {
+                console.log("FAILED...", error.text);
+            }
+        );
+}
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/style/lib/button';
+@import "@/assets/style/lib/button";
 .send-form {
     display: grid;
     grid-template-rows: repeat(2, auto);
-    @include adaptiveValue('row-gap', 25, 20);
+    @include adaptiveValue("row-gap", 25, 20);
 }
 .send-form-field {
     display: flex;
     gap: toRem(20);
 }
+.form {
+    display: none;
+}
 .input {
     color: rgb(255, 255, 255);
+    width: toRem(320);
+    height: toRem(56);
 }
 .button-main {
     background: #000;
