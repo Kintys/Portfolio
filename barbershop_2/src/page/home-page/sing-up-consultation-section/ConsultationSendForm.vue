@@ -1,6 +1,6 @@
 <template>
-    <v-form class="send-form" ref="form">
-        <form class="form" ref="formTemplate" @submit.prevent="sendEmail">
+    <v-form class="send-form" ref="form" @submit.prevent="sendEmail">
+        <form class="form" ref="formTemplate">
             <input type="phone" name="user_phone" :value="phone" />
             <input type="email" name="user_email" :value="email" />
         </form>
@@ -128,25 +128,42 @@ function createForm() {
 
 <style lang="scss" scoped>
 @import "@/assets/style/lib/button";
+@import "@/assets/style/lib/mixins";
 .send-form {
     display: grid;
     grid-template-rows: repeat(2, auto);
+    grid-template-columns: 1fr;
     @include adaptiveValue("row-gap", 25, 20);
 }
 .send-form-field {
-    display: flex;
-    gap: toRem(20);
+    display: grid;
+    // display: flex;
+    grid-template-columns: 1fr 1fr auto;
+    @media (max-width: em(1199)) {
+        grid-template-columns: 1fr 1fr;
+        justify-items: center;
+    }
+    @media (max-width: em(920)) {
+        grid-template-columns: 1fr;
+    }
+    gap: toRem(30);
 }
 .form {
     display: none;
 }
 .input {
     color: rgb(255, 255, 255);
-    width: toRem(320);
+    width: 100%;
     height: toRem(56);
 }
 .button-main {
     background: #000;
+    @media ((min-width: em(920)) and (max-width: em(1199))) {
+        grid-column-start: -3;
+        grid-column-end: -1;
+        justify-self: center;
+    }
+
     @media (any-hover: hover) {
         &:hover {
             background: white;
@@ -157,14 +174,12 @@ function createForm() {
 }
 .checkbox {
     justify-self: center;
-    // display: flex;
+    padding: toRem(0) 5%;
 }
 .checkbox-text {
     color: rgb(239, 231, 226);
     font-family: Fira Sans;
     font-size: toRem(13);
     line-height: 134.09%;
-}
-.personal-rules {
 }
 </style>
