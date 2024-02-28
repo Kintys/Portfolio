@@ -20,6 +20,9 @@ import ConsultationSendForm from "./ConsultationSendForm.vue";
 @import "@/assets/style/lib/mixins";
 .container {
     @include adaptiveValue("padding-top", 120, 20);
+    &:not(:last-child) {
+        @include adaptiveValue("margin-bottom", 120, 80);
+    }
 }
 .body {
     @include adaptiveValue("padding-left", 150, 5, 0, 1200, 320);
