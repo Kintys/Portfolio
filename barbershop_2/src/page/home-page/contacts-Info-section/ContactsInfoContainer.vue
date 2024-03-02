@@ -1,18 +1,14 @@
 <template>
     <div class="box">
         <ContactInfoForm />
-        <GoogleMap
-            api-key="AIzaSyCb-6ilDNNGVmdOgrXVtj25MBjTtuUNY2c"
-            :center="center"
-            :zoom="17"
-            class="map"
-        >
+        <GoogleMap :api-key="mapsKey" :center="center" :zoom="17" class="map">
             <Marker :options="{ position: center }" />
         </GoogleMap>
     </div>
 </template>
 
 <script setup>
+const mapsKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 import { GoogleMap, Marker } from "vue3-google-map";
 const center = { lat: 40.76236635022632, lng: -73.98667037480803 };
 import ContactInfoForm from "@/page/home-page/contacts-Info-section/ContactInfoForm.vue";

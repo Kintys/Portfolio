@@ -129,6 +129,7 @@ function createForm() {
 <style lang="scss" scoped>
 @import "@/assets/style/lib/button";
 @import "@/assets/style/lib/mixins";
+
 .send-form {
     display: grid;
     grid-template-rows: repeat(2, auto);
@@ -154,7 +155,9 @@ function createForm() {
 .input {
     color: rgb(255, 255, 255);
     width: 100%;
-    height: toRem(56);
+    .input__control {
+        display: block;
+    }
 }
 .button-main {
     background: #000;

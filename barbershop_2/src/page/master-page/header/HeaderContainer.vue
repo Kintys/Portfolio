@@ -2,23 +2,51 @@
     <HeaderBlock class="header">
         <div class="container">
             <RouterLink :to="{ name: 'home' }" class="logo">
-                <v-img width="42" max-height="44" aspect-ratio="1" cover :src="logoImg"></v-img>
+                <v-img
+                    width="42"
+                    max-height="44"
+                    aspect-ratio="1"
+                    cover
+                    :src="logoImg"
+                ></v-img>
                 <h2>Cool Barber</h2>
             </RouterLink>
-            <NavBar class="nav" :class="{ 'menu-open': showMenu }" />
-            <div class="icon-menu" :class="{ 'open-icon': showMenu }" @click="activeMenu()"><span></span></div>
+            <NavBar
+                @closeMenu="closeMenu"
+                class="nav"
+                :class="{ 'menu-open': showMenu }"
+            />
+            <div
+                class="icon-menu"
+                :class="{ 'open-icon': showMenu }"
+                @click="activeMenu()"
+            >
+                <span></span>
+            </div>
             <DynamicAdapt destination=".nav" breakpoint="992">
                 <div class="contacts">
                     <div class="address">
-                        <a href="302 W 50th St, NY, NY 10019" class="address-text">302 W 50th St, NY, NY 10019</a>
-                        <v-img width="42" max-height="44" :src="localImg"></v-img>
+                        <RouterLink
+                            :to="{ name: 'contacts' }"
+                            class="address-text"
+                            >302 W 50th St, NY, NY 10019</RouterLink
+                        >
+                        <v-img
+                            width="42"
+                            max-height="44"
+                            :src="localImg"
+                        ></v-img>
                     </div>
                     <div class="phone">
                         <a href="8 (800) 000-00-00" class="phone-text"
                             >8 (800) 000-00-00
                             <sub>Daily from 9 to 20</sub>
                         </a>
-                        <v-img width="42" max-height="44" :src="phoneImg"></v-img>
+                        <v-img
+                            width="42"
+                            max-height="44"
+                            :src="phoneImg"
+                        ></v-img>
                     </div>
                 </div>
             </DynamicAdapt>
@@ -27,20 +55,23 @@
 </template>
 
 <script setup>
-import HeaderBlock from '@/page/master-page/header/HeaderBlock.vue'
-import NavBar from '@/page/master-page/header/NavBar.vue'
-import logoImg from '@/assets/img/header/logo/logo.svg'
-import localImg from '@/assets/img/header/icon/local.svg'
-import phoneImg from '@/assets/img/header/icon/phone.svg'
-import DynamicAdapt from '@/components/DynamicAdapt.vue'
+import HeaderBlock from "@/page/master-page/header/HeaderBlock.vue";
+import NavBar from "@/page/master-page/header/NavBar.vue";
+import logoImg from "@/assets/img/header/logo/logo.svg";
+import localImg from "@/assets/img/header/icon/local.svg";
+import phoneImg from "@/assets/img/header/icon/phone.svg";
+import DynamicAdapt from "@/components/DynamicAdapt.vue";
 
-import { burgerMenu } from '@/helpersFunc/burger'
-const { activeMenu, showMenu } = burgerMenu()
+import { burgerMenu } from "@/helpersFunc/burger";
+const { activeMenu, showMenu } = burgerMenu();
+function closeMenu(event) {
+    if (event) activeMenu();
+}
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/style/lib/mixins';
-@import '@/assets/style/lib/burger';
+@import "@/assets/style/lib/mixins";
+@import "@/assets/style/lib/burger";
 .header {
     background-color: transparent;
     color: white;
@@ -52,18 +83,18 @@ const { activeMenu, showMenu } = burgerMenu()
     font-family: Fira Sans;
     display: grid;
     grid-template-columns: auto 1fr auto;
-    @include adaptiveValue('height', 120, 50);
+    @include adaptiveValue("height", 120, 50);
     align-items: center;
-    @include adaptiveValue('column-gap', 10, 8);
+    @include adaptiveValue("column-gap", 10, 8);
     @media (max-width: em(991.98)) {
         grid-template-columns: auto 1fr;
     }
 }
 .logo {
     display: flex;
-    @include adaptiveValue('column-gap', 15, 10);
+    @include adaptiveValue("column-gap", 15, 10);
     align-items: center;
-    @include adaptiveValue('margin-right', 30, 10);
+    @include adaptiveValue("margin-right", 30, 10);
     z-index: 5;
 }
 .contacts {
@@ -71,7 +102,7 @@ const { activeMenu, showMenu } = burgerMenu()
     grid-template-columns: repeat(2, auto);
     // display: flex;
     align-items: center;
-    @include adaptiveValue('column-gap', 54, 20);
+    @include adaptiveValue("column-gap", 54, 20);
     @media (max-width: em(991.98)) {
         grid-template-columns: auto;
         row-gap: toRem(20);

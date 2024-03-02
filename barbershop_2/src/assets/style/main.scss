@@ -1,8 +1,3 @@
-@use "vuetify/settings" with (
-    $checkbox-flex: 0 1 auto,
-    $checkbox-disabled-color: #000,
-    $checkbox-error-color: #000
-);
 @import "./font/fonts";
 @import "./global-page-params";
 @import "./base-style";
@@ -29,4 +24,14 @@
     text-align: center;
     grid-template-columns: minmax(toRem(200), toRem(580));
     justify-content: center;
+}
+.v-input__control {
+    display: block;
+    height: toRem(56);
+}
+.gm-style-mtc-bbw {
+    display: none;
+}
+.gm-style-moc {
+    display: none;
 }

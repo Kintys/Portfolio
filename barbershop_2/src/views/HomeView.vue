@@ -12,8 +12,10 @@ import ContactsInfoContainer from "@/page/home-page/contacts-Info-section/Contac
 <template>
     <MasterPage
         ><WelcomeContainer /><BenefitsContainer />
-        <AboutUsContainer /><TestimonialsContainer /><PriceListContainer />
-        <ConsultationMailContainer /><ContactsInfoContainer />
+        <AboutUsContainer id="about" /><TestimonialsContainer
+            id="testimonials"
+        /><PriceListContainer />
+        <ConsultationMailContainer /><ContactsInfoContainer id="contacts" />
     </MasterPage>
 </template>
 <style lang="scss">

@@ -1,58 +1,64 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-
+import { getNewRouterList } from "@/router/helpers";
 export const routes = [
     {
         path: "/",
         name: "home",
         component: HomeView,
+        children: [
+            {
+                path: "/about",
+                name: "about",
+            },
+            {
+                path: "/testimonials",
+                name: "testimonials",
+            },
+            {
+                path: "/contacts",
+                name: "contacts",
+            },
+        ],
     },
     {
-        path: "/about",
-        name: "about",
-        // route level code-splitting
-        // this generates a separate chunk (About.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import("../views/AboutView.vue"),
+        path: "/our-masters",
+        name: "our masters",
+        component: () => import("@/views/TeamMastersView.vue"),
     },
     {
-        path: "/about",
-        name: "Our masters",
-        // route level code-splitting
-        // this generates a separate chunk (About.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import("../views/AboutView.vue"),
-    },
-    {
-        path: "/about",
-        name: "Portfolio",
-        // route level code-splitting
-        // this generates a separate chunk (About.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import("../views/AboutView.vue"),
-    },
-    {
-        path: "/about",
-        name: "Testimonials",
-        // route level code-splitting
-        // this generates a separate chunk (About.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import("../views/AboutView.vue"),
+        path: "/",
+        name: "portfolio",
+        component: HomeView,
     },
 ];
-
+const routerList = getNewRouterList(routes);
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes,
     scrollBehavior(to, from, savedPosition) {
-        return (
-            savedPosition || {
-                el: ".item",
-                top: 0,
-                left: 0,
-                behavior: "smooth",
+        if (savedPosition) return savedPosition;
+        else {
+            for (let index = 0; index < routerList.length; index++) {
+                if (to.path === "/" && routerList[index].path === "/") {
+                    return {
+                        top: 0,
+                        left: 0,
+                        behavior: "smooth",
+                    };
+                } else if (to.path === routerList[index].path) {
+                    return new Promise((resolve) => {
+                        setTimeout(() => {
+                            resolve({
+                                el: `#${to.name}`,
+                                top: -30,
+                                behavior: "smooth",
+                            });
+                        }, 500);
+                    });
+                }
             }
-        );
+        }
     },
 });
 
