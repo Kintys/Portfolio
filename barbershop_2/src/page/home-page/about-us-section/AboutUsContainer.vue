@@ -8,8 +8,10 @@
         />
         <ImageBoxComponent class="image-box" />
         <footer class="actions">
-            <v-btn class="button-main"
-                >Our masters and their masterpieces</v-btn
+            <router-link :to="{ name: 'our masters' }"
+                ><v-btn class="button-main"
+                    >Our masters and their masterpieces</v-btn
+                ></router-link
             >
             <v-btn class="button-transparent">Our Instagram</v-btn>
         </footer>

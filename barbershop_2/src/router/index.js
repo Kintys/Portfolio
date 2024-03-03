@@ -27,9 +27,9 @@ export const routes = [
         component: () => import("@/views/TeamMastersView.vue"),
     },
     {
-        path: "/",
+        path: "/portfolio",
         name: "portfolio",
-        component: HomeView,
+        component: () => import("@/views/TeamMastersView.vue"),
     },
 ];
 const routerList = getNewRouterList(routes);
@@ -51,7 +51,6 @@ const router = createRouter({
                         setTimeout(() => {
                             resolve({
                                 el: `#${to.name}`,
-                                top: -30,
                                 behavior: "smooth",
                             });
                         }, 500);

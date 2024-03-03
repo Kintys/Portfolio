@@ -3,9 +3,15 @@
         <v-img :src="getImageUrl(priceList.imageCard)" />
         <h6 class="title">{{ priceList.titleCard }}</h6>
         <ul class="list">
-            <li class="item-list" v-for="service in priceList.hairstyles" :key="service.name">
+            <li
+                class="item-list"
+                v-for="service in priceList.hairstyles"
+                :key="service.name"
+            >
                 <span class="item-title">{{ service.name }}</span>
-                <span class="item-business-time">{{ service.businessTime }} min</span>
+                <span class="item-business-time"
+                    >{{ service.businessTime }} min</span
+                >
                 <b class="item-price"> ${{ service.price }}</b>
             </li>
         </ul>
@@ -16,17 +22,17 @@
 defineProps({
     priceList: {
         type: Object,
-        default: () => ({})
-    }
-})
+        default: () => ({}),
+    },
+});
 
 const getImageUrl = (name) => {
-    return new URL(`../../../assets/img/${name}`, import.meta.url).href
-}
+    return new URL(`../../../assets/img/${name}`, import.meta.url).href;
+};
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/style/lib/mixins';
+@import "@/assets/style/lib/mixins";
 .card {
     font-family: Fira Sans;
     display: grid;
@@ -40,8 +46,6 @@ const getImageUrl = (name) => {
     font-weight: 500;
     line-height: 133%;
     color: rgb(239, 231, 226);
-}
-.list {
 }
 .item-list {
     display: grid;
