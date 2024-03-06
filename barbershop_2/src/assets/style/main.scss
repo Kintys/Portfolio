@@ -3,6 +3,7 @@
 @import "./base-style";
 @import "./lib/null";
 @import "@/assets/style/lib/mixins";
+@import "./lib/timepicker.scss";
 .main-title {
     color: rgb(255, 255, 255);
     font-family: Fira Sans;
