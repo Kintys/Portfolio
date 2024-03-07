@@ -1,7 +1,7 @@
 <template>
     <div class="container">
-        <v-form ref="form" @submit.prevent="sendEmail">
-            <form class="from-template" ref="formTemplate">
+        <v-form class="form" ref="form" @submit.prevent="sendEmail">
+            <form class="from-template" ref="form-template">
                 <input type="text" name="user_name" :value="userName" />
                 <input type="email" name="user_email" :value="userEmail" />
                 <input type="data" name="user_data" :value="fullDateView" />
@@ -37,6 +37,7 @@
                     width="400"
                     v-model="userData"
                     hide-header="true"
+                    bg-color="rgb(37, 29, 26)"
                 ></v-date-picker>
             </v-row>
             <VueTimepicker
@@ -47,8 +48,8 @@
                 :hour-range="[[9, 17]]"
                 :minute-range="[0, 15, 30, 45]"
             />
+            <v-btn @click="sendEmail" class="button-main">book</v-btn>
         </v-form>
-        <v-btn @click="sendEmail">book</v-btn>
     </div>
 </template>
 
@@ -105,9 +106,30 @@ function createForm() {
 
 <style lang="scss" scoped>
 @import "@/assets/style/lib/mixins";
+@import "@/assets/style/lib/button";
 .container {
-    background: #fff;
-    padding-top: 100px;
+    padding: toRem(50) toRem(30) toRem(30) toRem(30);
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: -110%;
+    transition: all 0.3s;
+    background-color: rgb(37, 29, 26);
+    z-index: 100;
+    &::before {
+        width: 100vw;
+        height: 100%;
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: rgba(37, 29, 26, 0.093);
+    }
+}
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(20);
 }
 .from-template {
     display: none;
