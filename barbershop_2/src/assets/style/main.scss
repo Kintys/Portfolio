@@ -39,3 +39,12 @@
 .v-field__field {
     padding: toRem(2);
 }
+body {
+    .lock & {
+        overflow: hidden;
+        -ms-touch-action: none;
+        touch-action: none;
+        -ms-scroll-chaining: none;
+        overscroll-behavior: none;
+    }
+}

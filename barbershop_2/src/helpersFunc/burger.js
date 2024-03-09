@@ -2,16 +2,23 @@ import { ref } from "vue";
 
 export function burgerMenu() {
     const showMenu = ref(false);
+    const html = ref(document.querySelector("html"));
     function activeMenu() {
-        const html = document.querySelector("html");
         showMenu.value = !showMenu.value;
         setTimeout(() => {
             showMenu.value
-                ? html.classList.add("lock")
-                : html.classList.remove("lock");
+                ? html.value.classList.add("lock")
+                : html.value.classList.remove("lock");
         }, 500);
     }
+    function close() {
+        if (showMenu.value) {
+            showMenu.value = false;
+            html.value.classList.remove("lock");
+        }
+    }
     return {
+        close,
         activeMenu,
         showMenu,
     };

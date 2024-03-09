@@ -50,6 +50,7 @@
             />
             <v-btn @click="sendEmail" class="button-main">book</v-btn>
         </v-form>
+        <v-btn @click="menuClose">close</v-btn>
     </div>
 </template>
 
@@ -59,6 +60,8 @@ import { useDate } from "vuetify";
 import emailjs from "@emailjs/browser";
 import VueTimepicker from "vue3-timepicker";
 // CSS
+
+const emit = defineEmits("closesMenu");
 
 const time = ref(null);
 const dateConstructor = useDate();
@@ -88,6 +91,10 @@ async function sendEmail() {
     if (valid) createForm();
 }
 
+function menuClose() {
+    emit("closesMenu", true);
+}
+
 function createForm() {
     emailjs
         .sendForm("service_jk5a3z3", "template_uojhabm", formTemplate.value, {
@@ -111,7 +118,6 @@ function createForm() {
     padding: toRem(50) toRem(30) toRem(30) toRem(30);
     position: absolute;
     height: 100%;
-    top: 0;
     left: -110%;
     transition: all 0.3s;
     background-color: rgb(37, 29, 26);

@@ -63,9 +63,9 @@ import phoneImg from "@/assets/img/header/icon/phone.svg";
 import DynamicAdapt from "@/components/DynamicAdapt.vue";
 
 import { burgerMenu } from "@/helpersFunc/burger";
-const { activeMenu, showMenu } = burgerMenu();
+const { activeMenu, showMenu, close } = burgerMenu();
 function closeMenu(event) {
-    if (event) activeMenu();
+    if (event) close();
 }
 </script>
 
