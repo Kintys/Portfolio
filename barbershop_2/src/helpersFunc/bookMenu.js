@@ -1,9 +1,9 @@
 import { ref } from "vue";
+const showMenu = ref(false);
 
-export function burgerMenu() {
-    const showMenu = ref(false);
+export function bookMenu() {
     const html = ref(document.querySelector("html"));
-    function activeMenu() {
+    function activeBookMenu() {
         showMenu.value = !showMenu.value;
         setTimeout(() => {
             showMenu.value
@@ -12,7 +12,7 @@ export function burgerMenu() {
         }, 500);
     }
     return {
-        activeMenu,
         showMenu,
+        activeBookMenu,
     };
 }

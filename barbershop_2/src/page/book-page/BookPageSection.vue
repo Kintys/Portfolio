@@ -50,7 +50,7 @@
             />
             <v-btn @click="sendEmail" class="button-main">book</v-btn>
         </v-form>
-        <v-btn @click="menuClose">close</v-btn>
+        <v-btn @click="activeBookMenu">close</v-btn>
     </div>
 </template>
 
@@ -59,9 +59,9 @@ import { ref, computed } from "vue";
 import { useDate } from "vuetify";
 import emailjs from "@emailjs/browser";
 import VueTimepicker from "vue3-timepicker";
+import { bookMenu } from "@/helpersFunc/bookMenu";
+const { activeBookMenu } = bookMenu();
 // CSS
-
-const emit = defineEmits("closesMenu");
 
 const time = ref(null);
 const dateConstructor = useDate();
@@ -91,10 +91,6 @@ async function sendEmail() {
     if (valid) createForm();
 }
 
-function menuClose() {
-    emit("closesMenu", true);
-}
-
 function createForm() {
     emailjs
         .sendForm("service_jk5a3z3", "template_uojhabm", formTemplate.value, {
@@ -115,20 +111,21 @@ function createForm() {
 @import "@/assets/style/lib/mixins";
 @import "@/assets/style/lib/button";
 .container {
-    padding: toRem(50) toRem(30) toRem(30) toRem(30);
-    position: absolute;
-    height: 100%;
-    left: -110%;
+    position: fixed;
     transition: all 0.3s;
-    background-color: rgb(37, 29, 26);
     z-index: 100;
+    right: -110%;
+    padding: toRem(50) toRem(30) toRem(30) toRem(30);
+    background-color: rgb(37, 29, 26);
+    height: 100%;
+    overflow: auto;
     &::before {
         width: 100vw;
         height: 100%;
         content: "";
         position: absolute;
         top: 0;
-        left: 0;
+        right: 0;
         background-color: rgba(37, 29, 26, 0.093);
     }
 }
