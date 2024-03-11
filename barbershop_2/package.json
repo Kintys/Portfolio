@@ -18,6 +18,7 @@
     "@vuelidate/core": "^2.0.3",
     "@vuelidate/validators": "^2.0.4",
     "core-js": "^3.34.0",
+    "firebase": "^10.8.1",
     "roboto-fontface": "*",
     "swiper": "^11.0.6",
     "vee-validate": "^4.12.5",

@@ -6,29 +6,40 @@
                 <div class="headline">
                     <h1 class="title">Men’s Barbershop in The Middle East</h1>
                     <div class="subtitle-action">
-                        <v-btn class="subtitle-button button-transparent">THE HIGHEST RATED</v-btn>
-                        <p class="subtitle-text">Text that is placed at the bottom of the heading to reveal details</p>
+                        <v-btn class="subtitle-button button-transparent"
+                            >THE HIGHEST RATED</v-btn
+                        >
+                        <p class="subtitle-text">
+                            Text that is placed at the bottom of the heading to
+                            reveal details
+                        </p>
                     </div>
                 </div>
-                <v-btn class="sing-up-button button-main">Book now</v-btn>
+                <v-btn
+                    @click="activeBookMenu"
+                    class="sing-up-button button-main"
+                    >Book now</v-btn
+                >
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import barbershopImg from '@/assets/img/main/section-one/barbershop.webp'
+import { bookMenu } from "@/helpersFunc/bookMenu";
+import barbershopImg from "@/assets/img/main/section-one/barbershop.webp";
+const { activeBookMenu } = bookMenu();
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/style/lib/mixins';
-@import '@/assets/style/lib/button';
+@import "@/assets/style/lib/mixins";
+@import "@/assets/style/lib/button";
 .welcome {
 }
 .container {
     padding-left: toRem(10);
     padding-right: toRem(10);
-    @include adaptiveValue('padding-top', 140, 70);
+    @include adaptiveValue("padding-top", 140, 70);
 }
 .body {
     max-width: toRem(1180); /* 1180/1210 */
@@ -42,7 +53,7 @@ import barbershopImg from '@/assets/img/main/section-one/barbershop.webp'
         margin-bottom: toRem(20);
     }
     &::before {
-        content: '';
+        content: "";
         position: absolute;
         width: 100%;
         height: 100%;
@@ -61,7 +72,7 @@ import barbershopImg from '@/assets/img/main/section-one/barbershop.webp'
         top: 4%; /* 40/1000 */
         left: 5.084746%; /* 60/1180 */
         align-items: flex-end;
-        @include adaptiveValue('column-gap', 46, 0, 0, 1200, 1015);
+        @include adaptiveValue("column-gap", 46, 0, 0, 1200, 1015);
     }
     @media (max-width: em(991.98)) {
         padding-top: toRem(20);
@@ -76,7 +87,7 @@ import barbershopImg from '@/assets/img/main/section-one/barbershop.webp'
 .title {
     color: rgb(255, 255, 255);
     font-family: Playfair Display;
-    @include adaptiveValue('font-size', 70, 25);
+    @include adaptiveValue("font-size", 70, 25);
     max-width: toRem(625);
     max-height: toRem(154);
     font-weight: 900;
@@ -93,11 +104,11 @@ import barbershopImg from '@/assets/img/main/section-one/barbershop.webp'
 }
 .subtitle-button {
     max-width: toRem(221);
-    @include adaptiveValue('padding-bottom', 10, 8);
-    @include adaptiveValue('padding-top', 10, 8);
-    @include adaptiveValue('padding-left', 25, 15);
-    @include adaptiveValue('padding-right', 25, 15);
-    @include adaptiveValue('font-size', 14, 12);
+    @include adaptiveValue("padding-bottom", 10, 8);
+    @include adaptiveValue("padding-top", 10, 8);
+    @include adaptiveValue("padding-left", 25, 15);
+    @include adaptiveValue("padding-right", 25, 15);
+    @include adaptiveValue("font-size", 14, 12);
     &:not(:last-child) {
         margin-bottom: toRem(29);
     }
@@ -106,7 +117,7 @@ import barbershopImg from '@/assets/img/main/section-one/barbershop.webp'
     max-width: toRem(271);
     color: rgb(239, 231, 226);
     font-family: Fira Sans;
-    @include adaptiveValue('font-size', 17, 14);
+    @include adaptiveValue("font-size", 17, 14);
     line-height: 150%;
 }
 .sing-up-button {
