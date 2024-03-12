@@ -1,11 +1,11 @@
 <template>
     <div class="card">
-        <v-img :src="getImageUrl(priceList.imageCard)" />
-        <h6 class="title">{{ priceList.titleCard }}</h6>
+        <v-img :src="getImageUrl(titleData.imageCard)" />
+        <h6 class="title">{{ titleData.titleCard }}</h6>
         <ul class="list">
             <li
                 class="item-list"
-                v-for="service in priceList.hairstyles"
+                v-for="service in priceList"
                 :key="service.name"
             >
                 <span class="item-title">{{ service.name }}</span>
@@ -21,6 +21,10 @@
 <script setup>
 defineProps({
     priceList: {
+        type: Object,
+        default: () => ({}),
+    },
+    titleData: {
         type: Object,
         default: () => ({}),
     },

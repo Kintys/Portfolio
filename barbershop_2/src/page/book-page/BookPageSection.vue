@@ -1,5 +1,19 @@
 <template>
     <div class="container">
+        <v-autocomplete
+            clearable
+            label="Barber"
+            :items="getBarberName"
+            variant="outlined"
+            v-model="chooseBarber"
+        ></v-autocomplete>
+        <v-autocomplete
+            clearable
+            label="coiffure"
+            :items="getServiceTitle"
+            variant="outlined"
+            v-model="chooseService"
+        ></v-autocomplete>
         <v-form class="form" ref="form" @submit.prevent="sendEmail">
             <form class="from-template" ref="form-template">
                 <input type="text" name="user_name" :value="userName" />
@@ -7,6 +21,17 @@
                 <input type="data" name="user_data" :value="fullDateView" />
                 <input type="text" name="user_hour" :value="time?.HH" />
                 <input type="text" name="user_minute" :value="time?.mm" />
+                <!-- <input type="text" name="barber_name" :value="chooseBarber" /> -->
+                <!-- <input
+                    type="text"
+                    name="service_name"
+                    :value="getChooseService?.name"
+                /> -->
+                <!-- <input
+                    type="number"
+                    name="service_cost"
+                    :value="getChooseService?.price"
+                /> -->
             </form>
             <v-text-field
                 variant="outlined"
@@ -59,17 +84,40 @@ import { ref, computed } from "vue";
 import { useDate } from "vuetify";
 import emailjs from "@emailjs/browser";
 import VueTimepicker from "vue3-timepicker";
+
+import { storeToRefs } from "pinia";
+import { useBarberList } from "@/stores/barbers.js";
+const { getItemsList: getBarberList } = storeToRefs(useBarberList());
+const getBarberName = computed(() =>
+    getBarberList.value.map((name) => name.name)
+);
+
+import { useServiceList } from "@/stores/service";
+const { getItemsList: getServiceList } = storeToRefs(useServiceList());
+
+const getServiceTitle = computed(() =>
+    getServiceList.value.map((service) => service.name)
+);
+const getChooseService = computed(() => {
+    const newArr = getServiceList.value.filter(
+        (service) => service.name === chooseService.value
+    );
+    return newArr[0];
+});
+
 import { bookMenu } from "@/helpersFunc/bookMenu";
 const { activeBookMenu } = bookMenu();
 // CSS
+const dateConstructor = useDate();
 
 const time = ref(null);
-const dateConstructor = useDate();
 const userName = ref(null);
 const userEmail = ref(null);
 const userData = ref(null);
 const form = ref(null);
 const formTemplate = ref(null);
+const chooseBarber = ref(null);
+const chooseService = ref(null);
 const fullDateView = computed(() => {
     return dateConstructor.format(userData.value, "fullDateWithWeekday");
 });
