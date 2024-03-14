@@ -15,23 +15,23 @@
             v-model="chooseService"
         ></v-autocomplete>
         <v-form class="form" ref="form" @submit.prevent="sendEmail">
-            <form class="from-template" ref="form-template">
+            <form class="from-template" ref="formTemplate">
                 <input type="text" name="user_name" :value="userName" />
                 <input type="email" name="user_email" :value="userEmail" />
                 <input type="data" name="user_data" :value="fullDateView" />
                 <input type="text" name="user_hour" :value="time?.HH" />
                 <input type="text" name="user_minute" :value="time?.mm" />
-                <!-- <input type="text" name="barber_name" :value="chooseBarber" /> -->
-                <!-- <input
+                <input type="text" name="barber_name" :value="chooseBarber" />
+                <input
                     type="text"
                     name="service_name"
                     :value="getChooseService?.name"
-                /> -->
-                <!-- <input
+                />
+                <input
                     type="number"
                     name="service_cost"
                     :value="getChooseService?.price"
-                /> -->
+                />
             </form>
             <v-text-field
                 variant="outlined"
