@@ -162,7 +162,7 @@ function createForm() {
     position: fixed;
     transition: all 0.3s;
     z-index: 100;
-    right: -110%;
+    right: -200%;
     padding: toRem(50) toRem(30) toRem(30) toRem(30);
     background-color: rgb(37, 29, 26);
     height: 100%;

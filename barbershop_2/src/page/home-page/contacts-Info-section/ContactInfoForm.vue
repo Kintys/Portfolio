@@ -10,7 +10,7 @@
                     icon-name="icon-local"
                     ><IconLocal
                 /></IconBase>
-                <a>8 (800) 000-00-00</a>
+                <a class="info-text">8 (800) 000-00-00</a>
             </div>
             <div class="info-link">
                 <IconBase
@@ -20,7 +20,7 @@
                     icon-name="icon-Messange"
                     ><IconMessange
                 /></IconBase>
-                <a>info@sitename.com</a>
+                <a class="info-text">info@sitename.com</a>
             </div>
             <div class="info-link">
                 <IconBase
@@ -30,7 +30,7 @@
                     icon-name="icon-phone"
                     ><IconPhone
                 /></IconBase>
-                <a>302 W 50th St, NY, NY 10019</a>
+                <a class="info-text">302 W 50th St, NY, NY 10019</a>
             </div>
             <div class="info-link">
                 <IconBase
@@ -40,7 +40,7 @@
                     icon-name="icon-time"
                     ><IconTime
                 /></IconBase>
-                <p>Daily from 9 to 20</p>
+                <p class="info-text">Daily from 9 to 20</p>
             </div>
         </div>
     </div>
@@ -85,14 +85,14 @@ import IconTime from "@/components/icons/iconsSrc/IconTime.vue";
     &:not(:last-child) {
         margin-bottom: toRem(21);
     }
-    a {
-        color: rgb(255, 255, 255);
-        font-family: Montserrat;
-        font-size: toRem(21);
-        font-weight: 400;
-        line-height: 143%;
-        letter-spacing: 0%;
-        text-align: left;
-    }
+}
+.info-text {
+    @include adaptiveValue("font-size", 21, 14);
+    color: rgb(255, 255, 255);
+    font-family: Montserrat;
+    font-weight: 400;
+    line-height: 143%;
+    letter-spacing: 0%;
+    text-align: left;
 }
 </style>
