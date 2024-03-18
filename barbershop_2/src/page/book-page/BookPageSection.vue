@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div data-lp class="container popup">
         <v-autocomplete
             clearable
             label="Barber"
@@ -80,7 +80,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useDate } from "vuetify";
 import emailjs from "@emailjs/browser";
 import VueTimepicker from "vue3-timepicker";
@@ -98,13 +98,14 @@ const { getItemsList: getServiceList } = storeToRefs(useServiceList());
 const getServiceTitle = computed(() =>
     getServiceList.value.map((service) => service.name)
 );
+
 const getChooseService = computed(() => {
     const newArr = getServiceList.value.filter(
         (service) => service.name === chooseService.value
     );
     return newArr[0];
 });
-
+onMounted(() => bookMenu());
 import { bookMenu } from "@/helpersFunc/bookMenu";
 const { activeBookMenu } = bookMenu();
 // CSS
@@ -160,7 +161,7 @@ function createForm() {
 @import "@/assets/style/lib/button";
 .container {
     position: fixed;
-    transition: all 0.3s;
+    transition: right 0.3s;
     z-index: 100;
     right: -200%;
     padding: toRem(50) toRem(30) toRem(30) toRem(30);
