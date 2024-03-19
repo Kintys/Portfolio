@@ -80,7 +80,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
+import { ref, computed } from "vue";
 import { useDate } from "vuetify";
 import emailjs from "@emailjs/browser";
 import VueTimepicker from "vue3-timepicker";
@@ -105,12 +105,11 @@ const getChooseService = computed(() => {
     );
     return newArr[0];
 });
-onMounted(() => bookMenu());
+
 import { bookMenu } from "@/helpersFunc/bookMenu";
 const { activeBookMenu } = bookMenu();
 // CSS
 const dateConstructor = useDate();
-
 const time = ref(null);
 const userName = ref(null);
 const userEmail = ref(null);
@@ -154,6 +153,30 @@ function createForm() {
             }
         );
 }
+// const popup = ref(null);
+// const body = ref(document.querySelector("body"));
+
+// const bodyUnlock = computed(() => {
+//     if (!showMenu) {
+//         setTimeout(() => {
+//             body.value.style.paddingRight = "0px";
+//             popup.value.style.paddingRight = "0px";
+//             // document.documentElement.classList.remove("lock");
+//         }, 500);
+//     }
+// });
+// const bodyLock = computed(() => {
+//     if (showMenu.value) {
+//         popup.value.style.paddingRight =
+//             window.innerWidth -
+//             document.querySelector(".wrapper").offsetWidth +
+//             "px";
+//         body.value.style.paddingRight =
+//             window.innerWidth -
+//             document.querySelector(".wrapper").offsetWidth +
+//             "px";
+//     }
+// });
 </script>
 
 <style lang="scss" scoped>

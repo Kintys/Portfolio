@@ -4,6 +4,7 @@
 @import "./lib/null";
 @import "@/assets/style/lib/mixins";
 @import "./lib/timepicker.scss";
+
 .main-title {
     color: rgb(255, 255, 255);
     font-family: Fira Sans;
@@ -42,6 +43,7 @@
 
 .lock {
     overflow: hidden;
+    margin-right: calc(-1 * (100vw - 100%));
     -ms-touch-action: none;
     touch-action: none;
     -ms-scroll-chaining: none;
