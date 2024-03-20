@@ -43,9 +43,8 @@
 
 .lock {
     overflow: hidden;
-    margin-right: calc(-1 * (100vw - 100%));
     -ms-touch-action: none;
     touch-action: none;
     -ms-scroll-chaining: none;
-    overscroll-behavior: contain;
+    // overscroll-behavior: contain;
 }

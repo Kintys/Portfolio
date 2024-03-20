@@ -3,35 +3,24 @@ const showMenu = ref(false);
 
 export function bookMenu() {
     const html = ref(document.querySelector("html"));
-    const body = ref(document.querySelector("body"));
-    const bodyLockStatus = ref(true);
     function activeBookMenu() {
         showMenu.value = !showMenu.value;
-
         if (showMenu.value) {
-            bodyLock();
+            const wrapper = document.querySelector(".wrapper");
+            console.log(wrapper.offsetWidth);
+            console.log(window.innerWidth);
+            html.value.style.paddingRight =
+                window.innerWidth -
+                document.querySelector(".wrapper").offsetWidth +
+                "px";
             html.value.classList.add("lock");
         } else {
             html.value.classList.remove("lock");
             bodyUnlock();
         }
     }
-    function bodyUnlock(delay = 500) {
-        if (bodyLockStatus.value) {
-            setTimeout(() => {
-                body.value.style.paddingRight = "0px";
-            }, delay);
-            bodyLockStatus.value = false;
-            setTimeout(function () {
-                bodyLockStatus.value = true;
-            }, delay);
-        }
-    }
-    function bodyLock() {
-        body.value.style.paddingRight =
-            window.innerWidth -
-            document.querySelector(".wrapper").offsetWidth +
-            "px";
+    function bodyUnlock() {
+        html.value.style.paddingRight = "0px";
     }
 
     return {
