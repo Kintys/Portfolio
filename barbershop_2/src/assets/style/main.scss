@@ -48,3 +48,7 @@
     -ms-scroll-chaining: none;
     // overscroll-behavior: contain;
 }
+html {
+    margin-right: calc(-1 * (100vw - 100%));
+    overflow-x: hidden;
+}

@@ -3,13 +3,14 @@ const showMenu = ref(false);
 
 export function bookMenu() {
     const html = ref(document.querySelector("html"));
+    const body = ref(document.querySelector("#app"));
     function activeBookMenu() {
         showMenu.value = !showMenu.value;
         if (showMenu.value) {
             const wrapper = document.querySelector(".wrapper");
             console.log(wrapper.offsetWidth);
             console.log(window.innerWidth);
-            html.value.style.paddingRight =
+            body.value.style.paddingRight =
                 window.innerWidth -
                 document.querySelector(".wrapper").offsetWidth +
                 "px";
