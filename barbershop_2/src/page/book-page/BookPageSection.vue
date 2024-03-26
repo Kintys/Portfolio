@@ -1,16 +1,23 @@
 <template>
     <div data-lp class="container popup">
+        <button type="button" class="close-pupop" @click="activeBookMenu">
+            <v-icon icon="mdi-close" />
+        </button>
         <v-autocomplete
             clearable
             label="Barber"
             :items="getBarberName"
             variant="outlined"
+            base-color="#fff"
+            color="#fff"
             v-model="chooseBarber"
         ></v-autocomplete>
         <v-autocomplete
             clearable
             label="coiffure"
             :items="getServiceTitle"
+            base-color="#fff"
+            color="#fff"
             variant="outlined"
             v-model="chooseService"
         ></v-autocomplete>
@@ -39,15 +46,15 @@
                 placeholder="Name"
                 class="input"
                 :rules="nameRules.nameRules"
-                base-color="#000"
+                base-color="#fff"
                 clearable
-                color="#000"
+                color="#fff"
                 v-model="userName"
             ></v-text-field>
             <v-text-field
                 variant="outlined"
-                base-color="#000"
-                color="#000"
+                base-color="#fff"
+                color="#fff"
                 label="Your email"
                 :rules="nameRules.emailRules"
                 placeholder="Email"
@@ -75,7 +82,6 @@
             />
             <v-btn @click="sendEmail" class="button-main">book</v-btn>
         </v-form>
-        <v-btn @click="activeBookMenu">close</v-btn>
     </div>
 </template>
 
@@ -208,5 +214,15 @@ function createForm() {
 }
 .from-template {
     display: none;
+}
+.close-pupop {
+    font-size: toRem(20);
+    color: white;
+    position: absolute;
+    right: 5%;
+    top: 2%;
+    &:not(:last-child) {
+        margin-bottom: toRem(20);
+    }
 }
 </style>
