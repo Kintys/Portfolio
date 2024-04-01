@@ -1,0 +1,31 @@
+// Main Colors
+@function toRem($px, $current: 16) {
+    $result: math.div($px, $current) + rem;
+    @return $result;
+}
+@function toEm($px, $current: 16) {
+    $result: math.div($px, $current) + em;
+    @return $result;
+}
+$mainColor: #000; // Default font color
+$secondColor: #db4444;
+
+$tablet: toEm(991.98); // Tablets, some horizontal phones
+$mobile: toEm(767.98); // Phones L
+$mobileSmall: toEm(479.98); // Phones S
+
+// Minimum page width
+$minWidth: 320;
+// Canvas width (layout)
+$maxWidth: 1440;
+// Width of the bounding container (0 = no limit)
+$maxWidthContainer: 1170;
+// General container padding
+// (30 = 15px left and right, 0 = no padding)
+$containerPadding: 30;
+
+// Width of the first breakpoint trigger
+$containerWidth: $maxWidthContainer + $containerPadding;
+
+// Breakpoints
+$pc: toEm($containerWidth); // PC, laptops, some horizontal tablets

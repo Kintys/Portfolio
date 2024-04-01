@@ -1,0 +1,52 @@
+@use "sass:math";
+//Percent
+@function percent($px, $from: 100) {
+	$result: math.div($px, $from) * 100%;
+	@return $result;
+}
+//REM
+@function toRem($px, $current: 16) {
+	$result: math.div($px, $current) + rem;
+	@return $result;
+}
+//EM
+@function toEm($px, $current: 16) {
+	$result: math.div($px, $current) + em;
+	@return $result;
+}
+
+//Currency
+@mixin currency($sym) {
+	&::after {
+		content: "#{$sym}";
+	}
+}
+
+// Трикутник
+@mixin triangle($direction, $color, $size, $size2: $size) {
+	@if $direction == left {
+		border: toRem($size2) solid transparent;
+		border-right: toRem($size) solid $color;
+	}
+	@if $direction == right {
+		border: toRem($size2) solid transparent;
+		border-left: toRem($size) solid $color;
+	}
+	@if $direction == top {
+		border: toRem($size2) solid transparent;
+		border-bottom: toRem($size) solid $color;
+	}
+	@if $direction == bottom {
+		border: toRem($size2) solid transparent;
+		border-top: toRem($size) solid $color;
+	}
+}
+
+// Grids
+@mixin gridCards($type: fit, $min: 280px, $max: 1fr, $gap: 30px) {
+	display: grid;
+	gap: $gap;
+	grid-template-columns: repeat(auto-#{$type}, minmax($min, $max));
+}
+
+// Адаптивна властивість (clamp)

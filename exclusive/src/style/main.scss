@@ -1,0 +1,68 @@
+@use "sass:math";
+@import "./lib/mixins";
+// Default Font ==============================================================================================================================================================================================================================================================================
+@import "./font/fonts";
+$fontFamily: $poppinsFont;
+$fontSize: toRem(16); // where 14(px) is the default font size from the layout
+
+// Type of responsiveness:
+// 1 = fluid (no breakpoints in containers),
+// 2 = by breakpoints (container changes its width by breakpoints)
+$responsiveType: 1;
+@import "./lib/variables";
+
+// BODY Tag Styles ============================================================================================================================================================================================================================================================================================================================================================================================
+body {
+    background-color: #fff;
+}
+
+// Bounding Container ======================================================================================================================================================================================================================
+/*
+(i) Styles will apply to
+all classes containing *__container
+For example: header__container, main__container, etc.
+Snippet (HTML): cnt
+*/
+@if ($responsiveType==1) {
+    // Fluid
+    [class*="container"] {
+        @if ($maxWidthContainer>0) {
+            max-width: toRem($containerWidth);
+            margin: 0 auto;
+        }
+        @if ($containerPadding>0) {
+            @if ($maxWidthContainer>0) {
+                padding: 0 toRem(math.div($containerPadding, 2));
+            } @else {
+                @include adaptiveValue("padding-left", math.div($containerPadding, 2), 15);
+                @include adaptiveValue("padding-right", math.div($containerPadding, 2), 15);
+            }
+        }
+    }
+} @else {
+    // Breakpoints
+    [class*="container"] {
+        margin: 0 auto;
+        @if ($maxWidthContainer>0) {
+            max-width: toRem($containerWidth);
+        } @else {
+            @if ($containerPadding>0) {
+                padding: 0 toRem(math.div($containerPadding, 2));
+            }
+        }
+        @media (max-width: $pc) {
+            max-width: toRem(970);
+        }
+        @media (max-width: $tablet) {
+            max-width: toRem(750);
+        }
+        @media (max-width: $mobile) {
+            max-width: none;
+            @if ($containerPadding>0 and $maxWidthContainer>0) {
+                padding: 0 toRem(math.div($containerPadding, 2));
+            }
+        }
+    }
+}
+@import "./lib/adaptive.scss";
+@import "./lib/null";
