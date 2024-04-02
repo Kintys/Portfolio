@@ -1,3 +1,18 @@
+@use "sass:math";
+@function percent($px, $from: 100) {
+    $result: math.div($px, $from) * 100%;
+    @return $result;
+}
+//REM
+@function toRem($px, $current: 16) {
+    $result: math.div($px, $current) + rem;
+    @return $result;
+}
+//EM
+@function toEm($px, $current: 16) {
+    $result: math.div($px, $current) + em;
+    @return $result;
+}
 @import "../lib/variables";
 @mixin adaptiveValue($property, $startSize, $minSize, $keepSize: 0, $widthFrom: $containerWidth, $widthTo: $minWidth) {
     @if ($startSize==0) {

@@ -1,4 +1,5 @@
 // Main Colors
+@use "sass:math";
 @function toRem($px, $current: 16) {
     $result: math.div($px, $current) + rem;
     @return $result;
@@ -7,12 +8,14 @@
     $result: math.div($px, $current) + em;
     @return $result;
 }
+$poppinsFont: "Poppins", sans-serif;
+$interFont: "Inter Variable", sans-serif;
 $mainColor: #000; // Default font color
 $secondColor: #db4444;
 
-$tablet: toEm(991.98); // Tablets, some horizontal phones
-$mobile: toEm(767.98); // Phones L
-$mobileSmall: toEm(479.98); // Phones S
+$tablet: 991.98; // Tablets, some horizontal phones
+$mobile: 767.98; // Phones L
+$mobileSmall: 479.98; // Phones S
 
 // Minimum page width
 $minWidth: 320;

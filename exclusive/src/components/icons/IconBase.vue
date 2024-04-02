@@ -39,10 +39,4 @@ const props = defineProps({
 })
 </script>
 
-<style lang="scss" scoped>
-svg {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-</style>
+<style lang="scss" scoped></style>

@@ -1,57 +1,60 @@
 //Burger Icon
 .menu-open {
-  bottom: 0;
-  &::before {
-    top: 0;
-  }
+    left: 0;
+    &::before {
+        left: 0;
+    }
+    &::after {
+        left: 0;
+    }
 }
 
 .icon-menu {
-  display: none;
-  @media (max-width: em(991.98)) {
-    display: block;
-    position: relative;
-    width: toRem(30);
-    height: toRem(18);
-    z-index: 5;
-    @media (any-hover: none) {
-      cursor: default;
+    display: none;
+    @media (max-width: toEm(790)) {
+        display: block;
+        position: relative;
+        width: toRem(30);
+        height: toRem(18);
+        z-index: 5;
+        @media (any-hover: none) {
+            cursor: default;
+        }
+        span,
+        &::before,
+        &::after {
+            content: "";
+            transition: all 0.3s ease 0s;
+            right: 0;
+            position: absolute;
+            width: 100%;
+            height: toRem(2);
+            background-color: $mainColor;
+        }
+        &::before {
+            top: 0;
+        }
+        &::after {
+            bottom: 0;
+        }
+        span {
+            top: calc(50% - toRem(1));
+        }
     }
-    span,
-    &::before,
-    &::after {
-      content: '';
-      transition: all 0.3s ease 0s;
-      right: 0;
-      position: absolute;
-      width: 100%;
-      height: toRem(2);
-      background-color: white;
-    }
-    &::before {
-      top: 0;
-    }
-    &::after {
-      bottom: 0;
-    }
-    span {
-      top: calc(50% - toRem(1));
-    }
-  }
 }
 .open-icon {
-  span {
-    width: 0;
-  }
-  &::before,
-  &::after {
-  }
-  &::before {
-    top: calc(50% - toRem(1));
-    transform: rotate(-45deg);
-  }
-  &::after {
-    bottom: calc(50% - toRem(1));
-    transform: rotate(45deg);
-  }
+    span {
+        width: 0;
+    }
+    &::before,
+    &::after {
+    }
+    &::before {
+        top: calc(50% - toRem(1));
+        transform: rotate(-45deg);
+    }
+    &::after {
+        bottom: calc(50% - toRem(1));
+        transform: rotate(45deg);
+    }
 }
