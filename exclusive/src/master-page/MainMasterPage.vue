@@ -4,11 +4,12 @@
         <main class="main">
             <slot></slot>
         </main>
-        <footer></footer>
+        <FooterContainer />
     </div>
 </template>
 
 <script setup>
+import FooterContainer from '@/master-page/footer/FooterContainer.vue'
 import HeaderContainer from '@/master-page/header/HeaderContainer.vue'
 </script>
 

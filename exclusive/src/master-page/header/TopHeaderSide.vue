@@ -34,13 +34,13 @@ const shortText = computed(() => {
     else return text
 })
 
-onMounted(() =>
-    window.addEventListener('resize', () => {
-        screenWidth.value = window.innerWidth
-    })
-)
+function getDynamicInnerWidth() {
+    screenWidth.value = window.innerWidth
+}
+
+onMounted(() => window.addEventListener('resize', getDynamicInnerWidth))
 onBeforeUnmount(() => {
-    window.removeEventListener('resize')
+    window.removeEventListener('resize', getDynamicInnerWidth)
 })
 </script>
 

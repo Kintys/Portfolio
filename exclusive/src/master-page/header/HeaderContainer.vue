@@ -1,9 +1,15 @@
 <template>
     <TopHeaderSide />
-    <HeaderHat>
+    <HeaderHat @windows-scroll="onScroll">
         <div class="header">
-            <div class="header__container">
-                <router-link :to="{ name: 'home' }" class="header__logo">Exclusive</router-link>
+            <div
+                class="header__container"
+                :class="{
+                    'header-padding-scroll': smallCont,
+                    'header-padding': !smallCont
+                }"
+            >
+                <router-link :to="{ name: 'home' }" class="header__logo logo">Exclusive</router-link>
                 <HeaderNavBar class="header__nav" :class="{ 'menu-open': showMenu }" />
                 <DynamicAdapt destination=".nav" breakpoint="790">
                     <div class="header__search search-comp">
@@ -38,15 +44,23 @@ import IconBase from '@/components/icons/IconBase.vue'
 import IconMagnifyingGlass from '@/components/icons/iconsSrc/IconMagnifyingGlass.vue'
 import DynamicAdapt from '@/components/DynamicAdapt.vue'
 import HeaderHat from '@/master-page/header/HeaderHat.vue'
-
+// ======================
 import { burgerMenu } from '@/modulesHelpers/lib/burger'
 const { showMenu, activeMenu } = burgerMenu()
+// ======================
+import { ref } from 'vue'
+const smallCont = ref(false)
+function onScroll(scroll) {
+    if (scroll >= 48) smallCont.value = true
+    else smallCont.value = false
+}
 </script>
 
 <style lang="scss" scoped>
 @import '../../style/lib/adaptive';
 @import '@/style/lib/variables';
 @import '@/style/lib/burger.scss';
+@import '@/style/common/logo.scss';
 .header {
     // .header__container
     &__nav {
@@ -54,23 +68,17 @@ const { showMenu, activeMenu } = burgerMenu()
 
     &__container {
         z-index: 50;
+        // @include adaptiveValue('padding-top', 40+48, 55);
+        // @include adaptiveValue('padding-bottom', 16, 14);
         display: grid;
         grid-template-columns: auto 1fr auto auto;
         align-items: center;
-        @include adaptiveValue('padding-top', 40+48, 55);
-        @include adaptiveValue('padding-bottom', 16, 14);
         background-color: #ffff;
     }
 
     // .header__logo
 
     &__logo {
-        font-family: $interFont;
-        font-size: toRem(24);
-        font-style: normal;
-        font-weight: 700;
-        line-height: 100%;
-        letter-spacing: 0.72px;
         padding-right: toRem(5);
     }
 
@@ -123,5 +131,17 @@ const { showMenu, activeMenu } = burgerMenu()
         cursor: pointer;
         z-index: 5;
     }
+}
+.header-padding-scroll,
+.header-padding {
+    transition: all 0.5s;
+}
+.header-padding-scroll {
+    padding: toRem(16) toRem(0);
+}
+.header-padding {
+    @include adaptiveValue('padding-top', 40+48, 55);
+    @include adaptiveValue('padding-bottom', 16, 14);
+    transition: all 0.5s;
 }
 </style>

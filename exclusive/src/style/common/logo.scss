@@ -1,0 +1,9 @@
+@import "@/style/lib/variables";
+.logo {
+    font-family: $interFont;
+    font-size: toRem(24);
+    font-style: normal;
+    font-weight: 700;
+    line-height: 100%;
+    letter-spacing: 0.72px;
+}

@@ -5,7 +5,8 @@
             'headroom--unpinned ': headerValue.scrolled,
             'headroom--pinned': !headerValue.scrolled,
             'scroll-up': headerValue.scrolledUp,
-            'start-scroll': headerValue.startScroll
+            'start-scroll': headerValue.startScroll,
+            'headroom--small': headerValue.startScroll
         }"
     >
         <slot></slot>
@@ -14,6 +15,7 @@
 
 <script setup>
 import { reactive, onMounted, onBeforeUnmount } from 'vue'
+const emit = defineEmits(['windowsScroll'])
 const props = defineProps({
     limitPosition: {
         type: Number,
@@ -31,6 +33,7 @@ const headerValue = reactive({
     scrolledUp: false
 })
 function handleScroll() {
+    emit('windowsScroll', window.scrollY)
     if (headerValue.lastPosition !== window.scrollY) {
         if (headerValue.lastPosition < window.scrollY && props.limitPosition < window.scrollY) {
             headerValue.startScroll = true
