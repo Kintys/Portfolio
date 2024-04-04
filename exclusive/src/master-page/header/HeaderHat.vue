@@ -72,6 +72,7 @@ onBeforeUnmount(() => {
     width: 100%;
     z-index: 30;
     transition: top 500ms linear;
+    background: #fff;
 }
 
 .headroom--pinned {

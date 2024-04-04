@@ -73,7 +73,6 @@ function onScroll(scroll) {
         display: grid;
         grid-template-columns: auto 1fr auto auto;
         align-items: center;
-        background-color: #ffff;
     }
 
     // .header__logo
@@ -137,7 +136,8 @@ function onScroll(scroll) {
     transition: all 0.5s;
 }
 .header-padding-scroll {
-    padding: toRem(16) toRem(0);
+    padding-top: toRem(16);
+    padding-bottom: toRem(16);
 }
 .header-padding {
     @include adaptiveValue('padding-top', 40+48, 55);

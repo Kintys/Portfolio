@@ -30,7 +30,7 @@ const selectedLang = ref(null)
 const text = 'Summer Sale For All Swim Suits And Free Express Delivery - OFF 50%!'
 const screenWidth = ref(null)
 const shortText = computed(() => {
-    if (screenWidth.value < 790) return text.substring(0, 11)
+    if (screenWidth.value < 790 && screenWidth.value) return text.substring(0, 11)
     else return text
 })
 

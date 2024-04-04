@@ -42,6 +42,7 @@ import IconSendArrow from '@/components/icons/iconsSrc/IconSendArrow.vue'
         top: 25%; /* 12/48 */
         right: 6.912442%; /* 15/217 */
         cursor: pointer;
+        color: transparent;
     }
 }
 </style>
