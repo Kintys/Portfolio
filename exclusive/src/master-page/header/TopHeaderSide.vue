@@ -38,7 +38,10 @@ function getDynamicInnerWidth() {
     screenWidth.value = window.innerWidth
 }
 
-onMounted(() => window.addEventListener('resize', getDynamicInnerWidth))
+onMounted(() => {
+    getDynamicInnerWidth()
+    window.addEventListener('resize', getDynamicInnerWidth)
+})
 onBeforeUnmount(() => {
     window.removeEventListener('resize', getDynamicInnerWidth)
 })

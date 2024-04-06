@@ -8,11 +8,10 @@ export const routes = [
         component: HomeView
     },
     {
-        path: '/',
-        name: 'home',
-        component: HomeView
+        path: '/login',
+        name: 'sign up',
+        component: () => import('@/pages/login-page/LoginView.vue')
     },
-
     {
         path: '/',
         name: 'home',

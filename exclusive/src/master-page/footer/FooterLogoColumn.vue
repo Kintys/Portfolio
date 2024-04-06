@@ -15,10 +15,20 @@ import EmailFormSend from '../footer/email-form/EmailFormSend.vue'
 
 <style lang="scss" scoped>
 @import '@/style/common/logo.scss';
+@import '@/style/lib/variables';
 .logo-block {
     display: grid;
     gap: toRem(24);
     // .logo-block__logo
+    @media (max-width: toEm($mobile)) {
+        grid-template-columns: repeat(3, auto);
+        align-content: center;
+        grid-auto-flow: row;
+        justify-items: center;
+    }
+    @media (max-width: toEm(560)) {
+        grid-template-columns: auto;
+    }
 
     &__logo {
     }

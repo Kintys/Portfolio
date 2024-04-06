@@ -1,17 +1,21 @@
 <template>
     <div class="footer-nav-bar">
-        <h4 class="footer-nav-bar__title">{{ columnTitle }}</h4>
-        <ul class="footer-nav-bar__list">
-            <li v-for="linkData in linksParams" :key="linkData.title" class="footer-nav-bar__item">
-                <router-link :to="{ name: `${linkData.link}` }" class="footer-nav-bar__link">{{
-                    linkData.title
-                }}</router-link>
-            </li>
-        </ul>
+        <MExpansionPanels :label="columnTitle" :viewportSize="767.98">
+            <template #spoller-container>
+                <ul class="footer-nav-bar__list">
+                    <li v-for="linkData in linksParams" :key="linkData.title" class="footer-nav-bar__item">
+                        <router-link :to="{ name: `${linkData.link}` }" class="footer-nav-bar__link">{{
+                            linkData.title
+                        }}</router-link>
+                    </li>
+                </ul>
+            </template>
+        </MExpansionPanels>
     </div>
 </template>
 
 <script setup>
+import MExpansionPanels from '@/components/MExpansionPanels.vue'
 defineProps({
     columnTitle: {
         type: String,
