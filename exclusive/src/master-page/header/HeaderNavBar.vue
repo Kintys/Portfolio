@@ -1,7 +1,7 @@
 <template>
     <nav class="nav">
         <ul class="nav__list">
-            <li v-for="route in routes" :key="route.name" class="nav__link">
+            <li v-for="route in visibleMenuItems" :key="route.name" class="nav__link">
                 <router-link :to="{ name: `${route.name}` }">{{ route.name }}</router-link>
             </li>
         </ul>
@@ -9,7 +9,26 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
 import { routes } from '@/router/index'
+import { isRouteAvailable } from '@/router/userPermissions.js'
+
+function checkRoutesList(routeItems, menuItemsRoutes) {
+    for (const routeItem of routeItems) {
+        if (routeItem.children) checkRoutesList(routeItem.children, menuItemsRoutes)
+        else if (routeItem.meta?.useInMenu && isRouteAvailable(routeItem)) {
+            menuItemsRoutes.push({
+                name: routeItem.name
+            })
+        }
+    }
+}
+
+const visibleMenuItems = computed(() => {
+    const menuItemsRoutes = []
+    checkRoutesList(routes, menuItemsRoutes)
+    return menuItemsRoutes
+})
 </script>
 
 <style lang="scss" scoped>

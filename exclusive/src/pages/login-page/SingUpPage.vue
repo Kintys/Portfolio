@@ -1,20 +1,23 @@
 <template>
-    <section class="login">
-        <div class="login__container">
-            <v-img cover :src="loginPhoto" class="login__bg-img"></v-img>
-            <div class="login__block">
-                <slot name="form">
-                    <LoginForm :form-params="loginParams" />
-                </slot>
+    <MainMasterPage>
+        <section class="login">
+            <div class="login__container">
+                <v-img cover :src="loginPhoto" class="login__bg-img"></v-img>
+                <div class="login__block">
+                    <slot>
+                        <SingUpForm :form-params="create" />
+                    </slot>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </MainMasterPage>
 </template>
 
 <script setup>
+import MainMasterPage from '@/master-page/MainMasterPage.vue'
 import loginPhoto from '@/assets/loginPage/01.png'
-import LoginForm from '@/pages/login-page/LoginForm.vue'
-import { loginParams } from '@/pages/login-page/setting.js'
+import SingUpForm from '@/pages/login-page/SingUpForm.vue'
+import { create } from '@/pages/login-page/setting.js'
 </script>
 
 <style lang="scss" scoped>

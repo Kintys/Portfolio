@@ -5,6 +5,16 @@
         <slot name="login-inputs">
             <div class="login-form__forms">
                 <v-text-field
+                    v-if="formParams.inputName"
+                    label="Name"
+                    type="text"
+                    hide-details="auto"
+                    :rules="nameRules"
+                    v-model="name"
+                    class="login-form__input"
+                    variant="underlined"
+                ></v-text-field>
+                <v-text-field
                     label="Email or Phone Number"
                     hide-details="auto"
                     :rules="emailRules"
@@ -27,24 +37,35 @@
         </slot>
         <slot name="login-actions"
             ><div class="login-form__actions auth">
-                <div class="auth__sing-in">
+                <div class="auth__sing-up-btn">
                     <button
                         type="button"
                         @click="loginWithEmailAndPassword(email, password)"
                         class="auth__button button-main"
+                        :disabled="!isValidForm"
                     >
-                        Log In
+                        {{ formParams.buttonCreate }}
                     </button>
-                    <a class="auth__link" href="#"> Forget Password?</a>
+                    <button
+                        type="button"
+                        @click="loginWithGoogleEmailPopup"
+                        class="auth__button button-main button-main-trans"
+                    >
+                        <IconBase width="24" height="25" viewBox="0 0 24 25"><IconGoogle /></IconBase>
+                        {{ formParams.buttonGoogle }}
+                    </button>
+                </div>
+                <div class="auth__links">
+                    <p>{{ formParams.hasAcc }}</p>
+                    <router-link :to="{ name: 'login' }" class="auth__link">{{ formParams.link }}</router-link>
                 </div>
             </div>
         </slot>
     </div>
-    <!-- :disabled="!isValidForm" -->
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, computed, reactive, watch } from 'vue'
 defineProps({
     formParams: {
         type: Object,
@@ -59,46 +80,42 @@ const emailRules = reactive([
         return pattern.test(value) || 'The email is incorrect. Please make sure all fields are filled in'
     }
 ])
-const passwordRules = reactive([
-    {
-        required: (value) => !!value || 'Required.',
-        min: (v) => v.length >= 8 || 'Min 8 characters'
-    }
-])
+const passwordRules = reactive([(value) => !!value || 'Required.', (v) => v.length >= 8 || 'Min 8 characters'])
+const nameRules = reactive([(value) => !!value || 'Required.'])
+
 const show1 = ref(false)
 
-// const emit = defineEmits(['update:newEmail', 'update:newPass'])
+const emit = defineEmits(['update:newEmail', 'update:newPass'])
 
-// import { useRouter } from 'vue-router'
-// const router = useRouter()
+import { useRouter } from 'vue-router'
+const router = useRouter()
 
-// import { useAuthStore } from '@/stores/auth'
-// const { signInWithWithEmailAndPassword, loginWithGoogleAccount } = useAuthStore()
+import { useAuthStore } from '@/stores/auth'
+const { signInWithWithEmailAndPassword, loginWithGoogleAccount } = useAuthStore()
+const name = ref(null)
+const email = ref(null)
+const password = ref(null)
 
-// const email = ref(null)
-// const password = ref(null)
+watch([email, password], ([new_email, new_password]) => {
+    emit('update:newEmail', new_email)
+    emit('update:newPass', new_password)
+})
 
-// // watch([email, password], ([new_email, new_password]) => {
-// //     emit('update:newEmail', new_email)
-// //     emit('update:newPass', new_password)
-// // })
+const isValidForm = computed(() => name.value && email.value && password.value)
 
-// const isValidForm = computed(() => email.value && password.value)
-
-// function loginWithEmailAndPassword(email, password) {
-//     signInWithWithEmailAndPassword(email, password).then(() => {
-//         router.push({
-//             name: 'home'
-//         })
-//     })
-// }
-// function loginWithGoogleEmailPopup() {
-//     loginWithGoogleAccount().then(() => {
-//         router.push({
-//             name: 'home'
-//         })
-//     })
-// }
+function loginWithEmailAndPassword(email, password) {
+    signInWithWithEmailAndPassword(email, password).then(() => {
+        router.back()
+    })
+}
+function loginWithGoogleEmailPopup() {
+    loginWithGoogleAccount().then(() => {
+        router.back()
+    })
+}
+//=====================================================================
+import IconBase from '@/components/icons/IconBase.vue'
+import IconGoogle from '@/components/icons/iconsSrc/IconGoogle.vue'
 </script>
 
 <style lang="scss" scoped>
@@ -137,12 +154,12 @@ const show1 = ref(false)
         &:not(:last-child) {
             margin-bottom: toRem(20);
         }
-        min-height: toRem(147);
     }
 
     // .login-form__input
 
     &__input {
+        min-height: toRem(75);
     }
 
     // .login-form__actions
@@ -151,24 +168,29 @@ const show1 = ref(false)
     }
 }
 .auth {
-    // .auth__sing-in
-
-    &__sing-in {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(2, auto);
+    row-gap: toRem(16);
+    justify-items: center;
     // .auth__button
-
+    &__sing-up-btn {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        row-gap: toRem(16);
+    }
     &__button {
     }
-
+    &__links {
+        display: flex;
+        line-height: 150%; /* 150% */
+        column-gap: toRem(16);
+    }
     // .auth__link
 
     &__link {
-        color: $secondColor;
-        font-size: toRem(16);
+        font-weight: 500;
         line-height: 150%; /* 150% */
         @media (any-hover: hover) {
             &:hover {

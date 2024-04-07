@@ -16,4 +16,16 @@
             background-color: #e07575;
         }
     }
+    &-trans {
+        padding: toRem(15) toRem(47);
+        background-color: transparent;
+        border: toRem(1) solid rgba(0, 0, 0, 0.5);
+        color: $mainColor;
+        column-gap: toRem(16);
+        @media (any-hover: hover) {
+            &:hover {
+                background-color: hsla(206, 3%, 50%, 0.4);
+            }
+        }
+    }
 }

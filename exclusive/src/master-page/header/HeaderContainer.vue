@@ -54,6 +54,22 @@ function onScroll(scroll) {
     if (scroll >= 48) smallCont.value = true
     else smallCont.value = false
 }
+// ===========================
+// import { useAuthStore } from '@/stores/auth'
+// const { getUser } = useAuthStore()
+// const isVisibleAction = ref(false)
+// const isUserAuch = computed(() => {
+//     if (getUser) {
+//         isVisibleActionPanel(true)
+//         nextTick()
+//     } else {
+//         isVisibleActionPanel(false)
+//         nextTick()
+//     }
+// })
+// function isVisibleActionPanel(value) {
+//     isVisibleAction.value = value
+// }
 </script>
 
 <style lang="scss" scoped>
@@ -73,6 +89,9 @@ function onScroll(scroll) {
         display: grid;
         grid-template-columns: auto 1fr auto auto;
         align-items: center;
+        @media (max-width: toEm(790)) {
+            grid-template-columns: 1fr auto auto auto;
+        }
     }
 
     // .header__logo
