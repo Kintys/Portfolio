@@ -29,14 +29,14 @@ export const routes = [
                 component: () => import('@/pages/login-page/LoginPage.vue'),
                 meta: {
                     requireAuth: false,
-                    useInMenu: true
+                    useInMenu: false
                 }
             }
         ]
     },
     {
         path: '/',
-        name: 'home',
+        name: 'Contact',
         component: HomeView,
         meta: {
             requireAuth: false,
@@ -45,7 +45,7 @@ export const routes = [
     },
     {
         path: '/',
-        name: 'home',
+        name: 'About',
         component: HomeView,
         meta: {
             requireAuth: false,

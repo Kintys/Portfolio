@@ -1,10 +1,12 @@
 <template>
     <div class="logo-block">
         <router-link :to="{ name: 'home' }" class="logo-block__logo logo">Exclusive</router-link>
-        <div class="logo-block__subscribe">Subscribe</div>
-        <div class="logo-block__send-email subscribe-email">
-            <p class="subscribe-email__offer">Get 10% off your first order</p>
-            <EmailFormSend />
+        <div class="logo-block__block-subscribe">
+            <div class="logo-block__subscribe">Subscribe</div>
+            <div class="logo-block__send-email subscribe-email">
+                <p class="subscribe-email__offer">Get 10% off your first order</p>
+                <EmailFormSend />
+            </div>
         </div>
     </div>
 </template>
@@ -16,36 +18,25 @@ import EmailFormSend from '../footer/email-form/EmailFormSend.vue'
 <style lang="scss" scoped>
 @import '@/style/common/logo.scss';
 @import '@/style/lib/variables';
+
 .logo-block {
     display: grid;
     gap: toRem(24);
     // .logo-block__logo
     @media (max-width: toEm($mobile)) {
-        grid-template-columns: repeat(3, auto);
-        align-content: center;
-        grid-auto-flow: row;
+        grid-template-columns: auto;
+        text-align: center;
         justify-items: center;
     }
-    @media (max-width: toEm(560)) {
-        grid-template-columns: auto;
-    }
-
-    &__logo {
-    }
-
-    // .logo-block__subscribe
-
-    &__subscribe {
-    }
-
-    // .logo-block__send-email
-
-    &__send-email {
+    &__block-subscribe {
+        display: flex;
+        flex-direction: column;
+        row-gap: toRem(24);
     }
 }
+
 .subscribe-email {
     // .subscribe-email__offer
-
     &__offer {
         &:not(:last-child) {
             margin-bottom: toRem(16);

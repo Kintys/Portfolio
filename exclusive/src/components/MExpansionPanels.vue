@@ -17,7 +17,7 @@
                 /></IconBase>
             </span>
         </div>
-        <Transition name="slide-fade">
+        <Transition name="slide-down">
             <div class="spoller__box" v-show="isVisibleMenuSpoller">
                 <slot name="spoller-container">
                     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Asperiores iste dolore facere at. Neque
@@ -55,13 +55,7 @@ function getViewportWidth() {
     window.innerWidth <= props.viewportSize ? (isViewportSize.value = true) : (isViewportSize.value = false)
     isViewportSize.value ? (isVisibleMenuSpoller.value = false) : (isVisibleMenuSpoller.value = true)
 }
-// function isMobileDevice() {
-//     if (isMobile.any()) {
-//         isViewportSize.value = true
-//     } else {
-//         isViewportSize.value = false
-//     }
-// }
+
 onMounted(() => {
     getViewportWidth()
     window.addEventListener('resize', getViewportWidth)
@@ -108,18 +102,19 @@ onBeforeMount(() => {
         line-height: 210%;
     }
 }
-.slide-fade-enter-active {
-    transition: all 0.5s ease-out;
+.slide-down-enter-active {
+    transition: all 0.3s linear;
 }
 
-.slide-fade-leave-active {
-    transition: all 0.5s cubic-bezier(1, 0.5, 0.8, 1);
+.slide-down-leave-active {
+    transition: all 0.3s linear;
 }
 
-.slide-fade-enter-from,
-.slide-fade-leave-to {
+.slide-down-enter-from,
+.slide-down-leave-to {
     transform: translateY(-4px);
     opacity: 0;
+    transition: all 0.3s linear;
 }
 .icon-up {
     transform: rotate(180deg);

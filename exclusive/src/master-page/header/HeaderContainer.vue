@@ -11,8 +11,8 @@
             >
                 <router-link :to="{ name: 'home' }" class="header__logo logo">Exclusive</router-link>
                 <HeaderNavBar class="header__nav" :class="{ 'menu-open': showMenu }" />
-                <DynamicAdapt destination=".nav" breakpoint="790">
-                    <div class="header__search search-comp">
+                <div class="header__search search-comp">
+                    <DynamicAdapt destination=".nav" breakpoint="790">
                         <div class="search-comp__label">
                             <input type="text" class="search-comp__input" placeholder="What are you looking for?" />
                             <IconBase
@@ -25,9 +25,9 @@
                                 ><IconMagnifyingGlass
                             /></IconBase>
                         </div>
-                    </div>
-                </DynamicAdapt>
-                <HeaderActionsPanel class="header__actions" />
+                    </DynamicAdapt>
+                </div>
+                <HeaderActionsPanel v-if="getCurrentUser" :ref="navBar" class="header__actions" />
                 <div class="icon-menu" :class="{ 'open-icon': showMenu }" @click="activeMenu()">
                     <span></span>
                 </div>
@@ -50,26 +50,15 @@ const { showMenu, activeMenu } = burgerMenu()
 // ======================
 import { ref } from 'vue'
 const smallCont = ref(false)
+const navBar = ref(false)
 function onScroll(scroll) {
     if (scroll >= 48) smallCont.value = true
     else smallCont.value = false
 }
 // ===========================
-// import { useAuthStore } from '@/stores/auth'
-// const { getUser } = useAuthStore()
-// const isVisibleAction = ref(false)
-// const isUserAuch = computed(() => {
-//     if (getUser) {
-//         isVisibleActionPanel(true)
-//         nextTick()
-//     } else {
-//         isVisibleActionPanel(false)
-//         nextTick()
-//     }
-// })
-// function isVisibleActionPanel(value) {
-//     isVisibleAction.value = value
-// }
+import { storeToRefs } from 'pinia'
+import { useUsersStore } from '@/stores/users'
+const { getCurrentUser } = storeToRefs(useUsersStore())
 </script>
 
 <style lang="scss" scoped>
@@ -113,11 +102,8 @@ function onScroll(scroll) {
     &__label {
         position: relative;
         height: toRem(38);
-        @media (max-width: toEm($mobile)) {
-            max-width: toRem(243);
-        }
-        @media (min-width: toEm($tablet)) {
-            @include adaptiveValue('width', 243, 220, 0, $maxWidth, $mobile);
+        @media (min-width: toEm($mobile)) {
+            @include adaptiveValue('width', 233, 210, 0, $maxWidth, 824);
         }
     }
 

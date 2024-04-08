@@ -40,7 +40,7 @@
                 <div class="auth__sing-up-btn">
                     <button
                         type="button"
-                        @click="loginWithEmailAndPassword(email, password)"
+                        @click="singUpWithEmail(email, password)"
                         class="auth__button button-main"
                         :disabled="!isValidForm"
                     >
@@ -91,7 +91,7 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 import { useAuthStore } from '@/stores/auth'
-const { signInWithWithEmailAndPassword, loginWithGoogleAccount } = useAuthStore()
+const { loginWithGoogleAccount, signUpWithWithEmailAndPassword } = useAuthStore()
 const name = ref(null)
 const email = ref(null)
 const password = ref(null)
@@ -103,9 +103,9 @@ watch([email, password], ([new_email, new_password]) => {
 
 const isValidForm = computed(() => name.value && email.value && password.value)
 
-function loginWithEmailAndPassword(email, password) {
-    signInWithWithEmailAndPassword(email, password).then(() => {
-        router.back()
+function singUpWithEmail(email, password) {
+    signUpWithWithEmailAndPassword(email, password).then(() => {
+        router.push({ name: 'login' })
     })
 }
 function loginWithGoogleEmailPopup() {
