@@ -1,9 +1,6 @@
 <template>
     <div class="pa-4 text-center">
-        <v-dialog max-width="800">
-            <template v-slot:activator="{ props: activatorProps }">
-                <v-btn v-bind="activatorProps" text="Open Dialog"></v-btn>
-            </template>
+        <v-dialog max-width="800" v-model="open">
             <template v-slot:default="{ isActive }">
                 <v-card title="Use Google's location service?">
                     <template v-slot:text>
@@ -124,6 +121,8 @@
     </div>
 </template>
 
-<script></script>
+<script>
+const open = defineModel('openDialog')
+</script>
 
 <style lang="scss" scoped></style>

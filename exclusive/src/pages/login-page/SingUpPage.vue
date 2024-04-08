@@ -9,7 +9,6 @@
                     </slot>
                 </div>
             </div>
-            <LoaderSingUp />
         </section>
     </MainMasterPage>
 </template>
@@ -18,7 +17,6 @@
 import MainMasterPage from '@/master-page/MainMasterPage.vue'
 import loginPhoto from '@/assets/loginPage/01.png'
 import SingUpForm from '@/pages/login-page/SingUpForm.vue'
-import LoaderSingUp from '@/pages/login-page/LoaderSingUp.vue'
 import { create } from '@/pages/login-page/setting.js'
 </script>
 

@@ -61,6 +61,7 @@
                 </div>
             </div>
         </slot>
+        <SnackBar v-model:open="openSnackBar" />
     </div>
 </template>
 
@@ -105,17 +106,27 @@ const isValidForm = computed(() => name.value && email.value && password.value)
 
 function singUpWithEmail(email, password) {
     signUpWithWithEmailAndPassword(email, password).then(() => {
-        router.push({ name: 'login' })
+        openSnackBar.value = true
+        setTimeout(() => {
+            router.push({ name: 'login' })
+        }, 3000)
     })
 }
 function loginWithGoogleEmailPopup() {
     loginWithGoogleAccount().then(() => {
-        router.back()
+        openSnackBar.value = true
+        setTimeout(() => {
+            router.push({ name: 'name' })
+        }, 3000)
     })
 }
 //=====================================================================
 import IconBase from '@/components/icons/IconBase.vue'
 import IconGoogle from '@/components/icons/iconsSrc/IconGoogle.vue'
+
+//=====================================================================
+import SnackBar from '@/components/SnackBar.vue'
+const openSnackBar = ref(false)
 </script>
 
 <style lang="scss" scoped>

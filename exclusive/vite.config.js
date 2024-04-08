@@ -1,8 +1,7 @@
 import { fileURLToPath, URL } from 'url'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import { aliases, mdi } from 'vuetify/iconsets/mdi-svg'
-import { mdiCheckCircle } from '@mdi/js'
+
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [vue()],
@@ -17,13 +16,5 @@ export default defineConfig({
     },
     optimizeDeps: {
         exclude: ['D:/courses/WEB/Portfolio/exclusive/node_modules/.vite/deps/chunk-WS4467ZS.js']
-    },
-    icons: {
-        defaultSet: 'mdi',
-        aliases,
-        mdiCheckCircle: mdiCheckCircle,
-        sets: {
-            mdi
-        }
     }
 })
