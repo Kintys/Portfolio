@@ -12,7 +12,9 @@
                         mauris dui tempor, aptent non. Quisque turpis. Phasellus quis lectus luctus orci eget rhoncus.
                         Amet donec vestibulum mattis commodo, nulla aliquet, nibh praesent, elementum nulla. Sit lacus
                         pharetra tempus magna neque pellentesque, nulla vel erat.
+
                         <br />
+
                         Justo ex quisque nulla accusamus venenatis, sed quis. Nibh phasellus gravida metus in, fusce
                         aenean ut erat commodo eros. Ut turpis, dui integer, nonummy pede placeat nec in sit leo.
                         Faucibus porttitor illo taciti odio, amet viverra scelerisque quis quis et tortor, curabitur
@@ -23,7 +25,9 @@
                         curabitur metus a, nulla justo mattis duis interdum vel, mollis vitae et id, vestibulum erat
                         ridiculus sit pulvinar justo sed. Vehicula convallis, et nulla wisi, amet vestibulum risus, quam
                         ac egestas.
+
                         <br />
+
                         Et vitae, nulla gravida erat scelerisque nullam nunc pellentesque, a dictumst cras augue, purus
                         imperdiet non. Varius montes cursus varius vel tortor, nec leo a qui, magni cras, velit vel
                         consectetuer lobortis vel. Nibh erat et wisi felis leo porttitor, sapien nibh sapien pede mi,
@@ -39,7 +43,9 @@
                         lacus sem. Neque magna mauris, commodo quisque, praesent semper suscipit lobortis nam. Justo
                         malesuada cursus ac nunc litora nunc. Tellus ac, in lobortis nunc, montes lectus purus
                         fermentum.
+
                         <br />
+
                         Ac sit wisi. Sodales aliquam, sed vestibulum nullam arcu sit risus arcu, id luctus vitae lorem
                         nibh, integer nec nullam class cursus mi, purus arcu lectus. Vel ante suscipit volutpat potenti
                         mattis sed, wisi eu placerat aliquam erat, lectus morbi lobortis at assumenda. Consequat neque
@@ -55,7 +61,9 @@
                         nec praesent amet. Hymenaeos velit lacus, quis vivamus libero tempus duis, eu nisi eu, ipsum at
                         accumsan pede justo morbi donec, massa et libero sit risus neque tortor. Ut sed sed etiam
                         hendrerit dapibus, quis metus suspendisse nibh.
+
                         <br />
+
                         Fringilla tempor felis augue magna. Cum arcu a, id vitae. Pellentesque pharetra in cras sociis
                         adipiscing est. Nibh nec mattis at maecenas, nisl orci aliquam nulla justo egestas venenatis,
                         elementum duis vel porta eros, massa vitae, eligendi imperdiet amet. Nec neque luctus suscipit,
@@ -66,7 +74,9 @@
                         duis. Urna ligula ante. Leo elementum nonummy. Sagittis mauris est in ipsum, nulla amet non
                         justo, proin id potenti platea posuere sit ut, nunc sit erat bibendum. Nibh id auctor, ab nulla
                         vivamus ultrices, posuere morbi nunc tellus gravida vivamus.
+
                         <br />
+
                         Mauris nec, facilisi quam fermentum, ut mauris integer, orci tellus tempus diam ut in
                         pellentesque. Wisi faucibus tempor et odio leo diam, eleifend quis integer curabitur sit
                         scelerisque ac, mauris consequat luctus quam penatibus fringilla dis, vitae lacus in, est eu ac
@@ -74,7 +84,9 @@
                         sodales quis, felis dolorem id mauris orci, orci tempus ut. Nullam hymenaeos. Curabitur in a,
                         tortor ut praesent placerat tincidunt interdum, ac dignissim metus nonummy hendrerit wisi, etiam
                         ut.
+
                         <br />
+
                         Semper praesent integer fusce, tortor suspendisse, augue ligula orci ante asperiores
                         ullamcorper. In sit per mi sed sed, mi vestibulum mus nam, morbi mauris neque vitae aliquam
                         proin senectus. Ac amet arcu mollis ante congue elementum, inceptos eget optio quam pellentesque
@@ -86,7 +98,9 @@
                         tellus purus et. Duis molestie placerat erat donec ut. Dolor enim erat massa faucibus ultrices
                         in, ante ultricies orci lacus, libero consectetuer mauris magna feugiat neque dapibus, donec
                         pretium et. Aptent dui, aliquam et et amet nostra ligula.
+
                         <br />
+
                         Augue curabitur duis dui volutpat, tempus sed ut pede donec. Interdum luctus, lectus nulla
                         aenean elit, id sit magna, vulputate ultrices pellentesque vel id fermentum morbi. Tortor et.
                         Adipiscing augue lorem cum non lacus, rutrum sodales laoreet duis tortor, modi placerat
@@ -97,7 +111,9 @@
                         imperdiet. Fermentum sem libero iaculis bibendum et eros, eget maecenas non nunc, ad
                         pellentesque. Ut nec diam elementum interdum. Elementum vitae tellus lacus vitae, ipsum
                         phasellus, corporis vehicula in ac sed massa vivamus, rutrum elit, ultricies metus volutpat.
+
                         <br />
+
                         Semper wisi et, sollicitudin nunc vestibulum, cursus accumsan nunc pede tempus mi ipsum, ligula
                         sed. Non condimentum ac dolor sit. Mollis eu aliquam, vel mattis mollis massa ut dolor ante,
                         tempus lacinia arcu. Urna vestibulum lorem, nulla fermentum, iaculis ut congue ac vivamus. Nam
@@ -105,15 +121,13 @@
                         Magna sociosqu donec, dictum cursus ullamcorper viverra. Ultricies quis orci lorem, suspendisse
                         ut vestibulum integer, purus sed lorem pulvinar habitasse turpis.
                     </template>
+
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn text="Disagree" variant="text" @click="isActive.value = false"></v-btn>
-                        <v-btn
-                            color="surface-variant"
-                            text="Agree"
-                            variant="flat"
-                            @click="isActive.value = false"
-                        ></v-btn>
+
+                        <v-btn text="Disagree" variant="text" @click="onCloseDialog(false)"></v-btn>
+
+                        <v-btn color="surface-variant" text="Agree" variant="flat" @click="onCloseDialog(true)"></v-btn>
                     </v-card-actions>
                 </v-card>
             </template>
@@ -121,8 +135,31 @@
     </div>
 </template>
 
-<script>
-const open = defineModel('openDialog')
+<script setup>
+import { ref, onMounted } from 'vue'
+const open = defineModel('open')
+const emit = defineEmits('update:evidence')
+
+const answer = ref(null)
+function onCloseDialog(val) {
+    if (val) {
+        answer.value = true
+        open.value = false
+    } else {
+        answer.value = false
+        open.value = false
+    }
+}
+async function isR() {
+    await ()
+}
+async function getAnswer() {
+    await onCloseDialog
+    emit('update:evidence', answer.value)
+}
+onMounted(async () => {
+    await getAnswer()
+})
 </script>
 
 <style lang="scss" scoped></style>

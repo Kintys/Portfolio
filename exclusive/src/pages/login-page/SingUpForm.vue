@@ -62,6 +62,7 @@
             </div>
         </slot>
         <SnackBar v-model:open="openSnackBar" />
+        <AgreementsDialog v-model:open="openAgreementsWindows" v-model:evidence="dialogAnswer" />
     </div>
 </template>
 
@@ -104,7 +105,7 @@ watch([email, password], ([new_email, new_password]) => {
 
 const isValidForm = computed(() => name.value && email.value && password.value)
 
-function singUpWithEmail(email, password) {
+async function singUpWithEmail(email, password) {
     signUpWithWithEmailAndPassword(email, password).then(() => {
         openSnackBar.value = true
         setTimeout(() => {
@@ -112,21 +113,31 @@ function singUpWithEmail(email, password) {
         }, 3000)
     })
 }
-function loginWithGoogleEmailPopup() {
-    loginWithGoogleAccount().then(() => {
-        openSnackBar.value = true
-        setTimeout(() => {
-            router.push({ name: 'name' })
-        }, 3000)
+async function loginWithGoogleEmailPopup() {
+    openAgreementsWindows.value = true
+    await adoptingRules().then(() => {
+        loginWithGoogleAccount().then(() => {
+            openSnackBar.value = true
+            setTimeout(() => {
+                router.push({ name: 'name' })
+            }, 3000)
+        })
     })
-}
-//=====================================================================
+} //=====================================================================
 import IconBase from '@/components/icons/IconBase.vue'
 import IconGoogle from '@/components/icons/iconsSrc/IconGoogle.vue'
 
 //=====================================================================
 import SnackBar from '@/components/SnackBar.vue'
 const openSnackBar = ref(false)
+
+//=====================================================================
+import AgreementsDialog from '@/pages/login-page/AgreementsDialog.vue'
+const openAgreementsWindows = ref(false)
+const dialogAnswer = ref(null)
+async function adoptingRules() {
+    return dialogAnswer.value ? true : false
+}
 </script>
 
 <style lang="scss" scoped>
