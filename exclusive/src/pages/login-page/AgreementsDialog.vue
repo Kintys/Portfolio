@@ -42,38 +42,16 @@
                         justo semper, purus sociis curabitur mi ipsum consequat ut, mollis vestibulum, est ante ornare
                         lacus sem. Neque magna mauris, commodo quisque, praesent semper suscipit lobortis nam. Justo
                         malesuada cursus ac nunc litora nunc. Tellus ac, in lobortis nunc, montes lectus purus
-                        fermentum.
-
-                        <br />
-
-                        Ac sit wisi. Sodales aliquam, sed vestibulum nullam arcu sit risus arcu, id luctus vitae lorem
-                        nibh, integer nec nullam class cursus mi, purus arcu lectus. Vel ante suscipit volutpat potenti
-                        mattis sed, wisi eu placerat aliquam erat, lectus morbi lobortis at assumenda. Consequat neque
-                        purus ipsum voluptas odio, netus vestibulum ut nec, suspendisse pellentesque nec enim in. Wisi
-                        dictum sed semper a, ipsum erat tellus habitasse est, erat sem ornare, vitae quisque ultricies.
-                        Dui sed blandit. Tempor et faucibus justo sed luctus, nec vitae vitae. Nunc nibh pede, ipsum
-                        vestibulum aenean leo ante ultricies, nam cras quis sed penatibus amet. In mauris a. Integer
-                        metus mauris tortor, et rutrum vestibulum ultricies, ut phasellus in ullamcorper ut mollit, eu
-                        justo. Cursus pretium venenatis. Cras pellentesque vel sodales accumsan aenean. Feugiat metus
-                        sit nec in aliquet amet, porttitor pretium vulputate massa. Consequat ipsum luctus quisque
-                        adipiscing libero. Wisi sollicitudin. Eget vitae ac lobortis, lorem natoque vestibulum et,
-                        aliquet faucibus at morbi nibh, vel condimentum. Massa unde orci sed id sed, odio donec congue
-                        nec praesent amet. Hymenaeos velit lacus, quis vivamus libero tempus duis, eu nisi eu, ipsum at
-                        accumsan pede justo morbi donec, massa et libero sit risus neque tortor. Ut sed sed etiam
-                        hendrerit dapibus, quis metus suspendisse nibh.
-
-                        <br />
-
-                        Fringilla tempor felis augue magna. Cum arcu a, id vitae. Pellentesque pharetra in cras sociis
-                        adipiscing est. Nibh nec mattis at maecenas, nisl orci aliquam nulla justo egestas venenatis,
-                        elementum duis vel porta eros, massa vitae, eligendi imperdiet amet. Nec neque luctus suscipit,
-                        justo sem praesent, ut nisl quisque, volutpat torquent wisi tellus aliquam reprehenderit,
-                        curabitur cras at quis massa porttitor mauris. Eros sed ultrices. Amet dignissim justo urna
-                        feugiat mauris litora, etiam accumsan, lobortis a orci suspendisse. Semper ac mauris, varius
-                        bibendum pretium, orci urna nunc ullamcorper auctor, saepe sem integer quam, at feugiat egestas
-                        duis. Urna ligula ante. Leo elementum nonummy. Sagittis mauris est in ipsum, nulla amet non
-                        justo, proin id potenti platea posuere sit ut, nunc sit erat bibendum. Nibh id auctor, ab nulla
-                        vivamus ultrices, posuere morbi nunc tellus gravida vivamus.
+                        fermentum. Fringilla tempor felis augue magna. Cum arcu a, id vitae. Pellentesque pharetra in
+                        cras sociis adipiscing est. Nibh nec mattis at maecenas, nisl orci aliquam nulla justo egestas
+                        venenatis, elementum duis vel porta eros, massa vitae, eligendi imperdiet amet. Nec neque luctus
+                        suscipit, justo sem praesent, ut nisl quisque, volutpat torquent wisi tellus aliquam
+                        reprehenderit, curabitur cras at quis massa porttitor mauris. Eros sed ultrices. Amet dignissim
+                        justo urna feugiat mauris litora, etiam accumsan, lobortis a orci suspendisse. Semper ac mauris,
+                        varius bibendum pretium, orci urna nunc ullamcorper auctor, saepe sem integer quam, at feugiat
+                        egestas duis. Urna ligula ante. Leo elementum nonummy. Sagittis mauris est in ipsum, nulla amet
+                        non justo, proin id potenti platea posuere sit ut, nunc sit erat bibendum. Nibh id auctor, ab
+                        nulla vivamus ultrices, posuere morbi nunc tellus gravida vivamus.
 
                         <br />
 
@@ -125,9 +103,14 @@
                     <v-card-actions>
                         <v-spacer></v-spacer>
 
-                        <v-btn text="Disagree" variant="text" @click="onCloseDialog(false)"></v-btn>
+                        <v-btn text="Disagree" variant="text" @click="handleAction('reject')"></v-btn>
 
-                        <v-btn color="surface-variant" text="Agree" variant="flat" @click="onCloseDialog(true)"></v-btn>
+                        <v-btn
+                            color="surface-variant"
+                            text="Agree"
+                            variant="flat"
+                            @click="handleAction('accept')"
+                        ></v-btn>
                     </v-card-actions>
                 </v-card>
             </template>
@@ -136,30 +119,24 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 const open = defineModel('open')
 const emit = defineEmits('update:evidence')
 
 const answer = ref(null)
-function onCloseDialog(val) {
-    if (val) {
-        answer.value = true
-        open.value = false
-    } else {
-        answer.value = false
-        open.value = false
-    }
+function handleAction(action) {
+    return new Promise(function (resolve, reject) {
+        if (action === 'accept') {
+            answer.value = true
+            open.value = false
+            resolve(emit('update:evidence', answer.value))
+        } else if (action === 'reject') {
+            answer.value = false
+            open.value = false
+            reject(emit('update:evidence', answer.value))
+        }
+    })
 }
-async function isR() {
-    await ()
-}
-async function getAnswer() {
-    await onCloseDialog
-    emit('update:evidence', answer.value)
-}
-onMounted(async () => {
-    await getAnswer()
-})
 </script>
 
 <style lang="scss" scoped></style>

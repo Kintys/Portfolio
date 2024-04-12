@@ -114,15 +114,18 @@ async function singUpWithEmail(email, password) {
     })
 }
 async function loginWithGoogleEmailPopup() {
-    openAgreementsWindows.value = true
-    await adoptingRules().then(() => {
-        loginWithGoogleAccount().then(() => {
-            openSnackBar.value = true
-            setTimeout(() => {
-                router.push({ name: 'name' })
-            }, 3000)
+    loginWithGoogleAccount()
+        .then(() => {
+            openAgreementsWindows.value = true
         })
-    })
+        .then(() => {
+            if (dialogAnswer.value) {
+                openSnackBar.value = true
+                setTimeout(() => {
+                    router.push({ name: 'name' })
+                }, 3000)
+            } else new Error('error')
+        })
 } //=====================================================================
 import IconBase from '@/components/icons/IconBase.vue'
 import IconGoogle from '@/components/icons/iconsSrc/IconGoogle.vue'
@@ -135,9 +138,6 @@ const openSnackBar = ref(false)
 import AgreementsDialog from '@/pages/login-page/AgreementsDialog.vue'
 const openAgreementsWindows = ref(false)
 const dialogAnswer = ref(null)
-async function adoptingRules() {
-    return dialogAnswer.value ? true : false
-}
 </script>
 
 <style lang="scss" scoped>
