@@ -51,6 +51,15 @@ export const routes = [
             requireAuth: false,
             useInMenu: true
         }
+    },
+    {
+        path: '/account',
+        name: 'account',
+        component: HomeView,
+        meta: {
+            requireAuth: false,
+            useInMenu: true
+        }
     }
 ]
 

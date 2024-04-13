@@ -22,12 +22,15 @@ class DbOperations {
     getListFromSnapshot(snapshot) {
         const list = []
         snapshot.docs.forEach((doc) => {
-            list.push({
-                id: doc.id,
-                ...doc.data()
-            })
+            list.push(this.getItemFormSnapshot(doc))
         })
         return list
+    }
+    getItemFormSnapshot(docSnap) {
+        return {
+            id: docSnap.id,
+            ...docSnap.data()
+        }
     }
     loadItemsList() {
         return new Promise((resolve, reject) => {
@@ -132,7 +135,7 @@ class DbOperations {
             const docRef = doc(this.dbCollection, itemId)
             getDoc(docRef)
                 .then((docSnap) => {
-                    if (docSnap.exists()) resolve(docSnap.data())
+                    if (docSnap.exists()) resolve(this.getItemFormSnapshot(docSnap))
                     else resolve({})
                 })
                 .catch((error) => {

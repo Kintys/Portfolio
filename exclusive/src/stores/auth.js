@@ -119,6 +119,7 @@ export const useAuthStore = defineStore('auth', () => {
         generalApiOperation({
             operation: () => authOperations.logout()
         })
+        user.value = null
         usersStore.currentUser = null
     }
 

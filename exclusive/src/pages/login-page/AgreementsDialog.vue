@@ -1,7 +1,7 @@
 <template>
     <div class="pa-4 text-center">
-        <v-dialog max-width="800" v-model="open">
-            <template v-slot:default="{ isActive }">
+        <v-dialog max-width="800" v-model="showDialog">
+            <template v-slot:default="{}">
                 <v-card title="Use Google's location service?">
                     <template v-slot:text>
                         Lorem ipsum dolor sit amet, semper quis, sapien id natoque elit. Nostra urna at, magna at neque
@@ -78,26 +78,6 @@
                         pretium et. Aptent dui, aliquam et et amet nostra ligula.
 
                         <br />
-
-                        Augue curabitur duis dui volutpat, tempus sed ut pede donec. Interdum luctus, lectus nulla
-                        aenean elit, id sit magna, vulputate ultrices pellentesque vel id fermentum morbi. Tortor et.
-                        Adipiscing augue lorem cum non lacus, rutrum sodales laoreet duis tortor, modi placerat
-                        facilisis et malesuada eros ipsum, vehicula tempus. Ac vivamus amet non aliquam venenatis
-                        lectus, sociosqu adipiscing consequat nec arcu odio. Blandit orci nec nec, posuere in pretium,
-                        enim ut, consectetuer nullam urna, risus vel. Nullam odio vehicula massa sed, etiam sociis
-                        mauris, lacus ullamcorper, libero imperdiet non sodales placerat justo vehicula. Nec morbi
-                        imperdiet. Fermentum sem libero iaculis bibendum et eros, eget maecenas non nunc, ad
-                        pellentesque. Ut nec diam elementum interdum. Elementum vitae tellus lacus vitae, ipsum
-                        phasellus, corporis vehicula in ac sed massa vivamus, rutrum elit, ultricies metus volutpat.
-
-                        <br />
-
-                        Semper wisi et, sollicitudin nunc vestibulum, cursus accumsan nunc pede tempus mi ipsum, ligula
-                        sed. Non condimentum ac dolor sit. Mollis eu aliquam, vel mattis mollis massa ut dolor ante,
-                        tempus lacinia arcu. Urna vestibulum lorem, nulla fermentum, iaculis ut congue ac vivamus. Nam
-                        libero orci, pulvinar nulla, enim pellentesque consectetuer leo, feugiat rhoncus rhoncus vel.
-                        Magna sociosqu donec, dictum cursus ullamcorper viverra. Ultricies quis orci lorem, suspendisse
-                        ut vestibulum integer, purus sed lorem pulvinar habitasse turpis.
                     </template>
 
                     <v-card-actions>
@@ -119,23 +99,30 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-const open = defineModel('open')
-const emit = defineEmits('update:evidence')
-
-const answer = ref(null)
-function handleAction(action) {
-    return new Promise(function (resolve, reject) {
-        if (action === 'accept') {
-            answer.value = true
-            open.value = false
-            resolve(emit('update:evidence', answer.value))
-        } else if (action === 'reject') {
-            answer.value = false
-            open.value = false
-            reject(emit('update:evidence', answer.value))
-        }
-    })
+//=================================================
+import { storeToRefs } from 'pinia'
+import { useAgreementsStore } from '@/stores/agreements'
+const { showDialog } = storeToRefs(useAgreementsStore())
+const { acceptUserAnswer, rejectUserAnswer, closeDialog } = useAgreementsStore()
+//=================================================
+import { useRouter } from 'vue-router'
+const router = useRouter()
+//=================================================
+import { useAuthStore } from '@/stores/auth'
+const { logOut } = useAuthStore()
+//=================================================
+async function handleAction(action) {
+    if (action === 'accept') {
+        await acceptUserAnswer()
+        await closeDialog()
+        setTimeout(() => {
+            router.back()
+        }, 2000)
+    } else if (action === 'reject') {
+        await rejectUserAnswer()
+        logOut()
+        await closeDialog()
+    }
 }
 </script>
 

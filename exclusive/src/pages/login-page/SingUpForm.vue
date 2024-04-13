@@ -115,16 +115,14 @@ async function singUpWithEmail(email, password) {
 }
 async function loginWithGoogleEmailPopup() {
     loginWithGoogleAccount()
-        .then(() => {
-            openAgreementsWindows.value = true
+        .then(async () => {
+            openSnackBar.value = true
+            await checkAcceptRules()
         })
         .then(() => {
-            if (dialogAnswer.value) {
-                openSnackBar.value = true
-                setTimeout(() => {
-                    router.push({ name: 'name' })
-                }, 3000)
-            } else new Error('error')
+            setTimeout(() => {
+                router.back()
+            }, 2000)
         })
 } //=====================================================================
 import IconBase from '@/components/icons/IconBase.vue'
@@ -138,6 +136,10 @@ const openSnackBar = ref(false)
 import AgreementsDialog from '@/pages/login-page/AgreementsDialog.vue'
 const openAgreementsWindows = ref(false)
 const dialogAnswer = ref(null)
+
+//=====================================================================
+import { useAgreementsStore } from '@/stores/agreements'
+const { checkAcceptRules } = useAgreementsStore()
 </script>
 
 <style lang="scss" scoped>

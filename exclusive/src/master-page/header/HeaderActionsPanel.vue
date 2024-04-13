@@ -18,15 +18,7 @@
             icon-color="transparent"
             ><IconCart
         /></IconBase>
-        <IconBase
-            class="icon icon-user"
-            icon-name="user"
-            viewBox="0 0 32 32"
-            width="32"
-            height="32"
-            icon-color="transparent"
-            ><IconUser
-        /></IconBase>
+        <UserProfil />
     </div>
 </template>
 
@@ -34,7 +26,7 @@
 import IconBase from '@/components/icons/IconBase.vue'
 import IconWishList from '@/components/icons/iconsSrc/IconWishList.vue'
 import IconCart from '@/components/icons/iconsSrc/IconCart.vue'
-import IconUser from '@/components/icons//iconsSrc/IconUser.vue'
+import UserProfil from '@/master-page/header/UserProfil.vue'
 </script>
 
 <style lang="scss" scoped>
