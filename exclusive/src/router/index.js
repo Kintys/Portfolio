@@ -37,18 +37,18 @@ export const routes = [
     {
         path: '/',
         name: 'Contact',
-        component: HomeView,
         meta: {
             requireAuth: false,
             useInMenu: true
-        }
+        },
+        component: () => import('@/pages/contact-page/ContactPage.vue')
     },
     {
         path: '/',
         name: 'About',
         component: HomeView,
         meta: {
-            requireAuth: false,
+            requireAuth: true,
             useInMenu: true
         }
     },
@@ -60,6 +60,15 @@ export const routes = [
             requireAuth: false,
             useInMenu: true
         }
+    },
+    {
+        path: '/:path(.*)*',
+        name: 'pageNotFound',
+        meta: {
+            requireAuth: false,
+            useInMenu: false
+        },
+        component: () => import('@/pages/PageNotFound.vue')
     }
 ]
 
@@ -76,7 +85,7 @@ router.beforeEach(async (to) => {
             }
         if (!isRouteAvailable(to)) {
             return {
-                name: 'page-not-found'
+                name: 'pageNotFound'
             }
         }
     }
