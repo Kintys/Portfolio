@@ -38,14 +38,14 @@
         <slot name="login-actions"
             ><div class="login-form__actions auth">
                 <div class="auth__sing-up-btn">
-                    <button
+                    <v-btn
                         type="button"
                         @click="singUpWithEmail(email, password)"
                         class="auth__button button-main"
                         :disabled="!isValidForm"
                     >
                         {{ formParams.buttonCreate }}
-                    </button>
+                    </v-btn>
                     <button
                         type="button"
                         @click="loginWithGoogleEmailPopup"

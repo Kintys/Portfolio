@@ -9,9 +9,9 @@
                         <p class="page404__subtitle">Your visited page not found. You may go home page</p>
                     </div>
                     <div class="page404__action">
-                        <router-link :to="{ name: 'home' }" class="page404__button button-main"
-                            >Back to home page</router-link
-                        >
+                        <v-btn class="page404__button button-main">
+                            <router-link :to="{ name: 'home' }">Back to home page</router-link>
+                        </v-btn>
                     </div>
                 </div>
             </div>
@@ -88,7 +88,6 @@ const items = [
     // .page404__button
 
     &__button {
-        color: #00000080;
     }
 }
 </style>

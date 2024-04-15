@@ -4,13 +4,13 @@
             <template #login-actions>
                 <div class="auth">
                     <div class="auth__actions">
-                        <button
+                        <v-btn
                             type="button"
                             @click="loginWithEmailAndPassword(email, password)"
                             class="auth__button button-main"
                         >
                             {{ login.buttonLogin }}
-                        </button>
+                        </v-btn>
                         <a class="auth__link" href="#">{{ login.forgetPass }}</a>
                     </div>
                 </div>
