@@ -28,7 +28,7 @@ const items = [
 
 <style lang="scss" scoped>
 @import '@/style/lib/adaptive';
-
+@import '@/style/lib/variables';
 .contact-page {
     // .contact-page__container
 
@@ -43,9 +43,20 @@ const items = [
 
     &__content {
         display: grid;
-        grid-template-columns: auto 1fr;
-        max-height: toRem(457);
-        column-gap: toRem(30);
+        gap: toRem(30);
+        @media (min-width: toEm($tablet)) {
+            grid-template-columns: auto 1fr;
+            max-height: toRem(457);
+        }
+    }
+}
+.page-contact-block {
+    // .page-contact-block__aside-info-panel
+
+    &__aside-info-panel {
+        @media (max-width: toEm($tablet)) {
+            grid-row: 2;
+        }
     }
 }
 </style>

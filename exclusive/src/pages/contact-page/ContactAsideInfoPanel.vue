@@ -47,10 +47,12 @@ const cardProps = [
 .aside-panel {
     // .aside-panel__box
     &__box {
-        max-width: toRem(340);
         padding: toRem(40) toRem(35);
         border-radius: toRem(4);
         box-shadow: 0 toRem(1) toRem(13) 0 rgba(0, 0, 0, 0.05);
+        @media (min-width: toEm($tablet)) {
+            max-width: toRem(340);
+        }
     }
 
     // .aside-panel__card

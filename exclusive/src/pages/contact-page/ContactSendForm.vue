@@ -53,6 +53,7 @@ const validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0
 const formRules = ref({
     nameRules: [(v) => !!v || 'Required.'],
     phoneRules: [
+        (value) => !!value || 'Required.',
         (value) => {
             if (value?.length <= 9) return true
             return 'Phone number needs to be at least 9 digits!'
@@ -110,6 +111,7 @@ function createForm() {
         padding: toRem(40) toRem(31);
         box-shadow: 0px toRem(1) toRem(13) 0px rgba(0, 0, 0, 0.05);
         display: grid;
+        gap: toRem(4);
         grid-template-rows: auto 1fr auto;
     }
 
@@ -117,13 +119,10 @@ function createForm() {
 
     &__input-group {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        column-gap: toRem(16);
-    }
-
-    // .form__massage-field
-
-    &__massage-field {
+        @media (min-width: toEm(662)) {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        gap: toRem(16);
     }
 
     // .form__button
@@ -133,11 +132,6 @@ function createForm() {
     }
 }
 .input-contact {
-    // .input-contact__label
-
-    &__label {
-    }
-
     // .input-contact__required-star
 
     &__required-star {

@@ -35,6 +35,10 @@ defineProps({
         display: grid;
         row-gap: toRem(32);
         line-height: 150%;
+        @media (max-width: toEm($tablet)) {
+            justify-items: center;
+            text-align: center;
+        }
     }
 
     // .card-aside__headline-card
@@ -58,6 +62,9 @@ defineProps({
         font-size: toRem(14);
         display: grid;
         row-gap: toRem(16);
+        @media (max-width: toEm($tablet)) {
+            justify-items: center;
+        }
     }
     // .card-aside__subtext
 

@@ -84,10 +84,5 @@ const items = [
     &__subtitle {
         line-height: 150%;
     }
-
-    // .page404__button
-
-    &__button {
-    }
 }
 </style>
