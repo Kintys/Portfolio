@@ -29,31 +29,24 @@ defineProps({
 </script>
 
 <style lang="scss" scoped>
-.menu-welcome {
-    // .menu-welcome__link
-
-    &__link {
-    }
-
-    // .menu-welcome__panel
-
-    &__panel {
+@import '../../../../node_modules/vuetify/dist/vuetify';
+@import '@/style/lib/adaptive';
+.v-expansion-panel {
+    border-radius: 0;
+    :deep() {
+        .v-expansion-panel__shadow {
+            box-shadow: none;
+        }
+        .v-expansion-panel-title {
+            padding: 0;
+            min-height: 0;
+            &--active {
+                min-height: 0;
+            }
+        }
     }
 }
-.ex-panel {
-    // .ex-panel__title
-
-    &__title {
-    }
-
-    // .ex-panel__text
-
-    &__text {
-    }
-
-    // .ex-panel__link
-
-    &__link {
-    }
+.v-expansion-panel--active > .v-expansion-panel-title:not(.v-expansion-panel-title--static) {
+    min-height: 0;
 }
 </style>
