@@ -3,10 +3,14 @@
         <div class="top-header__container">
             <div class="top-header__info">
                 <p class="top-header__text">
-                    <span abindex="0" data-descr="For All Swim Suits And Free Express Delivery - OFF 50%!">{{
-                        shortText
-                    }}</span>
+                    <span
+                        class="top-header__span"
+                        abindex="0"
+                        data-descr="For All Swim Suits And Free Express Delivery - OFF 50%!"
+                        ><span>{{ shortText }}</span>
+                    </span>
                 </p>
+
                 <router-link :to="{ name: 'home' }" class="top-header__link">ShopNow</router-link>
             </div>
             <div class="top-header__actions">
@@ -71,6 +75,7 @@ onBeforeUnmount(() => {
         font-size: toRem(14);
         flex-grow: 1;
         align-items: center;
+        position: relative;
     }
 
     // .top-header__text
@@ -79,6 +84,7 @@ onBeforeUnmount(() => {
         line-height: toRem(20);
         letter-spacing: toRem(0.5);
         margin-right: toRem(8);
+        animation: line-text 20s linear infinite;
         @media (max-width: toEm(790)) {
             span[data-descr] {
                 position: relative;
@@ -101,7 +107,10 @@ onBeforeUnmount(() => {
             }
         }
     }
-
+    &__span {
+        display: flex;
+        column-gap: toRem(200);
+    }
     // .top-header__link
 
     &__link {

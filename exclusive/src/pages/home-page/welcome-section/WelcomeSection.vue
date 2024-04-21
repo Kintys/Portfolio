@@ -9,6 +9,6 @@ import WelcomeContainer from '@/pages/home-page/welcome-section/WelcomeContainer
 <style lang="scss" scoped>
 @import '@/style/lib/adaptive';
 .welcome-section {
-    padding-top: toRem(100);
+    padding-top: toRem(140);
 }
 </style>

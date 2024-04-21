@@ -67,10 +67,6 @@ const { getCurrentUser } = storeToRefs(useUsersStore())
 @import '@/style/lib/burger.scss';
 @import '@/style/common/logo.scss';
 .header {
-    // .header__container
-    &__nav {
-    }
-
     &__container {
         z-index: 50;
         // @include adaptiveValue('padding-top', 40+48, 55);
@@ -78,6 +74,7 @@ const { getCurrentUser } = storeToRefs(useUsersStore())
         display: grid;
         grid-template-columns: auto 1fr auto auto;
         align-items: center;
+        border-bottom: toRem(1) solid rgba(0, 0, 0, 0.304);
         @media (max-width: toEm(790)) {
             grid-template-columns: 1fr auto auto auto;
         }
@@ -87,11 +84,6 @@ const { getCurrentUser } = storeToRefs(useUsersStore())
 
     &__logo {
         padding-right: toRem(5);
-    }
-
-    // .header__search
-
-    &__search {
     }
 }
 .search-comp {

@@ -1,8 +1,8 @@
 <template>
     <nav class="nav">
         <ul class="nav__list">
-            <li v-for="route in visibleMenuItems" :key="route.name" class="nav__link">
-                <router-link :to="{ name: `${route.name}` }">{{ route.name }}</router-link>
+            <li v-for="route in visibleMenuItems" :key="route.name" class="nav__item">
+                <router-link class="nav__link hover-link" :to="{ name: `${route.name}` }">{{ route.name }}</router-link>
             </li>
         </ul>
     </nav>
@@ -34,6 +34,7 @@ const visibleMenuItems = computed(() => {
 <style lang="scss" scoped>
 @import '@/style/lib/adaptive';
 @import '@/style/lib/variables';
+@import '@/style/lib/hover-link';
 .nav {
     display: grid;
     align-items: center;
@@ -89,17 +90,9 @@ const visibleMenuItems = computed(() => {
             font-size: toRem(24);
         }
     }
-
-    // .nav__link
-
-    &__link {
+    &__item {
         text-transform: capitalize;
         padding: toRem(0) toRem(3);
-        @media (any-hover: hover) {
-            &:hover {
-                text-decoration: underline;
-            }
-        }
     }
 }
 </style>

@@ -1,0 +1,23 @@
+.hover-link {
+    position: relative;
+    &::after,
+    &::before {
+        content: "";
+        width: 0;
+        height: toRem(1);
+        background: #000;
+        position: absolute;
+        bottom: toRem(-4);
+        transition: all 0.3s;
+    }
+    &::after {
+        left: 50%;
+    }
+    &::before {
+        right: 50%;
+    }
+    &:hover::after,
+    &:hover::before {
+        width: 50%;
+    }
+}
