@@ -14,7 +14,7 @@
             </div>
         </div>
         <div class="banner__image">
-            <v-img :src="phone" max-width="446" max-height="276" class="banner__photo" />
+            <v-img :src="phone" class="banner__photo" />
         </div>
     </div>
 </template>
@@ -32,16 +32,18 @@ import appleLogo from '../assets/homePage/welcomeSection/icon/Apple_gray_logo.pn
 @import '@/style/lib/hover-link';
 .banner {
     max-width: toRem(892);
+    @include adaptiveValue('width', 892, 682, 0, 1180, 992);
     max-height: toRem(344);
     background: $mainColor;
     color: #fafafa;
-    display: flex;
     display: grid;
-    grid-template-columns: toRem(294) toRem(446);
+    // 50%; /* 446/892 */
+    grid-template-columns: toRem(294) 50%;
     padding-top: toRem(38);
     padding-bottom: toRem(31);
     justify-content: end;
-    column-gap: toRem(93);
+    @include adaptiveValue('column-gap', 93, 5, 0, 1180, 992);
+
     // .banner__info
 
     &__info {
@@ -78,6 +80,8 @@ import appleLogo from '../assets/homePage/welcomeSection/icon/Apple_gray_logo.pn
     // .banner__photo
 
     &__photo {
+        @include adaptiveValue('width', 446, 300, 0, 1180, 992);
+        @include adaptiveValue('height', 276, 200, 0, 1180, 992);
     }
 }
 .hat-banner {

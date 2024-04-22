@@ -17,8 +17,8 @@ import WelcomeMainSlider from '@/pages/home-page/welcome-section/WelcomeMainSlid
 
     &__container {
         display: grid;
-        grid-template-columns: toRem(233) 1fr;
-        column-gap: toRem(58);
+        grid-template-columns: toRem(233) auto;
+        @include adaptiveValue('column-gap', 58, 20, 0, 1400, 1200);
     }
 
     // .welcome-section__menu
