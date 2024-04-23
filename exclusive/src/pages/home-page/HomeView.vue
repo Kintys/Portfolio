@@ -2,6 +2,7 @@
 import MainMasterPage from '@/master-page/MainMasterPage.vue'
 import WelcomeSection from '../../../src/pages/home-page/welcome-section/WelcomeSection.vue'
 import { useAuthStore } from '@/stores/auth.js'
+import ProductCart from '../../components/ProductCart.vue'
 const { loginWithGoogleAccount, logOut } = useAuthStore()
 </script>
 
@@ -9,8 +10,11 @@ const { loginWithGoogleAccount, logOut } = useAuthStore()
     <MainMasterPage>
         <WelcomeSection />
         <div class="container">
+            <ProductCart style="margin-bottom: 100px" />
+
             <v-btn type="button" @click="loginWithGoogleAccount">google</v-btn>
             <v-btn type="button" @click="logOut">logout</v-btn>
+
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor nulla reiciendis autem non quasi modi
             deserunt praesentium, minima esse, laborum delectus aut quod corrupti eaque quo earum, incidunt labore?
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor nulla reiciendis autem non quasi modi
@@ -131,6 +135,5 @@ const { loginWithGoogleAccount, logOut } = useAuthStore()
 @import '@/style/lib/variables';
 .container {
     padding-top: 200px;
-    color: $secondColor;
 }
 </style>
