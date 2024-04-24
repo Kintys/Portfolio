@@ -47,18 +47,6 @@ defineProps({
 
 <style lang="scss" scoped>
 @import '@/style/lib/adaptive';
-
-.menu-welcome {
-    // .menu-welcome__link
-
-    &__link {
-    }
-
-    // .menu-welcome__panel
-
-    &__panel {
-    }
-}
 .ex-panel {
     // .ex-panel__title
 

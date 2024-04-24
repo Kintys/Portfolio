@@ -2,7 +2,7 @@
 import MainMasterPage from '@/master-page/MainMasterPage.vue'
 import WelcomeSection from '../../../src/pages/home-page/welcome-section/WelcomeSection.vue'
 import { useAuthStore } from '@/stores/auth.js'
-import ProductCart from '../../components/ProductCart.vue'
+import CounterComponent from '../../pages/home-page/welcome-section/CounterComponent.vue'
 const { loginWithGoogleAccount, logOut } = useAuthStore()
 </script>
 
@@ -10,7 +10,7 @@ const { loginWithGoogleAccount, logOut } = useAuthStore()
     <MainMasterPage>
         <WelcomeSection />
         <div class="container">
-            <ProductCart style="margin-bottom: 100px" />
+            <CounterComponent style="padding-top: 100px; padding-bottom: 100px" />
 
             <v-btn type="button" @click="loginWithGoogleAccount">google</v-btn>
             <v-btn type="button" @click="logOut">logout</v-btn>

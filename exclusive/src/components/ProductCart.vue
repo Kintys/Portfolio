@@ -1,8 +1,8 @@
 <template>
-    <div class="card">
+    <a class="card">
         <div class="card__image-card">
-            <div class="card__img"><v-img :src="productImage" /></div>
-            <span class="card__discount">-40%</span>
+            <div class="card__img"><v-img :src="productItem.img" /></div>
+            <span class="card__discount">{{ productItem.discount }}</span>
             <div class="card__actions">
                 <button class="card__wish-list-btn">
                     <div class="card__circle">
@@ -26,41 +26,60 @@
             <v-btn class="card__add-to-cart">Add to Cart</v-btn>
         </div>
         <div class="card__description">
-            <h4 class="card__title">HAVIT HV-G92 Gamepad</h4>
+            <h4 class="card__title">{{ productItem.productTitle }}</h4>
             <div class="card__costs">
-                <span class="card__new-price">$120</span><span class="card__old-price">$160</span>
+                <span class="card__new-price">${{ productItem.prices.oldPrice }}</span
+                ><span class="card__old-price">${{ productItem.prices.newPrice }}</span>
             </div>
-            <div class="card__review">
-                <star-rating :inline="true" :star-size="13" :read-only="true" :show-rating="false" rating="4" /><span
-                    class="card__review-number"
-                ></span>
-            </div>
+            <Rating :v-model="productItem.review.rating" :stars="5" readonly :cancel="false" class="card__review">
+                <template #onicon>
+                    <IconBase width="16" height="15">
+                        <IconRatingStarYellow />
+                    </IconBase>
+                </template>
+                <template #officon>
+                    <IconBase width="16" height="15">
+                        <IconRatingStarGray />
+                    </IconBase>
+                </template> </Rating
+            ><span class="card__review-number">({{ productItem.review.evaluation }})</span>
         </div>
-    </div>
+    </a>
 </template>
 
 <script setup>
-import productImage from '@/assets/01.png'
-import StarRating from 'vue-star-rating'
 import IconBase from '@/components/icons/IconBase.vue'
 import IconWishList from '@/components/icons/iconsSrc/IconWishList.vue'
 import IconShow from '@/components/icons/iconsSrc/IconShow.vue'
+import IconRatingStarYellow from '../components/icons/iconsSrc/IconRatingStarYellow.vue'
+import IconRatingStarGray from '../components/icons/iconsSrc/IconRatingStarGray.vue'
+import Rating from 'primevue/rating'
+
+defineProps({
+    productItem: {
+        type: Object,
+        default: () => ({})
+    }
+})
 </script>
 
 <style lang="scss" scoped>
 @import '@/style/lib/adaptive';
 
 .card {
+    // .card__image-card
     max-width: toRem(270);
     max-height: toRem(350);
+    display: grid;
+    row-gap: toRem(16);
     &__image-card {
         display: grid;
-        align-items: center;
+        align-content: center;
+        justify-content: center;
         min-height: toRem(250);
         background-color: #f5f5f5;
         position: relative;
-
-        &:hover .cart__add-to-cart {
+        &:hover .card__add-to-cart {
             visibility: visible;
             pointer-events: auto;
             opacity: 1;
@@ -70,7 +89,7 @@ import IconShow from '@/components/icons/iconsSrc/IconShow.vue'
     // .card__img
 
     &__img {
-        max-width: toRem(180);
+        width: toRem(200);
         height: toRem(180);
     }
 
@@ -108,6 +127,8 @@ import IconShow from '@/components/icons/iconsSrc/IconShow.vue'
         }
     }
 
+    // .card__actions
+
     &__actions {
         position: absolute;
         right: 5%;
@@ -116,21 +137,9 @@ import IconShow from '@/components/icons/iconsSrc/IconShow.vue'
         gap: toRem(18);
     }
 
-    &__wish-list-btn {
-    }
-
-    // .card__show-product-brn
-
-    &__show-product-btn {
-    }
-
-    // .card__icon
-
     &__icon {
         z-index: 3;
     }
-
-    // .card__add-to-cart
 
     &__add-to-cart {
         position: absolute;
@@ -147,36 +156,46 @@ import IconShow from '@/components/icons/iconsSrc/IconShow.vue'
     // .card__description
 
     &__description {
-    }
-
-    // .card__title
-
-    &__title {
+        display: flex;
+        flex-direction: column;
+        row-gap: toRem(8);
+        font-weight: 500;
+        line-height: 150%; /* 150% */
     }
 
     // .card__costs
 
     &__costs {
+        display: flex;
+        column-gap: toRem(12);
     }
 
     // .card__new-price
 
     &__new-price {
+        color: $secondColor;
     }
 
     // .card__old-price
 
     &__old-price {
+        opacity: 0.5;
+        position: relative;
+        &::after {
+            content: '';
+            background: #000;
+            height: toRem(1.5);
+            width: 100%;
+            position: absolute;
+            top: 45%;
+            left: 0;
+        }
     }
 
     // .card__review
 
     &__review {
-    }
-
-    // .card__review-number
-
-    &__review-number {
+        display: flex;
     }
 }
 </style>
