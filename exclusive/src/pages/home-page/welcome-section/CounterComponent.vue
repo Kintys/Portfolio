@@ -36,8 +36,8 @@ const displayHours = ref(0)
 const displayDays = ref(0)
 const props = defineProps({
     addTime: {
-        type: Object,
-        default: () => ({})
+        type: Array,
+        default: () => []
     }
 })
 
