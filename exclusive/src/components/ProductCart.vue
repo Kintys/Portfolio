@@ -26,23 +26,25 @@
             <v-btn class="card__add-to-cart">Add to Cart</v-btn>
         </div>
         <div class="card__description">
-            <h4 class="card__title">{{ productItem.productTitle }}</h4>
+            <h4 class="card__title">{{ productItem.title }}</h4>
             <div class="card__costs">
-                <span class="card__new-price">${{ productItem.prices.oldPrice }}</span
-                ><span class="card__old-price">${{ productItem.prices.newPrice }}</span>
+                <span class="card__new-price">${{ productItem.prices.newPrice }}</span
+                ><span class="card__old-price">${{ productItem.prices.oldPrice }}</span>
             </div>
-            <Rating :v-model="productItem.review.rating" :stars="5" readonly :cancel="false" class="card__review">
-                <template #onicon>
-                    <IconBase width="16" height="15">
-                        <IconRatingStarYellow />
-                    </IconBase>
-                </template>
-                <template #officon>
-                    <IconBase width="16" height="15">
-                        <IconRatingStarGray />
-                    </IconBase>
-                </template> </Rating
-            ><span class="card__review-number">({{ productItem.review.evaluation }})</span>
+            <div class="card__review">
+                <Rating v-model="rating" :stars="5" readonly :cancel="false" class="card__stars">
+                    <template #onicon>
+                        <IconBase width="16" height="15">
+                            <IconRatingStarYellow />
+                        </IconBase>
+                    </template>
+                    <template #officon>
+                        <IconBase width="16" height="15">
+                            <IconRatingStarGray />
+                        </IconBase>
+                    </template> </Rating
+                ><span class="card__review-number">({{ productItem.review.evaluation }})</span>
+            </div>
         </div>
     </a>
 </template>
@@ -55,12 +57,13 @@ import IconRatingStarYellow from '../components/icons/iconsSrc/IconRatingStarYel
 import IconRatingStarGray from '../components/icons/iconsSrc/IconRatingStarGray.vue'
 import Rating from 'primevue/rating'
 
-defineProps({
+const props = defineProps({
     productItem: {
         type: Object,
         default: () => ({})
     }
 })
+const rating = props.productItem.review.rating
 </script>
 
 <style lang="scss" scoped>
@@ -151,6 +154,7 @@ defineProps({
         line-height: 150%;
         border-radius: 0 0 toRem(4) toRem(4);
         opacity: 0;
+        padding: 0;
     }
 
     // .card__description
@@ -196,6 +200,18 @@ defineProps({
 
     &__review {
         display: flex;
+        align-items: center;
+        column-gap: toRem(10);
+    }
+    &__stars {
+        display: flex;
+    }
+    &__review-number {
+        font-size: toRem(14);
+        font-weight: 600;
+        line-height: 150%; /* 150% */
+        opacity: 0.5;
+        padding-bottom: toRem(4);
     }
 }
 </style>

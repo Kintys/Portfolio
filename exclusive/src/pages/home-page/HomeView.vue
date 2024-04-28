@@ -1,17 +1,16 @@
 <script setup>
 import MainMasterPage from '@/master-page/MainMasterPage.vue'
-import WelcomeSection from '../../../src/pages/home-page/welcome-section/WelcomeSection.vue'
+import WelcomeSection from '@/pages/home-page/welcome-section/WelcomeSection.vue'
+import TodaysSection from '@/pages/home-page/todays-section/TodaysSection.vue'
 import { useAuthStore } from '@/stores/auth.js'
-import CounterComponent from '../../pages/home-page/welcome-section/CounterComponent.vue'
 const { loginWithGoogleAccount, logOut } = useAuthStore()
 </script>
 
 <template>
     <MainMasterPage>
         <WelcomeSection />
+        <TodaysSection />
         <div class="container">
-            <CounterComponent style="padding-top: 100px; padding-bottom: 100px" />
-
             <v-btn type="button" @click="loginWithGoogleAccount">google</v-btn>
             <v-btn type="button" @click="logOut">logout</v-btn>
 

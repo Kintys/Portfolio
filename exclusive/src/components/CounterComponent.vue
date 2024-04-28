@@ -34,12 +34,12 @@ const displaySeconds = ref(0)
 const displayMinutes = ref(0)
 const displayHours = ref(0)
 const displayDays = ref(0)
-const props = defineProps({
-    addTime: {
-        type: Array,
-        default: () => []
-    }
-})
+// const props = defineProps({
+//     addTime: {
+//         type: Array,
+//         default: () => []
+//     }
+// })
 
 const _seconds = computed(() => 1000)
 const _minutes = computed(() => _seconds.value * 60)
@@ -49,7 +49,7 @@ const _days = computed(() => _hours.value * 24)
 function showRemaining() {
     const timer = setInterval(() => {
         const now = new Date()
-        const end = props.addTime ? new Date(props.addTime) : new Date(2024, 4, 24, 10, 30, 10, 10)
+        const end = new Date(2024, 4, 24, 10, 30, 10, 10)
         const distance = end.getTime() - now.getTime()
 
         if (distance < 0) clearInterval(timer)
@@ -74,11 +74,12 @@ onMounted(() => {
 @import '@/style/lib/adaptive';
 .flash-sale-timer {
     display: flex;
-    flex-shrink: 0;
+    align-items: flex-end;
     column-gap: toRem(17);
     &__wrapper {
         display: grid;
         position: relative;
+        row-gap: toRem(4);
     }
 
     // .flash-sale-timer__title
