@@ -27,7 +27,6 @@
                 //     slidesPerView: 3
                 // }
             }"
-            :grid-rows="3"
             :navigation="{
                 nextEl: '.next-arrow',
                 prevEl: '.prev-arrow'
@@ -101,7 +100,7 @@ import ProductCart from '@/components/ProductCart.vue'
     // .section-slider__wrapper
 
     &__wrapper {
-        height: 1200px;
+        // height: 1200px;
     }
 }
 .prev-arrow {
