@@ -100,7 +100,6 @@ import ProductCart from '@/components/ProductCart.vue'
     // .section-slider__wrapper
 
     &__wrapper {
-        // height: 1200px;
     }
 }
 .prev-arrow {
