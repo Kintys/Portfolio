@@ -49,7 +49,7 @@
                     <button
                         type="button"
                         @click="loginWithGoogleEmailPopup"
-                        class="auth__button button-main button-main-trans"
+                        class="auth__button button-main button-main--trans"
                     >
                         <IconBase width="24" height="25" viewBox="0 0 24 25"><IconGoogle /></IconBase>
                         {{ formParams.buttonGoogle }}
@@ -148,6 +148,9 @@ const { checkAcceptRules } = useAgreementsStore()
 .login-form {
     // .login-form__title
     color: $mainColor;
+    @media (min-width: toEm($mobile)) {
+        padding-right: toRem(30);
+    }
 
     &__title {
         font-family: $interFont;

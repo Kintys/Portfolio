@@ -8,15 +8,18 @@
     background-color: $secondColor;
     transition: all 0.3s;
     color: #fafafa;
-    font-size: toRem(16);
     font-weight: 500;
+    text-transform: capitalize;
     line-height: 150%; /* 150% */
     @media (any-hover: hover) {
         &:hover {
             background-color: #e07575;
         }
     }
-    &-trans {
+    &--padding-regular {
+        padding: toRem(28) toRem(45.6);
+    }
+    &--trans {
         padding: toRem(15) toRem(47);
         background-color: transparent;
         border: toRem(1) solid rgba(0, 0, 0, 0.5);
