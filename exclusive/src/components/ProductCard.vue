@@ -71,6 +71,7 @@ const rating = props.productItem.review.rating
 
 .card {
     // .card__image-card
+
     max-width: toRem(270);
     max-height: toRem(350);
     display: grid;

@@ -41,6 +41,9 @@ defineProps({
     // .headline__title
 
     &__title {
+        @media (min-width: toEm(450)) {
+            text-wrap: nowrap;
+        }
         font-family: $interFont;
         font-size: toRem(36);
         font-weight: 600;

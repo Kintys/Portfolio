@@ -14,6 +14,7 @@
     @return $result;
 }
 @import "../lib/variables";
+
 @mixin adaptiveValue($property, $startSize, $minSize, $keepSize: 0, $widthFrom: $containerWidth, $widthTo: $minWidth) {
     @if ($startSize==0) {
         $startSize: 0.000001;
@@ -74,4 +75,9 @@
             #{$property}: toRem($minSize);
         }
     }
+}
+@mixin gridCards($type: fit, $min: 280px, $max: 1fr, $gap: 30px) {
+    display: grid;
+    gap: $gap;
+    grid-template-columns: repeat(auto-#{$type}, minmax($min, $max));
 }

@@ -5,66 +5,43 @@
                 <MainTitleBlock :title-text="titleParams" />
                 <div class="section-slider__timer"><slot name="timer"> </slot></div>
             </div>
-            <div class="section-slider__arrow">
-                <div class="section-slider__prev-arrow prev-arrow">
-                    <IconBase width="24" height="24" viewBox="0 0 24 24" icon-color="transparent">
-                        <IconSliderArrow />
-                    </IconBase>
+            <slot name="arrow">
+                <div class="section-slider__arrow">
+                    <div class="section-slider__prev-arrow prev-arrow">
+                        <IconBase width="24" height="24" viewBox="0 0 24 24" icon-color="transparent">
+                            <IconSliderArrow />
+                        </IconBase>
+                    </div>
+                    <div class="section-slider__next-arrow next-arrow">
+                        <IconBase width="24" height="24" viewBox="0 0 24 24" icon-color="transparent">
+                            <IconSliderArrow />
+                        </IconBase>
+                    </div>
                 </div>
-                <div class="section-slider__next-arrow next-arrow">
-                    <IconBase width="24" height="24" viewBox="0 0 24 24" icon-color="transparent">
-                        <IconSliderArrow />
-                    </IconBase>
-                </div>
-            </div>
+            </slot>
         </div>
         <swiper-container
             class="section-slider__wrapper"
-            :slides-per-view="4"
-            :space-between="30"
+            :slides-per-view="sliderParams.sliderPerView"
+            :space-between="sliderParams.sliderBetween"
+            :loop="isLoop"
             :grid="{
                 fill: 'row',
                 rows: showGridRows
             }"
-            :breakpoints="{
-                320: {
-                    slidesPerView: 1.1,
-                    spaceBetween: 10
-                },
-                350: {
-                    slidesPerView: 1.5
-                },
-                480: {
-                    slidesPerView: 1.7
-                },
-                630: {
-                    slidesPerView: 2.5
-                },
-                768: {
-                    slidesPerView: 3.2
-                },
-                830: {
-                    slidesPerView: 3.5,
-                    spaceBetween: 15
-                },
-                1070: {
-                    slidesPerView: 4,
-                    spaceBetween: 20
-                },
-                1200: {
-                    spaceBetween: 30
-                }
-            }"
+            :breakpoints="sliderParams.breakpoints"
             :navigation="{
                 nextEl: '.next-arrow',
                 prevEl: '.prev-arrow'
             }"
         >
-            <swiper-slide v-for="item in productData" :key="item.id">
-                <slot name="main"><ProductCart :product-item="item" /></slot>
-            </swiper-slide>
+            <slot name="main">
+                <swiper-slide v-for="item in productData" :key="item.id">
+                    <ProductCard :product-item="item" />
+                </swiper-slide>
+            </slot>
         </swiper-container>
-        <slot name="action">
+        <slot v-if="showAction" name="action">
             <v-btn @click="showGridRows++" class="section-slider__button button-main button-main--padding-regular"
                 >View All Products</v-btn
             >
@@ -84,6 +61,18 @@ import IconBase from '@/components/icons/IconBase.vue'
 import IconSliderArrow from '@/components/icons/iconsSrc/IconSliderArrow.vue'
 
 defineProps({
+    isLoop: {
+        type: Boolean,
+        default: false
+    },
+    showAction: {
+        type: Boolean,
+        default: false
+    },
+    sliderParams: {
+        type: Object,
+        default: () => ({})
+    },
     productData: {
         type: Array
     },
@@ -94,7 +83,7 @@ defineProps({
 
 import MainTitleBlock from '@/components/MainTitleBlock.vue'
 
-import ProductCart from '@/components/ProductCart.vue'
+import ProductCard from '@/components/ProductCard.vue'
 </script>
 
 <style lang="scss" scoped>
@@ -141,7 +130,9 @@ import ProductCart from '@/components/ProductCart.vue'
         display: flex;
         column-gap: toRem(30);
         padding-bottom: toRem(5);
-        padding-right: toRem(15);
+        @media (min-width: toEm($mobile)) {
+            padding-right: toRem(15);
+        }
         @media (max-width: toEm($mobile)) {
             align-self: center;
         }

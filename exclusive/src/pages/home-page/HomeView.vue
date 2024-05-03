@@ -3,6 +3,8 @@ import MainMasterPage from '@/master-page/MainMasterPage.vue'
 import WelcomeSection from '@/pages/home-page/welcome-section/WelcomeSection.vue'
 import TodaysSection from '@/pages/home-page/todays-section/TodaysSection.vue'
 import { useAuthStore } from '@/stores/auth.js'
+import CategorySection from '@/pages/home-page/categories-section/CategorySection.vue'
+import BestProductSection from '../../pages/home-page/best-product/BestProductSection.vue'
 const { loginWithGoogleAccount, logOut } = useAuthStore()
 </script>
 
@@ -10,6 +12,8 @@ const { loginWithGoogleAccount, logOut } = useAuthStore()
     <MainMasterPage>
         <WelcomeSection />
         <TodaysSection />
+        <CategorySection />
+        <BestProductSection />
         <div class="container">
             <v-btn type="button" @click="loginWithGoogleAccount">google</v-btn>
             <v-btn type="button" @click="logOut">logout</v-btn>

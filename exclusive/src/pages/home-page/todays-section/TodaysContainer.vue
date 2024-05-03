@@ -1,6 +1,11 @@
 <template>
     <div class="todays-section__container">
-        <SectionSliderWithTitles :product-data="productArr" :title-params="sectionTitle">
+        <SectionSliderWithTitles
+            :product-data="productArr"
+            :title-params="sectionTitle"
+            :slider-params="sliderParams"
+            :show-action="true"
+        >
             <template #timer>
                 <CounterComponent />
             </template>
@@ -9,9 +14,9 @@
 </template>
 
 <script setup>
-import SectionSliderWithTitles from '../../../components/SectionSliderWithTitles.vue'
-import CounterComponent from '../../../components/CounterComponent.vue'
-import img from '../../../assets/01.png'
+import SectionSliderWithTitles from '@/components/SectionSliderWithTitles.vue'
+import CounterComponent from '@/components/CounterComponent.vue'
+import img from '@/assets/01.png'
 const sectionTitle = {
     cat: "today's",
     title: 'flash sales'
@@ -148,30 +153,39 @@ const productArr = [
         }
     }
 ]
-</script>
-
-<style lang="scss" scoped>
-.arrow {
-    display: flex;
-    column-gap: toRem(8);
-}
-.prev-arrow,
-.next-arrow {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    &::before {
-        content: '';
-        width: toRem(46);
-        position: absolute;
-        z-index: -1;
-        height: toRem(46);
-        border-radius: 50%;
-        background-color: #f5f5f5;
+const sliderParams = {
+    sliderPerView: 4,
+    sliderBetween: 30,
+    breakpoints: {
+        320: {
+            slidesPerView: 1.1,
+            spaceBetween: 10
+        },
+        350: {
+            slidesPerView: 1.5
+        },
+        480: {
+            slidesPerView: 1.7
+        },
+        630: {
+            slidesPerView: 2.5
+        },
+        768: {
+            slidesPerView: 3.2
+        },
+        830: {
+            slidesPerView: 3.5,
+            spaceBetween: 15
+        },
+        1070: {
+            slidesPerView: 4,
+            spaceBetween: 20
+        },
+        1200: {
+            spaceBetween: 30
+        }
     }
 }
-.next-arrow {
-    transform: rotate(180deg);
-}
-</style>
+</script>
+
+<style lang="scss" scoped></style>

@@ -3,7 +3,7 @@
 </template>
 
 <script setup>
-import TodaysContainer from '../../../pages/home-page/todays-section/TodaysContainer.vue'
+import TodaysContainer from '@/pages/home-page/todays-section/TodaysContainer.vue'
 </script>
 
 <style lang="scss" scoped>
