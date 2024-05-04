@@ -1,5 +1,10 @@
 <template>
-    <div class="section-slider">
+    <div
+        class="section-slider"
+        :class="{
+            'section-slider--border': isBorder
+        }"
+    >
         <div class="section-slider__headline">
             <div class="section-slider__title-wrapper">
                 <MainTitleBlock :title-text="titleParams" />
@@ -78,6 +83,10 @@ defineProps({
     },
     titleParams: {
         type: Object
+    },
+    isBorder: {
+        type: Boolean,
+        default: true
     }
 })
 
@@ -94,8 +103,10 @@ import ProductCard from '@/components/ProductCard.vue'
     @include adaptiveValue('row-gap', 60, 40);
     // .section-slider__headline
     @include adaptiveValue('padding-bottom', 60, 30);
-    border-bottom: toRem(1) solid rgba(0, 0, 0, 0.301);
 
+    &--border {
+        border-bottom: toRem(1) solid rgba(0, 0, 0, 0.301);
+    }
     &__headline {
         display: flex;
         justify-content: space-between;

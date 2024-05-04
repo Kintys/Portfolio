@@ -32,7 +32,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import IphoneBanner from '@/components/IphoneBanner.vue'
+import IphoneBanner from '@/components/banners/IphoneBanner.vue'
 import { register } from 'swiper/element/bundle'
 import { Pagination } from 'swiper/modules'
 import 'swiper/css/pagination'

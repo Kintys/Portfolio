@@ -34,12 +34,11 @@ const displaySeconds = ref(0)
 const displayMinutes = ref(0)
 const displayHours = ref(0)
 const displayDays = ref(0)
-// const props = defineProps({
-//     addTime: {
-//         type: Array,
-//         default: () => []
-//     }
-// })
+const props = defineProps({
+    addTime: {
+        type: Object
+    }
+})
 
 const _seconds = computed(() => 1000)
 const _minutes = computed(() => _seconds.value * 60)
@@ -48,12 +47,11 @@ const _days = computed(() => _hours.value * 24)
 
 function showRemaining() {
     const timer = setInterval(() => {
+        const { propsYear, propsMonth, propsDay, propsHour, propsMinutes, propsSeconds, propsMllSecond } = props.addTime
         const now = new Date()
-        const end = new Date(2024, 4, 24, 10, 30, 10, 10)
+        const end = new Date(propsYear, propsMonth, propsDay, propsHour, propsMinutes, propsSeconds, propsMllSecond)
         const distance = end.getTime() - now.getTime()
-
         if (distance < 0) clearInterval(timer)
-
         const days = Math.floor(distance / _days.value)
         const hours = Math.floor((distance % _days.value) / _hours.value)
         const minutes = Math.floor((distance % _hours.value) / _minutes.value)

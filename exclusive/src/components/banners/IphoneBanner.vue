@@ -20,10 +20,10 @@
 </template>
 
 <script setup>
-import IconBase from '../components/icons/IconBase.vue'
-import IconArrowRight from '../components/icons/iconsSrc/IconArrowRight.vue'
+import IconBase from '@/components/icons/IconBase.vue'
+import IconArrowRight from '@/components/icons/iconsSrc/IconArrowRight.vue'
 import phone from '@/assets/homePage/welcomeSection/01.png'
-import appleLogo from '../assets/homePage/welcomeSection/icon/Apple_gray_logo.png'
+import appleLogo from '@/assets/homePage/welcomeSection/icon/Apple_gray_logo.png'
 </script>
 
 <style lang="scss" scoped>

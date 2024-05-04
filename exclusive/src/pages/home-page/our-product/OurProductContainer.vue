@@ -1,34 +1,21 @@
 <template>
-    <div class="todays-section__container">
+    <div class="our-product__container">
         <SectionSliderWithTitles
             :product-data="productArr"
             :title-params="sectionTitle"
             :slider-params="sliderParams"
             :show-action="true"
-        >
-            <template #timer>
-                <CounterComponent
-                    :add-time="{
-                        propsYear: 2024,
-                        propsMonth: 4,
-                        propsDay: 24,
-                        propsHour: 10,
-                        propsMinutes: 30,
-                        propsSeconds: 10,
-                        propsMllSecond: 10
-                    }"
-                />
-            </template>
-        </SectionSliderWithTitles>
+            :is-border="false"
+        />
     </div>
 </template>
+
 <script setup>
 import SectionSliderWithTitles from '@/components/SectionSliderWithTitles.vue'
-import CounterComponent from '@/components/CounterComponent.vue'
 import img from '@/assets/01.png'
 const sectionTitle = {
-    cat: "today's",
-    title: 'flash sales'
+    cat: 'Our Products',
+    title: 'Explore Our Products '
 }
 const productArr = [
     {
