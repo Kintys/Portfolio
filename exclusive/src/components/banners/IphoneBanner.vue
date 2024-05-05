@@ -52,11 +52,6 @@ import appleLogo from '@/assets/homePage/welcomeSection/icon/Apple_gray_logo.png
         row-gap: toRem(21);
     }
 
-    // .banner__headline
-
-    &__headline {
-    }
-
     // .banner__text
 
     &__text {
@@ -65,16 +60,6 @@ import appleLogo from '@/assets/homePage/welcomeSection/icon/Apple_gray_logo.png
         font-weight: 600;
         line-height: 125%; /* 125% */
         letter-spacing: toRem(1.92);
-    }
-
-    // .banner__link
-
-    &__link {
-    }
-
-    // .banner__image
-
-    &__image {
     }
 
     // .banner__photo
@@ -89,9 +74,6 @@ import appleLogo from '@/assets/homePage/welcomeSection/icon/Apple_gray_logo.png
     display: flex;
     align-items: center;
     column-gap: toRem(24);
-
-    &__icon {
-    }
 
     // .hat-banner__title
 
