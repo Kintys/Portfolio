@@ -7,6 +7,7 @@ import BestProductSection from '@/pages/home-page/best-product/BestProductSectio
 import SpecialOfferSection from '@/pages/home-page/special-offer/SpecialOfferSection.vue'
 import OurProductSection from '@/pages/home-page/our-product/OurProductSection.vue'
 import NewArrivalSection from '@/pages/home-page/new-arrival/NewArrivalSection.vue'
+import ServiceBlock from '@/components/ServiceBlock.vue'
 </script>
 
 <template>
@@ -19,6 +20,7 @@ import NewArrivalSection from '@/pages/home-page/new-arrival/NewArrivalSection.v
         <SpecialOfferSection />
         <OurProductSection />
         <NewArrivalSection />
+        <ServiceBlock />
     </MainMasterPage>
 </template>
 
