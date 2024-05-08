@@ -46,9 +46,9 @@ export const routes = [
     {
         path: '/',
         name: 'About',
-        component: HomeView,
+        component: () => import('@/pages/about-page/AboutView.vue'),
         meta: {
-            requireAuth: true,
+            requireAuth: false,
             useInMenu: true
         }
     },
