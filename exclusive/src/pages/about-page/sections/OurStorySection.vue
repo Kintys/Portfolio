@@ -16,7 +16,8 @@
                         diverse assotment in categories ranging from consumer.
                     </p>
                 </article>
-                <v-img :src="sectionPhoto" :max-width="650" aspect-ratio="1/1" />
+                <div class="our-story__block"></div>
+                <div class="our-story__picture"><img :src="sectionPhoto" class="ibg ibg–contain" /></div>
             </div>
         </div>
     </section>
@@ -43,8 +44,10 @@ const breadcrumbsLinks = [
 @import '@/style/lib/adaptive';
 .our-story {
     // .our-story__container
+    @include adaptiveValue('padding-top', 140, 80);
     &__container {
         position: relative;
+        min-height: toRem(609+42);
     }
 
     // .our-story__breadcrumb
@@ -58,17 +61,18 @@ const breadcrumbsLinks = [
     // .our-story__content
 
     &__content {
-        display: flex;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
         column-gap: toRem(25);
-        justify-content: space-between;
     }
 
     // .our-story__description
 
     &__description {
-        flex: 0 1 toRem(525);
+        padding-right: toRem(40);
     }
-
+    &__block {
+    }
     // .our-story__title
 
     &__title {
@@ -94,6 +98,15 @@ const breadcrumbsLinks = [
     // .our-story__picture
 
     &__picture {
+        position: absolute;
+        top: toRem(42);
+        right: -12.3%;
+        img {
+            aspect-ratio: 837 / 609;
+        }
+        @media (max-width: toEm(1045)) {
+            max-width: toRem(600);
+        }
     }
 }
 </style>
