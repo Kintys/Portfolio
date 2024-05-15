@@ -2,23 +2,52 @@
     <section class="specialist">
         <div class="specialist__container">
             <swiper-container
-                class="slider__box"
+                class="specialist__box"
                 :slides-per-view="3"
                 :space-between="60"
                 :centered-slides="false"
                 :loop="true"
                 :pagination="{
                     clickable: true,
-                    el: '.slider__bullet'
+                    el: '.specialist__bullet'
                 }"
                 :autoplay="{
                     delay: 4000,
                     pauseOnMouseEnter: true
                 }"
                 :breakpoints="{
-                    // 768: {
-                    //     slidesPerView: 3
-                    // }
+                    320: {
+                        slidesPerView: 1.2,
+                        spaceBetween: 40
+                    },
+                    400: {
+                        slidesPerView: 1.5,
+                        spaceBetween: 40
+                    },
+                    500: {
+                        slidesPerView: 2,
+                        spaceBetween: 40
+                    },
+                    660: {
+                        slidesPerView: 2.3,
+                        spaceBetween: 40
+                    },
+                    768: {
+                        slidesPerView: 2.6,
+                        spaceBetween: 40
+                    },
+                    950: {
+                        slidesPerView: 2.6,
+                        spaceBetween: 40
+                    },
+                    1065: {
+                        slidesPerView: 3.5,
+                        spaceBetween: 50
+                    },
+                    1140: {
+                        slidesPerView: 3,
+                        spaceBetween: 60
+                    }
                 }"
                 :params="params"
                 :modules="Pagination"
@@ -27,7 +56,7 @@
                     <SpecialistCard :specialist="slide" />
                 </swiper-slide>
             </swiper-container>
-            <div class="slider__bullet"></div>
+            <div class="specialist__bullet-wrapper"><div class="specialist__bullet"></div></div>
         </div>
     </section>
 </template>
@@ -136,4 +165,44 @@ const specialistData = [
 ]
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@import '@/style/lib/adaptive';
+
+.specialist {
+    // .specialist__container
+
+    &__container {
+        @include adaptiveValue('padding-top', 140, 80);
+    }
+
+    // .specialist__box
+
+    &__box {
+        &:not(:last-child) {
+            margin-bottom: toRem(40);
+        }
+    }
+    &__bullet-wrapper {
+        width: 100%;
+        transform: translate(40%, 0);
+    }
+    // .specialist__bullet
+
+    &__bullet {
+        // position: absolute;
+        // bottom: 0;
+        // left: 0;
+        z-index: 2;
+        :deep() {
+            .swiper-pagination-bullet {
+                background-color: gray;
+                width: toRem(16);
+                height: toRem(16);
+            }
+            .swiper-pagination-bullet-active {
+                background-color: $secondColor;
+            }
+        }
+    }
+}
+</style>
