@@ -55,7 +55,7 @@ export const routes = [
     {
         path: '/account',
         name: 'account',
-        component: HomeView,
+        component: () => import('@/pages/product-pages/ProductView.vue'),
         meta: {
             requireAuth: false,
             useInMenu: true
