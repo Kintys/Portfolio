@@ -16,7 +16,6 @@
                         diverse assotment in categories ranging from consumer.
                     </p>
                 </article>
-                <div class="our-story__block"></div>
                 <div class="our-story__picture"><img :src="sectionPhoto" class="ibg ibg–contain" /></div>
             </div>
         </div>
@@ -71,8 +70,6 @@ const breadcrumbsLinks = [
     &__description {
         padding-right: toRem(40);
     }
-    &__block {
-    }
     // .our-story__title
 
     &__title {
@@ -99,14 +96,18 @@ const breadcrumbsLinks = [
 
     &__picture {
         position: absolute;
-        top: toRem(42);
-        right: -12.3%;
+        z-index: -1;
+        padding-right: toRem(15);
+        @media (min-width: toEm(900)) {
+            top: toRem(42);
+            right: -12.3%;
+        }
         img {
             aspect-ratio: 837 / 609;
         }
-        @media (max-width: toEm(1045)) {
-            max-width: toRem(600);
-        }
+        // @media (max-width: toEm(1045)) {
+        //     max-width: toRem(600);
+        // }
     }
 }
 </style>

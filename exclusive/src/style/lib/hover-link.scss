@@ -21,3 +21,58 @@
         width: 50%;
     }
 }
+
+.instagram-icon {
+    color: #000;
+    position: relative;
+    display: inline-block;
+    @include adaptiveValue("font-size", 28, 25);
+
+    .inner {
+        background: #fcfcfc;
+        mix-blend-mode: screen;
+        display: block;
+        width: 43.75px;
+    }
+
+    .bg {
+        width: calc(100% - 1px);
+        background: #000;
+        text-align: center;
+        display: block;
+
+        &::before {
+            content: "";
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            opacity: 0;
+            transition: 0.3s ease-in-out;
+        }
+    }
+
+    &:hover .bg::before {
+        opacity: 1;
+    }
+}
+.twitter-icon,
+.linkedin-icon {
+    transition: all 0.3s;
+    @media (any-hover: hover) {
+        &:hover {
+            color: #1da1f2;
+        }
+    }
+}
+
+.linkedin-icon {
+    @media (any-hover: hover) {
+        &:hover {
+            color: #0e76a8;
+        }
+    }
+}

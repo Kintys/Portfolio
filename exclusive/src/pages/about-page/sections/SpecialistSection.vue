@@ -1,66 +1,59 @@
 <template>
     <section class="specialist">
         <div class="specialist__container">
-            <swiper-container
-                class="specialist__box"
-                :slides-per-view="3"
-                :space-between="60"
-                :centered-slides="false"
-                :loop="true"
-                :pagination="{
-                    clickable: true,
-                    el: '.specialist__bullet'
-                }"
-                :autoplay="{
-                    delay: 4000,
-                    pauseOnMouseEnter: true
-                }"
-                :breakpoints="{
-                    320: {
-                        slidesPerView: 1.2,
-                        spaceBetween: 40
-                    },
-                    400: {
-                        slidesPerView: 1.5,
-                        spaceBetween: 40
-                    },
-                    500: {
-                        slidesPerView: 2,
-                        spaceBetween: 40
-                    },
-                    660: {
-                        slidesPerView: 2.3,
-                        spaceBetween: 40
-                    },
-                    768: {
-                        slidesPerView: 2.6,
-                        spaceBetween: 40
-                    },
-                    950: {
-                        slidesPerView: 2.6,
-                        spaceBetween: 40
-                    },
-                    1065: {
-                        slidesPerView: 3.5,
-                        spaceBetween: 50
-                    },
-                    1140: {
-                        slidesPerView: 3,
-                        spaceBetween: 60
-                    }
-                }"
-                :params="params"
-                :modules="Pagination"
-            >
-                <swiper-slide v-for="slide in specialistData" :key="slide.id">
-                    <SpecialistCard :specialist="slide" />
-                </swiper-slide>
-            </swiper-container>
-            <div class="specialist__bullet-wrapper"><div class="specialist__bullet"></div></div>
+            <div class="specialist__wrapper">
+                <swiper-container
+                    class="specialist__swiper-slider"
+                    :slides-per-view="3"
+                    :space-between="60"
+                    :centered-slides="false"
+                    :loop="true"
+                    :pagination="{
+                        clickable: true,
+                        el: '.specialist__bullet'
+                    }"
+                    aspect-ratio="1/1"
+                    cover
+                    :breakpoints="{
+                        320: {
+                            slidesPerView: 1.2,
+                            spaceBetween: 30
+                        },
+                        540: {
+                            slidesPerView: 1.5
+                        },
+                        700: {
+                            slidesPerView: 1.8
+                        },
+                        768: {
+                            slidesPerView: 2.2
+                        },
+                        950: {
+                            slidesPerView: 2.6
+                        },
+                        1065: {
+                            slidesPerView: 2.8
+                        },
+                        1140: {
+                            slidesPerView: 3,
+                            spaceBetween: 60
+                        }
+                    }"
+                    :modules="Pagination"
+                >
+                    <swiper-slide v-for="slide in specialistData" :key="slide.id">
+                        <SpecialistCard :specialist="slide" />
+                    </swiper-slide>
+                </swiper-container>
+                <div class="specialist__bullet-wrapper"><div class="specialist__bullet"></div></div>
+            </div>
         </div>
     </section>
 </template>
-
+<!--    :autoplay="{
+                    delay: 4000,
+                    pauseOnMouseEnter: true
+                }" -->
 <script setup>
 import { register } from 'swiper/element/bundle'
 import { Pagination } from 'swiper/modules'
@@ -175,24 +168,28 @@ const specialistData = [
         @include adaptiveValue('padding-top', 140, 80);
     }
 
-    // .specialist__box
+    // .specialist__wrapper
 
-    &__box {
+    &__wrapper {
+        display: flex;
+        flex-direction: column;
+    }
+
+    // .specialist__swiper-slider
+
+    &__swiper-slider {
         &:not(:last-child) {
             margin-bottom: toRem(40);
         }
     }
+
+    // .specialist__bullet-wrapper
+
     &__bullet-wrapper {
-        width: 100%;
-        transform: translate(40%, 0);
+        align-self: center;
     }
     // .specialist__bullet
-
     &__bullet {
-        // position: absolute;
-        // bottom: 0;
-        // left: 0;
-        z-index: 2;
         :deep() {
             .swiper-pagination-bullet {
                 background-color: gray;
