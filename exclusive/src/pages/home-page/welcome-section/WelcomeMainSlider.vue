@@ -19,7 +19,6 @@
                 //     slidesPerView: 3
                 // }
             }"
-            :params="params"
             :modules="Pagination"
         >
             <swiper-slide v-for="(slide, index) in sliderData" :key="index">
