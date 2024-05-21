@@ -70,6 +70,8 @@ Snippet (HTML): cnt
         }
     }
 }
-
+.pswp__container {
+    max-width: 100%;
+}
 @import "./lib/adaptive.scss";
 @import "./lib/null";
