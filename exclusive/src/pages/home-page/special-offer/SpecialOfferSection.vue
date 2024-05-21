@@ -14,7 +14,7 @@ const offerData = {
     title: 'Enhance Your Music Experience',
     timer: {
         propsYear: 2024,
-        propsMonth: 4,
+        propsMonth: 6,
         propsDay: 10,
         propsHour: 8,
         propsMinutes: 20,
