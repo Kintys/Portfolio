@@ -38,15 +38,19 @@
                     <v-radio color="orange-darken-3" value="orange-darken-3"></v-radio>
                 </v-radio-group>
             </div>
-            <div class="product-description__product-size">
-                <label class="product-description__product-size">
-                    Size:
-                    <v-checkbox v-model="size" label="XS" value="XS"></v-checkbox>
-                    <v-checkbox v-model="size" label="S" value="S"></v-checkbox>
-                    <v-checkbox v-model="size" label="M" value="M"></v-checkbox>
-                    <v-checkbox v-model="size" label="L" value="L"></v-checkbox>
-                    <v-checkbox v-model="size" label="XL" value="XL"></v-checkbox>
-                </label>
+            <div class="product-description__product-size checkbox-size">
+                <span>Size:</span>
+                <label
+                    v-for="(itemSize, index) in sizeList"
+                    :key="index"
+                    class="checkbox-size__wrapper"
+                    ref="focusesList"
+                    @click="selectSize(index)"
+                >
+                    {{ itemSize }}
+                    <input class="checkbox-size__input" type="radio" :value="itemSize" v-model="size"
+                /></label>
+                {{ size }}
             </div>
             <div class="product-description__actions">
                 <div class="product-description__quantity quantity-inp">
@@ -64,14 +68,16 @@
         </div>
         <footer class="product-description__delivery">
             <div class="product-description__free-delivery free-delivery">
-                <font-awesome-icon :icon="faTruckFast" />
+                <div class="free-delivery__icon-box"><font-awesome-icon :icon="['faT', 'truck-fast']" size="xl" /></div>
                 <div class="free-delivery__text-block">
                     <h6 class="free-delivery__title">Free Delivery</h6>
                     <a href="#" class="free-delivery__link">Enter your postal code for Delivery Availability</a>
                 </div>
             </div>
             <div class="product-description__return-delivery return-delivery">
-                <font-awesome-icon :icon="faArrowsRotate" flip="vertical" />
+                <div class="free-delivery__icon-box">
+                    <font-awesome-icon :icon="['fas', 'arrows-rotate']" flip="vertical" size="xl" />
+                </div>
                 <div class="return-delivery__text-block">
                     <h6 class="return-delivery__title">Return Delivery</h6>
                     <p class="return-delivery__text">
@@ -85,18 +91,24 @@
 
 <script setup>
 import { ref } from 'vue'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faTruckFast, faArrowsRotate } from '@fortawesome/free-solid-svg-icons'
 const color = ref(null)
-const size = ref([])
-
+const size = ref(null)
 const numberVal = ref(1)
+//===========================================================
 
+import { useFocus } from '@/modulesHelpers/lib/focusFunc.js'
+const { focusesList, onActive } = useFocus()
+
+function selectSize(index) {
+    onActive(index, 'active')
+}
+//===========================================================
+
+const sizeList = ref(['xs', 's', 'm', 'l', 'xl'])
 const rating = ref(4)
 import Rating from 'primevue/rating'
 import IconBase from '@/components/icons/IconBase.vue'
 import IconWishList from '@/components/icons/iconsSrc/IconWishList.vue'
-// import IconShow from '@/components/icons/iconsSrc/IconShow.vue'
 import IconRatingStarYellow from '@/components/icons/iconsSrc/IconRatingStarYellow.vue'
 import IconRatingStarGray from '@/components/icons/iconsSrc/IconRatingStarGray.vue'
 </script>
@@ -203,6 +215,12 @@ import IconRatingStarGray from '@/components/icons/iconsSrc/IconRatingStarGray.v
                 margin-inline-start: 0;
                 opacity: 1;
             }
+            .v-input__details {
+                display: none;
+            }
+        }
+        &:not(:last-child) {
+            margin-bottom: toRem(8);
         }
     }
 
@@ -211,6 +229,14 @@ import IconRatingStarGray from '@/components/icons/iconsSrc/IconRatingStarGray.v
     &__product-size {
         display: flex;
         align-items: center;
+        :deep() {
+            .v-input__details {
+                display: none;
+            }
+        }
+        &:not(:last-child) {
+            margin-bottom: toRem(24);
+        }
     }
 
     // .product-description__actions
@@ -276,7 +302,6 @@ import IconRatingStarGray from '@/components/icons/iconsSrc/IconRatingStarGray.v
         justify-content: center;
         font-size: toRem(30);
         transition: all 0.3s;
-
         @media (any-hover: hover) {
             &:hover {
                 color: #ffff;
@@ -286,9 +311,11 @@ import IconRatingStarGray from '@/components/icons/iconsSrc/IconRatingStarGray.v
     }
     &__plus {
         border-radius: toRem(0) toRem(4) toRem(4) toRem(0);
+        outline: toRem(2) solid black;
     }
     &__minus {
         border-radius: toRem(4) toRem(0) toRem(0) toRem(4);
+        outline: toRem(2) solid black;
     }
     // .quantity-inp__number
 
@@ -318,6 +345,23 @@ import IconRatingStarGray from '@/components/icons/iconsSrc/IconRatingStarGray.v
     &__return-delivery {
     }
 }
+.product-description {
+    // .product-description__delivery
+
+    &__delivery {
+    }
+
+    // .product-description__free-delivery
+
+    &__free-delivery {
+    }
+
+    // .product-description__return-delivery
+
+    &__return-delivery {
+    }
+}
+
 .free-delivery,
 .return-delivery {
     &:not(:last-child) {
@@ -329,6 +373,9 @@ import IconRatingStarGray from '@/components/icons/iconsSrc/IconRatingStarGray.v
     padding: toRem(20) toRem(15);
 
     &__text-block {
+    }
+    &__icon-box {
+        width: toRem(32);
     }
 
     // .free-delivery__title
@@ -356,22 +403,6 @@ import IconRatingStarGray from '@/components/icons/iconsSrc/IconRatingStarGray.v
         }
     }
 }
-.return-delivery {
-    // .return-delivery__text
-
-    &__text {
-    }
-
-    // .return-delivery__title
-
-    &__title {
-    }
-
-    // .return-delivery__link
-
-    &__link {
-    }
-}
 
 .review {
     display: flex;
@@ -386,5 +417,38 @@ import IconRatingStarGray from '@/components/icons/iconsSrc/IconRatingStarGray.v
         line-height: 150%; /* 150% */
         opacity: 0.5;
     }
+}
+
+.checkbox-size {
+    // .checkbox-size__wrapper
+    display: flex;
+
+    column-gap: toRem(16);
+
+    &__wrapper {
+        cursor: pointer;
+        width: toRem(32);
+        height: toRem(32);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: toRem(4);
+        border: toRem(1) solid rgba(0, 0, 0, 0.5);
+        font-size: toRem(14);
+        font-weight: 500;
+        line-height: 150%;
+        transition: all 0.3s;
+        position: relative;
+        text-transform: uppercase;
+    }
+    &__input {
+        cursor: pointer;
+        position: absolute;
+        opacity: 0;
+    }
+}
+.active {
+    background-color: $secondColor;
+    color: #fff;
 }
 </style>
