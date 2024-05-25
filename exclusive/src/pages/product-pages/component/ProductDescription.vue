@@ -50,13 +50,12 @@
                     {{ itemSize }}
                     <input class="checkbox-size__input" type="radio" :value="itemSize" v-model="size"
                 /></label>
-                {{ size }}
             </div>
             <div class="product-description__actions">
                 <div class="product-description__quantity quantity-inp">
-                    <button class="quantity-inp__minus" @click="numberVal--">-</button>
-                    <span class="quantity-inp__number">{{ numberVal }}</span
-                    ><button class="quantity-inp__plus" @click="numberVal++">+</button>
+                    <button class="quantity-inp__minus" @click="onDecreasingNumberOfProducts">-</button>
+                    <span class="quantity-inp__number">{{ numberProduct }}</span
+                    ><button class="quantity-inp__plus" @click="onIncreasingNumberOfProducts">+</button>
                 </div>
                 <v-btn class="product-description__buy-now button-main">Buy Now</v-btn>
                 <button class="product-description__wish-list-button">
@@ -93,7 +92,7 @@
 import { ref } from 'vue'
 const color = ref(null)
 const size = ref(null)
-const numberVal = ref(1)
+const numberProduct = ref(1)
 //===========================================================
 
 import { useFocus } from '@/modulesHelpers/lib/focusFunc.js'
@@ -106,6 +105,19 @@ function selectSize(index) {
 
 const sizeList = ref(['xs', 's', 'm', 'l', 'xl'])
 const rating = ref(4)
+//===========================================================
+
+//===========================================================
+function onIncreasingNumberOfProducts() {
+    numberProduct.value++
+}
+function onDecreasingNumberOfProducts() {
+    if (numberProduct.value <= 1) numberProduct.value = 1
+    else numberProduct.value--
+}
+
+//===========================================================
+
 import Rating from 'primevue/rating'
 import IconBase from '@/components/icons/IconBase.vue'
 import IconWishList from '@/components/icons/iconsSrc/IconWishList.vue'
@@ -120,7 +132,7 @@ import IconRatingStarGray from '@/components/icons/iconsSrc/IconRatingStarGray.v
     // .product-description__header
     display: flex;
     flex-direction: column;
-    max-width: toRem(400);
+    max-height: toRem(600);
     &__header {
         border-bottom: toRem(1) solid rgba(0, 0, 0, 0.5);
         padding-bottom: toRem(24);
@@ -195,6 +207,7 @@ import IconRatingStarGray from '@/components/icons/iconsSrc/IconRatingStarGray.v
     // .product-description__options
 
     &__options {
+        flex-grow: 1;
         &:not(:last-child) {
             margin-bottom: toRem(40);
         }
@@ -422,7 +435,6 @@ import IconRatingStarGray from '@/components/icons/iconsSrc/IconRatingStarGray.v
 .checkbox-size {
     // .checkbox-size__wrapper
     display: flex;
-
     column-gap: toRem(16);
 
     &__wrapper {

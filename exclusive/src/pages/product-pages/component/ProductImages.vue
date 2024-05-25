@@ -119,7 +119,6 @@ const setThumbsSwiper = (swiper) => {
 <style lang="scss" scoped>
 @import '@/style/lib/adaptive';
 .product-images {
-    @include adaptiveValue('padding-top', 100, 50);
     padding-bottom: toRem(200);
     // .product-images__product-photo
     display: grid;
