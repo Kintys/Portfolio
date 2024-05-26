@@ -26,29 +26,20 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import { ref, computed } from 'vue'
 import MSelect from '@/components/MSelect.vue'
 import langParams from '../header/settings'
 
 const selectedLang = ref(null)
 const text = 'Summer Sale For All Swim Suits And Free Express Delivery - OFF 50%!'
-const screenWidth = ref(null)
 const shortText = computed(() => {
     if (screenWidth.value < 790 && screenWidth.value) return text.substring(0, 11)
     else return text
 })
 
-function getDynamicInnerWidth() {
-    screenWidth.value = window.innerWidth
-}
-
-onMounted(() => {
-    getDynamicInnerWidth()
-    window.addEventListener('resize', getDynamicInnerWidth)
-})
-onBeforeUnmount(() => {
-    window.removeEventListener('resize', getDynamicInnerWidth)
-})
+//===========================================================
+import { onResize } from '@/modulesHelpers/lib/resize.js'
+const { currentWindowWidth: screenWidth } = onResize()
 </script>
 
 <style lang="scss" scoped>

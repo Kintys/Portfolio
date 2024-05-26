@@ -21,6 +21,9 @@ import ProductDescription from '@/pages/product-pages/component/ProductDescripti
         display: flex;
         justify-content: space-between;
         @include adaptiveValue('padding-top', 140, 80);
+        @media (max-width: toEm(1150)) {
+            flex-direction: column;
+        }
     }
 
     // .product-details__images

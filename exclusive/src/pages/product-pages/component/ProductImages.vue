@@ -2,12 +2,28 @@
     <div class="product-images">
         <div class="product-images__preview preview">
             <swiper
-                :modules="Thumbs"
+                :modules="[Thumbs, Navigation]"
                 :slides-per-view="4"
                 :space-between="16"
                 class="preview__thumbs-swiper"
                 @swiper="setThumbsSwiper"
-                :direction="'vertical'"
+                ref="swiperRef"
+                :direction="changeSwiperDirection()"
+                :freeMode="true"
+                :breakpoints="{
+                    320: {
+                        slidesPerView: 1.5
+                    },
+                    450: {
+                        slidesPerView: 2.5
+                    },
+                    600: {
+                        slidesPerView: 3.5
+                    },
+                    768: {
+                        slidesPerView: 4
+                    }
+                }"
             >
                 <swiper-slide v-for="(slide, index) in images" :key="index">
                     <div class="preview__thumbs-photo"><img :src="slide.img" /></div>
@@ -38,13 +54,13 @@
         </div>
     </div>
 </template>
-
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
-import { Thumbs } from 'swiper/modules'
+import { Thumbs, Navigation } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/thumbs'
+import 'swiper/css/navigation'
 import phone_1 from '@/assets/productPage/01.png'
 import phone_2 from '@/assets/productPage/02.png'
 import phone_3 from '@/assets/productPage/03.png'
@@ -66,7 +82,15 @@ const images = [
 import PhotoSwipeLightbox from 'photoswipe/lightbox'
 import 'photoswipe/style.css'
 
+//===========================================================
+const swiperRef = ref(null)
 const lightbox = ref(null)
+//===========================================================
+import { onResize } from '@/modulesHelpers/lib/resize.js'
+const { currentWindowWidth: windowWidth } = onResize()
+function changeSwiperDirection() {
+    return windowWidth.value <= 768 ? 'horizontal' : 'vertical'
+}
 onMounted(() => {
     if (!lightbox.value) {
         lightbox.value = new PhotoSwipeLightbox({
@@ -119,12 +143,15 @@ const setThumbsSwiper = (swiper) => {
 <style lang="scss" scoped>
 @import '@/style/lib/adaptive';
 .product-images {
-    padding-bottom: toRem(200);
-    // .product-images__product-photo
-    display: grid;
-    grid-template-columns: toRem(170) toRem(500);
-    grid-template-rows: toRem(500);
     gap: toRem(30);
+    display: flex;
+    flex-direction: column-reverse;
+    @media (min-width: toEm($mobile)) {
+        display: grid;
+        grid-template-columns: toRem(170) toRem(500);
+        grid-template-rows: toRem(600);
+    }
+
     &__product-photo {
     }
 
@@ -138,6 +165,7 @@ const setThumbsSwiper = (swiper) => {
 
     &__main-swiper {
         max-height: toRem(600);
+        @include adaptiveValue('max-height', 600, 400, 0, 480, 320);
     }
 
     // .product-photo__main-photo
@@ -148,7 +176,8 @@ const setThumbsSwiper = (swiper) => {
         align-items: center;
         border-radius: toRem(4);
         background-color: #f5f5f5;
-        height: toRem(600);
+        @include adaptiveValue('height', 600, 400, 0, 480, 320);
+        // height: toRem(600);
         padding: toRem(20);
         img {
             width: 100%;
@@ -165,11 +194,7 @@ const setThumbsSwiper = (swiper) => {
     // .preview__thumbs-photo
 
     &__thumbs-photo {
-        // display: flex;
-        // justify-content: center;
-        // align-items: center;
         display: grid;
-        grid-template-columns: toRem(170);
         grid-template-rows: toRem(138);
         justify-items: center;
         align-items: center;

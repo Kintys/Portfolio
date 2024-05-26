@@ -1,13 +1,12 @@
 <template>
-    <section class="best-product-section">
-        <div class="best-product-section__container product-best">
-            <div class="product-best__headline">
-                <MainTitleBlock :title-text="sectionTitle" class="product-best__titles-block" />
-                <v-btn class="product-best__button button-main button-main--small">View All</v-btn>
+    <section class="related-items">
+        <div class="related-items__container items-related">
+            <div class="items-related__headline">
+                <MainTitleBlock :title-text="sectionTitle" class="items-related__titles-block" />
             </div>
-            <div class="product-best__content">
-                <div class="product-best__card" v-for="bestProduct in bestProductList" :key="bestProduct.id">
-                    <ProductCard :product-item="bestProduct" />
+            <div class="items-related__content">
+                <div class="items-related__card" v-for="relatedItem in relatedItemList" :key="relatedItem.title">
+                    <ProductCard :product-item="relatedItem" />
                 </div>
             </div>
         </div>
@@ -24,9 +23,7 @@ const sectionTitle = {
     cat: 'This Month',
     title: 'Best Selling Products '
 }
-//===========================================================
-
-const bestProductList = [
+const relatedItemList = [
     {
         img: img,
         discount: '-40%',
@@ -84,11 +81,16 @@ const bestProductList = [
 
 <style lang="scss" scoped>
 @import '@/style/lib/adaptive';
-@import '@/style/lib/button';
-.best-product-section {
-    @include adaptiveValue('padding-top', 140, 80);
+.related-items {
+    // .related-items__container
+
+    &__container {
+        @include adaptiveValue('padding-top', 140, 80);
+        @include adaptiveValue('padding-bottom', 140, 80);
+    }
 }
-.product-best {
+
+.items-related {
     display: grid;
     row-gap: toRem(60);
     // .product-best__headline
