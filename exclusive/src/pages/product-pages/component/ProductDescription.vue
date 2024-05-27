@@ -132,7 +132,6 @@ import IconRatingStarGray from '@/components/icons/iconsSrc/IconRatingStarGray.v
     // .product-description__header
     display: flex;
     flex-direction: column;
-    max-height: toRem(600);
     &__header {
         border-bottom: toRem(1) solid rgba(0, 0, 0, 0.5);
         padding-bottom: toRem(24);
@@ -257,7 +256,11 @@ import IconRatingStarGray from '@/components/icons/iconsSrc/IconRatingStarGray.v
     &__actions {
         display: flex;
         align-items: center;
-        column-gap: toRem(16);
+        gap: toRem(16);
+        @media (max-width: toEm(430)) {
+            flex-wrap: wrap;
+            justify-content: center;
+        }
     }
 
     // .product-description__quantity

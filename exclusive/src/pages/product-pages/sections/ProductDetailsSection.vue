@@ -20,6 +20,7 @@ import ProductDescription from '@/pages/product-pages/component/ProductDescripti
     &__container {
         display: flex;
         justify-content: space-between;
+        gap: toRem(30);
         @include adaptiveValue('padding-top', 140, 80);
         @media (max-width: toEm(1150)) {
             flex-direction: column;
