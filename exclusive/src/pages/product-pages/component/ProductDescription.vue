@@ -159,11 +159,6 @@ import IconRatingStarGray from '@/components/icons/iconsSrc/IconRatingStarGray.v
         }
     }
 
-    // .product-description__reviews
-
-    &__reviews {
-    }
-
     // .product-description__availability
 
     &__availability {
@@ -263,11 +258,6 @@ import IconRatingStarGray from '@/components/icons/iconsSrc/IconRatingStarGray.v
         }
     }
 
-    // .product-description__quantity
-
-    &__quantity {
-    }
-
     // .product-description__buy-now
 
     &__buy-now {
@@ -287,16 +277,6 @@ import IconRatingStarGray from '@/components/icons/iconsSrc/IconRatingStarGray.v
     &__delivery {
         border-radius: toRem(4);
         border: toRem(1) solid rgba(0, 0, 0, 0.5);
-    }
-
-    // .product-description__free-delivery
-
-    &__free-delivery {
-    }
-
-    // .product-description__return-delivery
-
-    &__return-delivery {
     }
 }
 .quantity-inp {
@@ -349,33 +329,6 @@ import IconRatingStarGray from '@/components/icons/iconsSrc/IconRatingStarGray.v
     }
 
     // .quantity-inp__plus
-}
-.product-description {
-    // .product-description__free-delivery
-
-    &__free-delivery {
-    }
-
-    // .product-description__return-delivery
-
-    &__return-delivery {
-    }
-}
-.product-description {
-    // .product-description__delivery
-
-    &__delivery {
-    }
-
-    // .product-description__free-delivery
-
-    &__free-delivery {
-    }
-
-    // .product-description__return-delivery
-
-    &__return-delivery {
-    }
 }
 
 .free-delivery,

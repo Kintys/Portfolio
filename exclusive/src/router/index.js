@@ -62,6 +62,15 @@ export const routes = [
         }
     },
     {
+        path: '/cart',
+        name: 'cart',
+        component: () => import('@/pages/cart-pages/CartView.vue'),
+        meta: {
+            requireAuth: false,
+            useInMenu: true
+        }
+    },
+    {
         path: '/:path(.*)*',
         name: 'pageNotFound',
         meta: {
