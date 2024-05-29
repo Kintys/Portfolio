@@ -18,7 +18,7 @@
                             inset
                             variant="outlined"
                         ></v-number-input></span
-                    ><span>$650</span>
+                    ><span>${{ 650 }}</span>
                 </li>
             </ul>
         </div>
