@@ -40,10 +40,4 @@ import UserProfil from '@/master-page/header/UserProfil.vue'
 .icon {
     margin: toRem(0) toRem(2);
 }
-.icon-wish-list {
-}
-.icon-cart {
-}
-.icon-user {
-}
 </style>

@@ -20,7 +20,16 @@ import App from './App.vue'
 import router from './router'
 import PrimeVue from 'primevue/config'
 const app = createApp(App)
+
 import vuetify from '@/plugins/vuetify.js'
+import { createVuetify } from 'vuetify'
+import { VNumberInput } from 'vuetify/labs/VNumberInput'
+const VNumberComp = createVuetify({
+    components: {
+        VNumberInput
+    }
+})
+app.use(VNumberComp)
 app.use(createPinia())
 app.use(router)
 app.use(vuetify)
