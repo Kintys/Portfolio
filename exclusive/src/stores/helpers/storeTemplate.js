@@ -1,10 +1,10 @@
-import DbOperations from './DbOperations'
-
+import DbOperations from './DbOperations.js'
+import { useGeneralStore } from '../general.js'
 import { ref, computed } from 'vue'
 
-export default function getStoreTemplate(collectionTitle, generalApiOperation) {
+export default function getStoreTemplate(collectionTitle) {
     const collectionDB = new DbOperations(collectionTitle)
-
+    const { generalApiOperation } = useGeneralStore()
     const itemsList = ref(null)
     const currentItem = ref(null)
 

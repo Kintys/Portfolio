@@ -43,13 +43,13 @@
                             <button class="item-wrapper__delete">
                                 <font-awesome-icon :icon="['fas', 'circle-xmark']" class="item-wrapper__icon" />
                             </button>
-                            <v-img :width="54" :height="54" :src="photo" class="item-wrapper__img" />LCD Monitor </span
+                            <v-img :width="54" :height="54" :src="getItemsList[0].photo" class="item-wrapper__img" />LCD
+                            Monitor </span
                         ><span>$650</span
                         ><span class="item-wrapper__number"
                             ><v-number-input
                                 :reverse="false"
                                 controlVariant="stacked"
-                                label=""
                                 :hideInput="false"
                                 inset
                                 variant="outlined"
@@ -78,6 +78,10 @@ import photo from '@/assets/productPage/01.png'
 import { onResize } from '@/modulesHelpers/lib/resize.js'
 const { currentWindowWidth: windowsWidth } = onResize()
 const getWindowSize = computed(() => (windowsWidth.value <= 600 ? true : false))
+
+import { storeToRefs } from 'pinia'
+import { useSomeProductStore } from '@/stores/someProduct.js'
+const { getItemsList } = storeToRefs(useSomeProductStore())
 </script>
 
 <style lang="scss" scoped>
