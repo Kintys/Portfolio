@@ -1,11 +1,11 @@
 <template>
     <div class="product-description">
         <header class="product-description__header">
-            <h4 class="product-description__title">Havic HV G-92 Gamepad</h4>
+            <h4 class="product-description__title">{{ currentItem.title }}</h4>
             <div class="product-description__subtitle">
                 <div class="product-description__reviews review">
                     <div class="review">
-                        <Rating v-model="rating" :stars="5" readonly :cancel="false" class="review__stars">
+                        <Rating v-model="currentItem.rating" :stars="5" readonly :cancel="false" class="review__stars">
                             <template #onicon>
                                 <IconBase width="16" height="15">
                                     <IconRatingStarYellow />
@@ -16,29 +16,28 @@
                                     <IconRatingStarGray />
                                 </IconBase>
                             </template> </Rating
-                        ><span class="review__number">(130)</span>
+                        ><span class="review__number">{{ currentItem.review }}</span>
                     </div>
                 </div>
-                <div class="product-description__availability">In Stock</div>
+                <div v-if="currentItem.quantity" class="product-description__availability">In Stock</div>
             </div>
-            <div class="product-description__price">$192.00</div>
+            <div class="product-description__price">${{ currentItem.prices.newPrice }}</div>
             <div class="product-description__text">
-                PlayStation 5 Controller Skin High quality vinyl with air channel adhesive for easy bubble free install
-                & mess free removal Pressure sensitive.
+                {{ currentItem.description }}
             </div>
         </header>
         <div class="product-description__options">
             <div class="product-description__colors">
                 <v-radio-group label="Colours:" v-model="color" inline :height="8" :width="8">
-                    <v-radio color="red" value="red"></v-radio>
-                    <v-radio color="red-darken-3" value="red-darken-3"></v-radio>
-                    <v-radio color="indigo" value="indigo"></v-radio>
-                    <v-radio color="indigo-darken-3" value="indigo-darken-3"></v-radio>
-                    <v-radio color="orange" value="orange"></v-radio>
-                    <v-radio color="orange-darken-3" value="orange-darken-3"></v-radio>
+                    <v-radio
+                        v-for="(color, index) in currentItem.colors"
+                        :key="index"
+                        :color="color"
+                        :value="color"
+                    ></v-radio>
                 </v-radio-group>
             </div>
-            <div class="product-description__product-size checkbox-size">
+            <div v-if="currentItem.size" class="product-description__product-size checkbox-size">
                 <span>Size:</span>
                 <label
                     v-for="(itemSize, index) in sizeList"
@@ -89,7 +88,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 const color = ref(null)
 const size = ref(null)
 const numberProduct = ref(1)
@@ -104,12 +103,12 @@ function selectSize(index) {
 //===========================================================
 
 const sizeList = ref(['xs', 's', 'm', 'l', 'xl'])
-const rating = ref(4)
 //===========================================================
 
 //===========================================================
 function onIncreasingNumberOfProducts() {
-    numberProduct.value++
+    if (numberProduct.value >= currentItem.value.quantity) numberProduct.value = currentItem.value.quantity
+    else numberProduct.value++
 }
 function onDecreasingNumberOfProducts() {
     if (numberProduct.value <= 1) numberProduct.value = 1
@@ -123,6 +122,21 @@ import IconBase from '@/components/icons/IconBase.vue'
 import IconWishList from '@/components/icons/iconsSrc/IconWishList.vue'
 import IconRatingStarYellow from '@/components/icons/iconsSrc/IconRatingStarYellow.vue'
 import IconRatingStarGray from '@/components/icons/iconsSrc/IconRatingStarGray.vue'
+
+//===========================================================
+import { storeToRefs } from 'pinia'
+import { useGamepadsStore } from '@/stores/gamepad.js'
+const { getItemsList } = storeToRefs(useGamepadsStore())
+const currentItem = computed(() => {
+    const adv = getItemsList.value[0].rating.reduce((acc, review) => {
+        return Number(acc) + Number(review)
+    })
+    return {
+        ...getItemsList.value[0],
+        rating: adv / getItemsList.value[0].rating.length,
+        review: getItemsList.value[0].rating.length
+    }
+})
 </script>
 
 <style lang="scss" scoped>

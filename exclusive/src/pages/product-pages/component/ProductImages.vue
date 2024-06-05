@@ -25,8 +25,8 @@
                     }
                 }"
             >
-                <swiper-slide v-for="(slide, index) in images" :key="index">
-                    <div class="preview__thumbs-photo"><img :src="slide.img" /></div>
+                <swiper-slide v-for="(slide, index) in currentImage" :key="index">
+                    <div class="preview__thumbs-photo"><img :src="slide.thumbnailURL" /></div>
                 </swiper-slide>
             </swiper>
         </div>
@@ -37,7 +37,7 @@
                 :thumbs="{ swiper: thumbsSwiper }"
                 class="product-photo__main-swiper"
             >
-                <swiper-slide v-for="(slide, index) in imagesValue" :key="index" id="gallery">
+                <swiper-slide v-for="(slide, index) in currentImage" :key="index" id="gallery">
                     <div class="product-photo__main-photo">
                         <a
                             :href="slide.largeURL"
@@ -55,30 +55,13 @@
     </div>
 </template>
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Thumbs, Navigation } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/thumbs'
 import 'swiper/css/navigation'
-import phone_1 from '@/assets/productPage/01.png'
-import phone_2 from '@/assets/productPage/02.png'
-import phone_3 from '@/assets/productPage/03.png'
-import phone_4 from '@/assets/productPage/04.png'
-const images = [
-    {
-        img: phone_1
-    },
-    {
-        img: phone_2
-    },
-    {
-        img: phone_3
-    },
-    {
-        img: phone_4
-    }
-]
+
 import PhotoSwipeLightbox from 'photoswipe/lightbox'
 import 'photoswipe/style.css'
 
@@ -108,36 +91,24 @@ onUnmounted(() => {
     }
 })
 
-const imagesValue = [
-    {
-        largeURL: phone_1,
-        thumbnailURL: phone_1,
-        width: 720,
-        height: 720
-    },
-    {
-        largeURL: phone_2,
-        thumbnailURL: phone_2,
-        width: 600,
-        height: 338
-    },
-    {
-        largeURL: phone_3,
-        thumbnailURL: phone_3,
-        width: 600,
-        height: 600
-    },
-    {
-        largeURL: phone_4,
-        thumbnailURL: phone_4,
-        width: 720,
-        height: 720
-    }
-]
 const thumbsSwiper = ref(null)
 const setThumbsSwiper = (swiper) => {
     thumbsSwiper.value = swiper
 }
+//===========================================================
+import { storeToRefs } from 'pinia'
+import { useGamepadsStore } from '@/stores/gamepad.js'
+const { getItemsList } = storeToRefs(useGamepadsStore())
+const currentImage = computed(() => {
+    return getItemsList.value[0].images.map((img) => {
+        return {
+            largeURL: img,
+            thumbnailURL: img,
+            width: 720,
+            height: 720
+        }
+    })
+})
 </script>
 
 <style lang="scss" scoped>

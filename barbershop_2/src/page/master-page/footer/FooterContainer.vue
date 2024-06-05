@@ -1,11 +1,13 @@
 <template>
-    <footer class="footer"><p class="rights-text">© All rights reserved</p></footer>
+    <footer class="footer">
+        <p class="rights-text">© All rights reserved</p>
+    </footer>
 </template>
 
 <script setup></script>
 
 <style lang="scss" scoped>
-@import '@/assets/style/lib/mixins';
+@import "@/assets/style/lib/mixins";
 .footer {
     display: flex;
     width: 100%;
@@ -13,9 +15,7 @@
     color: white;
     justify-content: center;
     align-items: center;
-    @include adaptiveValue('padding-bottom', 56, 30);
-    @include adaptiveValue('padding-top', 56, 30);
-}
-.rights-text {
+    @include adaptiveValue("padding-bottom", 56, 30);
+    @include adaptiveValue("padding-top", 56, 30);
 }
 </style>
