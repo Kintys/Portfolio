@@ -19,7 +19,10 @@ library.add(fab, fas, far, faT, faL)
 import App from './App.vue'
 import router from './router'
 import PrimeVue from 'primevue/config'
+
 const app = createApp(App)
+
+import axios from './plugins/axios.js'
 
 import vuetify from '@/plugins/vuetify.js'
 import { createVuetify } from 'vuetify'
@@ -33,6 +36,10 @@ app.use(VNumberComp)
 app.use(createPinia())
 app.use(router)
 app.use(vuetify)
+app.use(axios, {
+    baseURL: 'http://localhost:3000/api/v1'
+})
+
 app.mount('#app')
 app.use(PrimeVue)
 app.component('font-awesome-icon', FontAwesomeIcon)

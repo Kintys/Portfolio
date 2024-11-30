@@ -53,8 +53,8 @@ export const routes = [
         }
     },
     {
-        path: '/account',
-        name: 'account',
+        path: '/product',
+        name: 'product',
         component: () => import('@/pages/product-pages/ProductView.vue'),
         meta: {
             requireAuth: false,
@@ -65,6 +65,16 @@ export const routes = [
         path: '/cart',
         name: 'cart',
         component: () => import('@/pages/cart-pages/CartView.vue'),
+        meta: {
+            requireAuth: false,
+            useInMenu: true
+        }
+    },
+
+    {
+        path: '/catalog',
+        name: 'catalog',
+        component: () => import('@/pages/filter-page/FilterPage.vue'),
         meta: {
             requireAuth: false,
             useInMenu: true

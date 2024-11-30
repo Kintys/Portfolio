@@ -80,8 +80,8 @@ const { currentWindowWidth: windowsWidth } = onResize()
 const getWindowSize = computed(() => (windowsWidth.value <= 600 ? true : false))
 
 import { storeToRefs } from 'pinia'
-import { useSomeProductStore } from '@/stores/someProduct.js'
-const { getItemsList } = storeToRefs(useSomeProductStore())
+// import { useSomeProductStore } from '@/stores/someProduct.js'
+// const { getItemsList } = storeToRefs(useSomeProductStore())
 </script>
 
 <style lang="scss" scoped>

@@ -73,9 +73,18 @@ const rating = props.productItem.review.rating
     // .card__image-card
 
     max-width: toRem(270);
-    max-height: toRem(350);
+    min-height: toRem(360);
     display: grid;
     row-gap: toRem(16);
+    padding: toRem(10);
+    transition: all 0.3s;
+    border-radius: toRem(4);
+    @media (any-hover: hover) {
+        &:hover {
+            //
+            background: rgba(255, 166, 0, 0.236);
+        }
+    }
     &__image-card {
         display: grid;
         align-content: center;
@@ -153,7 +162,7 @@ const rating = props.productItem.review.rating
         color: #fff;
         font-weight: 500;
         line-height: 150%;
-        border-radius: 0 0 toRem(4) toRem(4);
+        border-radius: toRem(0);
         opacity: 0;
         padding: 0;
     }
