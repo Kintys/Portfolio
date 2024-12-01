@@ -6,14 +6,35 @@
                 <FilterPanel></FilterPanel>
                 <FilterProductBox></FilterProductBox>
             </div>
-            <v-pagination :length="4" active-color="#db4444" class="filter__pagination"></v-pagination>
+            <v-pagination
+                v-model="currentPage"
+                :length="totalPage"
+                active-color="#db4444"
+                class="filter__pagination"
+            ></v-pagination>
         </div>
     </div>
 </template>
 
 <script setup>
+import { ref, onBeforeMount, computed, watch } from 'vue'
 import FilterPanel from './component/FilterPanel.vue'
 import FilterProductBox from './component/FilterProductBox.vue'
+import { useGamepadsStore } from '../../stores/gamepad.js'
+import { storeToRefs } from 'pinia'
+const { loadItemsList, loadProductWithPagination } = useGamepadsStore()
+const { getProductsListTotalNumber } = storeToRefs(useGamepadsStore())
+const currentPage = ref(1)
+const prePageNumber = ref(3)
+
+const totalPage = computed(() => Math.ceil(getProductsListTotalNumber.value / prePageNumber.value))
+
+watch(currentPage, (newVal, oldVal) => {
+    if (newVal) loadProductWithPagination(currentPage.value - 1, prePageNumber.value)
+})
+onBeforeMount(() => {
+    loadItemsList()
+})
 
 const links = [
     {

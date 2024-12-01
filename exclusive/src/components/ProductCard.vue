@@ -2,7 +2,7 @@
     <a class="card">
         <div class="card__image-card">
             <div class="card__img"><v-img :src="productItem.img" /></div>
-            <span class="card__discount">{{ productItem.discount }}</span>
+            <span v-if="productItem.discount" class="card__discount">{{ productItem.discount }}</span>
             <div class="card__actions">
                 <button class="card__wish-list-btn">
                     <div class="card__circle">
@@ -72,7 +72,7 @@ const rating = props.productItem.review.rating
 .card {
     // .card__image-card
 
-    max-width: toRem(270);
+    width: toRem(270);
     min-height: toRem(360);
     display: grid;
     row-gap: toRem(16);

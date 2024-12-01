@@ -11,7 +11,7 @@
             ></v-select>
         </div>
         <div class="filter-product__list-product">
-            <template v-for="product of productList" :key="product.id"
+            <template v-for="product of productData" :key="product._id"
                 ><ProductCard :product-item="product"></ProductCard
             ></template>
         </div>
@@ -19,12 +19,18 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
+import { useGamepadsStore } from '@/stores/gamepad'
 import ProductCard from '../../../components/ProductCard.vue'
 import img from '../../../assets/productPage/01.png'
-import axios from 'axios'
+import { storeToRefs } from 'pinia'
+
+const { loadItemsList } = useGamepadsStore()
+const { getProductsList } = storeToRefs(useGamepadsStore())
 const selected = ref(null)
-const productData = ref([])
+
+const productData = computed(() => getProductsList.value)
+
 const selectedItems = [
     {
         title: 'Ascending prices',
@@ -36,14 +42,6 @@ const selectedItems = [
     }
 ]
 
-// async function getProduct() {
-//     const data = await axios.get('/products')
-//     productData.value.push(...(data ?? []))
-//     console.log(productData.value)
-// }
-// onMounted(() => {
-//     getProduct()
-// })
 const productList = [
     {
         img: img,

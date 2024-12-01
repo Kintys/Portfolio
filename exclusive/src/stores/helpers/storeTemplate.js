@@ -1,11 +1,11 @@
-import DbOperations from './DbOperations.js'
+import DbOperations from './dbOperation.js'
 import { useGeneralStore } from '../general.js'
 import { ref, computed } from 'vue'
 
 export default function getStoreTemplate(collectionTitle) {
     const collectionDB = new DbOperations(collectionTitle)
     const { generalApiOperation } = useGeneralStore()
-    const itemsList = ref(null)
+    const itemsList = ref([])
     const currentItem = ref(null)
 
     async function loadItemsList() {
@@ -76,6 +76,7 @@ export default function getStoreTemplate(collectionTitle) {
     const getCurrentItem = computed(() => currentItem.value)
 
     return {
+        itemsList,
         loadItemsList,
         addItem,
         addItemWithCustomId,
@@ -87,6 +88,7 @@ export default function getStoreTemplate(collectionTitle) {
         loadItemById,
         loadFilteredData,
         getCurrentItem,
-        loadDocumentsFromIdsList
+        loadDocumentsFromIdsList,
+        collectionDB
     }
 }
