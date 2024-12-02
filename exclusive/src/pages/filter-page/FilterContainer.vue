@@ -4,10 +4,10 @@
             <v-breadcrumbs :items="links" color="#00000080"></v-breadcrumbs>
             <div class="filter__content">
                 <FilterPanel></FilterPanel>
-                <FilterProductBox></FilterProductBox>
+                <FilterProductBox v-model="filterObject.sortOption"></FilterProductBox>
             </div>
             <v-pagination
-                v-model="currentPage"
+                v-model="filterObject.pageNumber"
                 :length="totalPage"
                 active-color="#db4444"
                 class="filter__pagination"
@@ -22,18 +22,38 @@ import FilterPanel from './component/FilterPanel.vue'
 import FilterProductBox from './component/FilterProductBox.vue'
 import { useGamepadsStore } from '../../stores/gamepad.js'
 import { storeToRefs } from 'pinia'
-const { loadItemsList, loadProductWithPagination } = useGamepadsStore()
+
+const { loadProductWithPagination } = useGamepadsStore()
 const { getProductsListTotalNumber } = storeToRefs(useGamepadsStore())
-const currentPage = ref(1)
-const prePageNumber = ref(3)
-
-const totalPage = computed(() => Math.ceil(getProductsListTotalNumber.value / prePageNumber.value))
-
-watch(currentPage, (newVal, oldVal) => {
-    if (newVal) loadProductWithPagination(currentPage.value - 1, prePageNumber.value)
+const filterObject = ref({
+    pageNumber: 1,
+    prePageNumber: 3,
+    sortOption: null
 })
+const totalPage = computed(() => Math.ceil(getProductsListTotalNumber.value / filterObject.value.prePageNumber))
+
+watch(
+    filterObject.value,
+    (newVal) => {
+        if (newVal) {
+            loadProductWithPagination(
+                filterObject.value.pageNumber - 1,
+                filterObject.value.prePageNumber,
+                filterObject.value.sortOption
+            )
+        }
+    },
+    {
+        deep: true
+    }
+)
+
 onBeforeMount(() => {
-    loadItemsList()
+    loadProductWithPagination(
+        filterObject.value.pageNumber - 1,
+        filterObject.value.prePageNumber,
+        filterObject.value.sortOption
+    )
 })
 
 const links = [

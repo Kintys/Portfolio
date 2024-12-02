@@ -9,10 +9,11 @@ export const useGamepadsStore = defineStore('products', () => {
     const getProductsList = computed(() => getItemsList.value.data)
     const getProductsListTotalNumber = computed(() => getItemsList.value.totalNumber)
 
-    async function loadProductWithPagination(page, limit) {
+    async function loadProductWithPagination(page, limit, sortOpt) {
         itemsList.value = await collectionDB.loadItemListWithFilterParams({
             page: page,
-            prePage: limit
+            prePage: limit,
+            sort: { newPrice: sortOpt }
         })
     }
     return {

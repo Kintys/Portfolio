@@ -28,8 +28,8 @@
         <div class="card__description">
             <h4 class="card__title">{{ productItem.title }}</h4>
             <div class="card__costs">
-                <span class="card__new-price">${{ productItem.prices.newPrice }}</span
-                ><span class="card__old-price">${{ productItem.prices.oldPrice }}</span>
+                <span class="card__new-price">${{ productItem.newPrice }}</span
+                ><span class="card__old-price">${{ productItem.oldPrice }}</span>
             </div>
             <div class="card__review">
                 <Rating v-model="rating" :stars="5" readonly :cancel="false" class="card__stars">
@@ -43,7 +43,7 @@
                             <IconRatingStarGray />
                         </IconBase>
                     </template> </Rating
-                ><span class="card__review-number">({{ productItem.review.evaluation }})</span>
+                ><span class="card__review-number">({{ productItem.evaluation }})</span>
             </div>
         </div>
     </a>
@@ -63,7 +63,7 @@ const props = defineProps({
         default: () => ({})
     }
 })
-const rating = props.productItem.review.rating
+const rating = props.productItem.rating
 </script>
 
 <style lang="scss" scoped>

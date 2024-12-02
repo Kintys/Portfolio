@@ -4,7 +4,7 @@
             <v-select
                 label="Sort"
                 :items="selectedItems"
-                v-model="selected"
+                v-model="sortOption"
                 variant="outlined"
                 class="top-bar__select"
                 hide-details="false"
@@ -19,15 +19,15 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, computed, watch, defineEmits } from 'vue'
 import { useGamepadsStore } from '@/stores/gamepad'
 import ProductCard from '../../../components/ProductCard.vue'
-import img from '../../../assets/productPage/01.png'
 import { storeToRefs } from 'pinia'
 
-const { loadItemsList } = useGamepadsStore()
+const emit = defineEmits(['update:modelValue'])
+
 const { getProductsList } = storeToRefs(useGamepadsStore())
-const selected = ref(null)
+const sortOption = ref('asc')
 
 const productData = computed(() => getProductsList.value)
 
@@ -42,60 +42,11 @@ const selectedItems = [
     }
 ]
 
-const productList = [
-    {
-        img: img,
-        discount: '-40%',
-        title: 'HAVIT HV-G92 Gamepa',
-        prices: {
-            newPrice: '120',
-            oldPrice: '160'
-        },
-        review: {
-            rating: '5',
-            evaluation: '88'
-        }
-    },
-    {
-        img: img,
-        discount: '-40%',
-        title: 'HAVIT HV-G92 Gamepa',
-        prices: {
-            newPrice: '120',
-            oldPrice: '160'
-        },
-        review: {
-            rating: 4,
-            evaluation: '88'
-        }
-    },
-    {
-        img: img,
-        discount: '-40%',
-        title: 'HAVIT HV-G92 Gamepa',
-        prices: {
-            newPrice: '120',
-            oldPrice: '160'
-        },
-        review: {
-            rating: 4,
-            evaluation: '88'
-        }
-    },
-    {
-        img: img,
-        discount: '-40%',
-        title: 'HAVIT HV-G92 Gamepa',
-        prices: {
-            newPrice: '120',
-            oldPrice: '160'
-        },
-        review: {
-            rating: '4',
-            evaluation: '88'
-        }
+watch(sortOption, (newSort) => {
+    if (newSort) {
+        emit('update:modelValue', newSort)
     }
-]
+})
 </script>
 
 <style lang="scss" scoped>
