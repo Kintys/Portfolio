@@ -1,7 +1,7 @@
 <template>
-    <a class="card">
+    <a class="card" v-if="productItem">
         <div class="card__image-card">
-            <div class="card__img"><v-img :src="productItem.img" /></div>
+            <div class="card__img"><v-img :src="productItem?.img" /></div>
             <span v-if="productItem.discount" class="card__discount">{{ productItem.discount }}</span>
             <div class="card__actions">
                 <button class="card__wish-list-btn">

@@ -86,16 +86,23 @@ import IconBase from '../../../components/icons/IconBase.vue'
 import IconRatingStarYellow from '../../../components/icons/iconsSrc/IconRatingStarYellow.vue'
 import IconRatingStarGray from '../../../components/icons/iconsSrc/IconRatingStarGray.vue'
 import Rating from 'primevue/rating'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+const emit = defineEmits(['update:modelValue'])
 const opensPanels = ref(['Brand', 'Rating'])
 const brand = ref(['Management', 'Settings'])
 const rating = ref([5, 4, 3, 2])
 const filterParams = ref({
     search: '',
     brand: [],
-    rating: [],
+    rating: 0,
     minPrice: 1,
-    maxPrice: 10000
+    maxPrice: 1000
+})
+
+watch(filterParams.value, (newVal) => {
+    if (newVal) {
+        emit('update:modelValue', newVal)
+    }
 })
 </script>
 

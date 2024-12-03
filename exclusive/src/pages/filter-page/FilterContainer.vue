@@ -3,7 +3,7 @@
         <div class="filter__container">
             <v-breadcrumbs :items="links" color="#00000080"></v-breadcrumbs>
             <div class="filter__content">
-                <FilterPanel></FilterPanel>
+                <FilterPanel v-model="filterObject.filters"></FilterPanel>
                 <FilterProductBox v-model="filterObject.sortOption"></FilterProductBox>
             </div>
             <v-pagination
@@ -28,32 +28,27 @@ const { getProductsListTotalNumber } = storeToRefs(useGamepadsStore())
 const filterObject = ref({
     pageNumber: 1,
     prePageNumber: 3,
-    sortOption: null
+    sortOption: null,
+    filters: {}
 })
 const totalPage = computed(() => Math.ceil(getProductsListTotalNumber.value / filterObject.value.prePageNumber))
 
-watch(
-    filterObject.value,
-    (newVal) => {
-        if (newVal) {
-            loadProductWithPagination(
-                filterObject.value.pageNumber - 1,
-                filterObject.value.prePageNumber,
-                filterObject.value.sortOption
-            )
-        }
-    },
-    {
-        deep: true
+watch(filterObject.value, (newVal) => {
+    if (newVal) {
+        loadProductWithPagination(
+            newVal.pageNumber - 1,
+            newVal.prePageNumber,
+            newVal.sortOption,
+            newVal.filters.minPrice,
+            newVal.filters.maxPrice,
+            newVal.filters.search,
+            newVal.filters.rating
+        )
     }
-)
+})
 
 onBeforeMount(() => {
-    loadProductWithPagination(
-        filterObject.value.pageNumber - 1,
-        filterObject.value.prePageNumber,
-        filterObject.value.sortOption
-    )
+    loadProductWithPagination(filterObject.value.pageNumber - 1, filterObject.value.prePageNumber)
 })
 
 const links = [
