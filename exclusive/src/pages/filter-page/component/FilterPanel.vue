@@ -94,7 +94,7 @@ const rating = ref([5, 4, 3, 2])
 const filterParams = ref({
     search: '',
     brand: [],
-    rating: 0,
+    rating: 5,
     minPrice: 1,
     maxPrice: 1000
 })

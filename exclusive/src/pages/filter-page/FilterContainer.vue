@@ -23,7 +23,7 @@ import FilterProductBox from './component/FilterProductBox.vue'
 import { useGamepadsStore } from '../../stores/gamepad.js'
 import { storeToRefs } from 'pinia'
 
-const { loadProductWithPagination } = useGamepadsStore()
+const { loadProductWithPagination, loadItemsList } = useGamepadsStore()
 const { getProductsListTotalNumber } = storeToRefs(useGamepadsStore())
 const filterObject = ref({
     pageNumber: 1,

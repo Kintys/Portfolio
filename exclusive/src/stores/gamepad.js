@@ -6,11 +6,10 @@ export const useGamepadsStore = defineStore('products', () => {
     const productsStore = getStoreTemplate('products')
     const { getItemsList, itemsList, collectionDB } = productsStore
 
-    const getProductsList = computed(() => getItemsList.value.data?.documents)
+    const getProductsList = computed(() => getItemsList.value.data?.documents || getItemsList.value.data)
     const getProductsListTotalNumber = computed(() => getItemsList.value.data?.totalNumber)
 
     async function loadProductWithPagination(page, limit, sortOpt, minValue, maxValue, search, rating) {
-        console.log(search)
         itemsList.value = await collectionDB.loadItemListWithFilterParams({
             page: page,
             perPage: limit,
