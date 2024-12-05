@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import getStoreTemplate from './helpers/storeTemplate'
 import { computed } from 'vue'
+import RequestManager from './helpers/RequestManager'
 
 export const useGamepadsStore = defineStore('products', () => {
     const productsStore = getStoreTemplate('products')
@@ -19,10 +20,15 @@ export const useGamepadsStore = defineStore('products', () => {
             rating: rating
         })
     }
+    async function loginWithGoogle(path) {
+        const auth = await RequestManager.getRequest(path)
+        console.log(auth)
+    }
     return {
         getProductsList,
         getProductsListTotalNumber,
         loadProductWithPagination,
+        loginWithGoogle,
         ...productsStore
     }
 })

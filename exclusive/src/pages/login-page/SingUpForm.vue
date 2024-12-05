@@ -46,11 +46,7 @@
                     >
                         {{ formParams.buttonCreate }}
                     </v-btn>
-                    <button
-                        type="button"
-                        @click="loginWithGoogleEmailPopup"
-                        class="auth__button button-main button-main--trans"
-                    >
+                    <button type="button" @click="loginG" class="auth__button button-main button-main--trans">
                         <IconBase width="24" height="25" viewBox="0 0 24 25"><IconGoogle /></IconBase>
                         {{ formParams.buttonGoogle }}
                     </button>
@@ -68,12 +64,15 @@
 
 <script setup>
 import { ref, computed, reactive, watch } from 'vue'
+import { useGamepadsStore } from '../../stores/gamepad.js'
+const { loginWithGoogle } = useGamepadsStore()
 defineProps({
     formParams: {
         type: Object,
         required: true
     }
 })
+
 const emailRules = reactive([
     (value) => !!value || 'Required.',
     (value) => {
@@ -94,6 +93,7 @@ const router = useRouter()
 
 import { useAuthStore } from '@/stores/auth'
 const { loginWithGoogleAccount, signUpWithWithEmailAndPassword } = useAuthStore()
+
 const name = ref(null)
 const email = ref(null)
 const password = ref(null)
@@ -102,6 +102,10 @@ watch([email, password], ([new_email, new_password]) => {
     emit('update:newEmail', new_email)
     emit('update:newPass', new_password)
 })
+
+function loginG() {
+    loginWithGoogle('/auth/login/google')
+}
 
 const isValidForm = computed(() => name.value && email.value && password.value)
 
@@ -139,6 +143,7 @@ const dialogAnswer = ref(null)
 
 //=====================================================================
 import { useAgreementsStore } from '@/stores/agreements'
+import RequestManager from '@/stores/helpers/RequestManager'
 const { checkAcceptRules } = useAgreementsStore()
 </script>
 
