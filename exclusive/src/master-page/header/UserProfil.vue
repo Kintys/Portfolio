@@ -2,7 +2,7 @@
     <v-menu class="user-profil" location="bottom center">
         <template v-slot:activator="{ props }">
             <v-btn icon v-bind="props" size="34">
-                <v-avatar v-if="getUser.photoURL" :image="getUser.photoURL" size="34"> </v-avatar>
+                <v-avatar v-if="getUser.avatar" :image="getUser.avatar" size="34"> </v-avatar>
                 <v-avatar v-else size="34">
                     <IconBase
                         class="icon icon-user"

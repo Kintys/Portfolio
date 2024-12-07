@@ -2,7 +2,7 @@ import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { useGeneralStore } from './general'
 import { useUsersStore } from './users'
-import authOperations from './helpers/GoogleAuthOperations.js'
+import AuthOperations from './helpers/AuthOperations.js'
 
 export const useAuthStore = defineStore('auth', () => {
     const generalStore = useGeneralStore()
@@ -52,32 +52,34 @@ export const useAuthStore = defineStore('auth', () => {
         })
     }
 
-    function loginWithGoogleAccount() {
+    function loginWithGoogleAccount(path) {
+        console.log(path)
         return new Promise((resolve, reject) => {
             generalApiOperation({
-                operation: () => authOperations.loginWithGoogleAccountPopup()
+                operation: () => AuthOperations.getUserByToken(path)
             })
                 .then((res) => {
                     user.value = res
+                    resolve(true)
 
-                    usersStore
-                        .addUserWithCustomId({
-                            id: user?.value?.uid,
-                            data: {
-                                email: user?.value?.email,
-                                permissions: {
-                                    create: false,
-                                    read: true,
-                                    update: false,
-                                    delete: true
-                                }
-                            }
-                        })
-                        .then(() => {
-                            usersStore.loadUserById(user.value.uid).then(() => {
-                                resolve(res)
-                            })
-                        })
+                    // usersStore
+                    //     .addUserWithCustomId({
+                    //         id: user?.value?.uid,
+                    //         data: {
+                    //             email: user?.value?.email,
+                    //             permissions: {
+                    //                 create: false,
+                    //                 read: true,
+                    //                 update: false,
+                    //                 delete: true
+                    //             }
+                    //         }
+                    //     })
+                    //     .then(() => {
+                    //         usersStore.loadUserById(user.value.uid).then(() => {
+                    //             resolve(res)
+                    //         })
+                    //     })
                 })
                 .catch((error) => reject(error))
         })

@@ -9,7 +9,7 @@ export default class RequestManager {
     }
 
     static isAuthenticated() {
-        return localStorage.getItem('jwt_token')
+        return localStorage.getItem('token')
     }
 
     // static async onLogout() {
@@ -79,13 +79,15 @@ export default class RequestManager {
     static async getRequest(path, params, addAuthorization = true) {
         const headers = { 'Content-Type': 'application/json' }
         if (addAuthorization && RequestManager.isAuthenticated()) {
-            headers['Authorization'] = `Bearer ${localStorage.getItem('jwt_token')}`
+            console.log(localStorage.getItem('token'))
+            headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`
         }
         try {
             const response = await RequestManager.http.get(RequestManager.getServerRoute(path), {
                 params,
-                headers
+                headers: headers
             })
+
             if (response.status !== 200) throw new Error(response.data.error)
             else {
                 return response.data
@@ -94,6 +96,38 @@ export default class RequestManager {
             return error
         }
     }
+    // const headers = {}
+    // if (addAuthorization && RequestManager.isAuthenticated()) {
+    //     headers['Authorization'] = `Bearer ${localStorage.getItem('jwt_token')}`
+    // }
+    // const formData = new FormData(form)
+    // const response = await fetch(url, {
+    //     method: 'POST',
+    //     headers: headers,
+    //     body: formData
+    // })
+    // const data = await response.json()
+    // return data
+
+    // static async getRequest(path, params, addAuthorization = true) {
+    //     const headers = { 'Content-Type': 'application/json' }
+    //     if (addAuthorization && RequestManager.isAuthenticated()) {
+    //         console.log(localStorage.getItem('token'))
+    //         headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`
+    //     }
+    //     try {
+    //         const response = await RequestManager.http.get(RequestManager.getServerRoute(path), {
+    //             params,
+    //             headers: headers
+    //         })
+    //         if (response.status !== 200) throw new Error(response.data.error)
+    //         else {
+    //             return response.data
+    //         }
+    //     } catch (error) {
+    //         return error
+    //     }
+    // }
 
     static async postRequest(path, data) {
         try {

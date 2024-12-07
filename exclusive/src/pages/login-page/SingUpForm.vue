@@ -103,10 +103,58 @@ watch([email, password], ([new_email, new_password]) => {
     emit('update:newPass', new_password)
 })
 
-function loginG() {
-    loginWithGoogle('/auth/login/google')
-}
+// function loginG() {
+//     // loginWithGoogle('/auth/login/google')
 
+//     const windowFeatures = 'left=100,top=100,width=620,height=620'
+//     const authWindow = window.open(`http://localhost:3000/api/v1/auth/login/google`, 'google', windowFeatures)
+
+//     const messageListener = (event) => {
+//         if (event.origin !== 'http://localhost:3000') return
+
+//         window.removeEventListener('message', messageListener)
+
+//         authWindow.close()
+//         console.log(event.data)
+//         return (userData = JSON.parse(atob(event.data)))
+//     }
+
+//     window.addEventListener('message', messageListener)
+// }
+async function loginG() {
+    try {
+        await getToken()
+        // await loginWithGoogleAccount('/auth/user')
+    } catch (error) {
+        console.log(error)
+    }
+}
+async function getToken(params) {
+    const windowFeatures = 'left=100,top=100,width=620,height=620'
+    const authWindow = window.open('http://localhost:3000/api/v1/auth/login/google', 'google', windowFeatures)
+    const interval = setInterval(async () => {
+        if (authWindow.closed) {
+            clearInterval(interval)
+        }
+
+        try {
+            const url = authWindow.location.href
+            if (url.includes('singUp')) {
+                const queryParams = new URLSearchParams(new URL(url).search)
+                const token = queryParams.get('token')
+                localStorage.setItem('token', token)
+                if (token) {
+                    authWindow.close()
+                    clearInterval(interval)
+                    await loginWithGoogleAccount('/auth/user')
+                    return true
+                }
+            }
+        } catch (err) {
+            return false
+        }
+    }, 1000)
+}
 const isValidForm = computed(() => name.value && email.value && password.value)
 
 async function singUpWithEmail(email, password) {
@@ -121,7 +169,7 @@ async function loginWithGoogleEmailPopup() {
     loginWithGoogleAccount()
         .then(async () => {
             openSnackBar.value = true
-            await checkAcceptRules()
+            // await checkAcceptRules()
         })
         .then(() => {
             setTimeout(() => {
