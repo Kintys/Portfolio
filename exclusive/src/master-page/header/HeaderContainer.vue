@@ -27,7 +27,7 @@
                         </div>
                     </DynamicAdapt>
                 </div>
-                <HeaderActionsPanel v-if="getCurrentUser" :ref="navBar" class="header__actions" />
+                <HeaderActionsPanel v-if="isAuthenticated" :ref="navBar" class="header__actions" />
                 <div class="icon-menu" :class="{ 'open-icon': showMenu }" @click="activeMenu()">
                     <span></span>
                 </div>
@@ -57,8 +57,8 @@ function onScroll(scroll) {
 }
 // ===========================
 import { storeToRefs } from 'pinia'
-import { useUsersStore } from '@/stores/users'
-const { getCurrentUser } = storeToRefs(useUsersStore())
+import { useAuthStore } from '@/stores/auth'
+const { isAuthenticated } = storeToRefs(useAuthStore())
 </script>
 
 <style lang="scss" scoped>

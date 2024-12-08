@@ -9,133 +9,81 @@ export const useAuthStore = defineStore('auth', () => {
     const usersStore = useUsersStore()
     const { generalApiOperation } = generalStore
 
-    const user = ref(null)
+    const auth = ref(null)
 
-    const getUser = computed(() => user.value)
+    const isAuthenticated = computed(() => (auth.value && usersStore.getCurrentUser ? true : false))
 
-    async function signUpWithWithEmailAndPassword(email, password) {
-        generalApiOperation({
-            operation: () => authOperations.signUpWithWithEmailAndPassword({ email, password })
-        }).then(async (res) => {
-            user.value = res
-
-            await usersStore.addUserWithCustomId({
-                id: user?.value?.uid,
-                data: {
-                    email,
-                    permissions: {
-                        create: false,
-                        read: true,
-                        update: false,
-                        delete: false
-                    }
-                }
+    async function loginEmail(userData) {
+        return new Promise((resolve, reject) => {
+            generalApiOperation({
+                operation: () =>
+                    AuthOperations.loginWithEmailAndPassword(userData)
+                        .then((userData) => {
+                            return resolve(registerUserToStore(userData))
+                        })
+                        .catch((error) => reject(error))
             })
         })
     }
 
-    async function signInWithWithEmailAndPassword(email, password) {
+    async function signInWithEmailAndPassword(newUserData) {
         return new Promise((resolve, reject) => {
             generalApiOperation({
-                operation: () => authOperations.signInWithWithEmailAndPassword({ email, password })
+                operation: () => AuthOperations.createNewUserWithEmailAndPassword(newUserData)
             })
-                .then((res) => {
-                    user.value = res
-                    usersStore
-                        .loadUserById(user.value.uid)
-                        .then(() => {
-                            resolve(res)
-                        })
-                        .catch((error) => reject(error))
+                .then((userData) => {
+                    return resolve(registerUserToStore(userData))
                 })
                 .catch((error) => reject(error))
         })
     }
-
-    function loginWithGoogleAccount(path) {
-        console.log(path)
+    function loginWithGoogleAccount() {
         return new Promise((resolve, reject) => {
             generalApiOperation({
-                operation: () => AuthOperations.getUserByToken(path)
+                operation: () => AuthOperations.authWithGoogleEmail()
             })
-                .then((res) => {
-                    user.value = res
-                    resolve(true)
-
-                    // usersStore
-                    //     .addUserWithCustomId({
-                    //         id: user?.value?.uid,
-                    //         data: {
-                    //             email: user?.value?.email,
-                    //             permissions: {
-                    //                 create: false,
-                    //                 read: true,
-                    //                 update: false,
-                    //                 delete: true
-                    //             }
-                    //         }
-                    //     })
-                    //     .then(() => {
-                    //         usersStore.loadUserById(user.value.uid).then(() => {
-                    //             resolve(res)
-                    //         })
-                    //     })
+                .then((userData) => {
+                    if (userData) {
+                        return resolve(registerUserToStore(userData))
+                    } else throw new Error('user is not defined')
                 })
                 .catch((error) => reject(error))
         })
     }
     function loginWithGoogleToken() {
+        if (isAuthenticated.value) return
         return new Promise((resolve, reject) => {
             generalApiOperation({
-                operation: () => authOperations.loginWithCredential()
+                operation: () => AuthOperations.loadUserByToken('/auth/user')
             })
-                .then((res) => {
-                    if (res) {
-                        user.value = res.user
-
-                        usersStore
-                            .addUserWithCustomId({
-                                id: user?.value?.uid,
-                                data: {
-                                    email: user?.value?.email,
-                                    permissions: {
-                                        create: false,
-                                        read: true,
-                                        update: false,
-                                        delete: true
-                                    }
-                                }
-                            })
-                            .then(() => {
-                                usersStore.loadUserById(user.value.uid).then(() => {
-                                    resolve(res)
-                                })
-                            })
-                    } else return
+                .then((userData) => {
+                    if (userData) {
+                        return resolve(registerUserToStore(userData))
+                    } else throw new Error('user is not defined')
                 })
                 .catch((error) => reject(error))
         })
     }
+    function registerUserToStore(userData) {
+        auth.value = userData.auth
+        usersStore.addUser(userData.data)
+        return true
+    }
 
     function logOut() {
         generalApiOperation({
-            operation: () => authOperations.logout()
+            operation: () => AuthOperations.logout()
         })
-        user.value = null
+        auth.value = null
         usersStore.currentUser = null
     }
 
-    async function getAuthData() {
-        return user.value
-    }
-
     return {
-        signUpWithWithEmailAndPassword,
-        signInWithWithEmailAndPassword,
+        signInWithEmailAndPassword,
         loginWithGoogleAccount,
         logOut,
-        getUser,
-        getAuthData,
+        loginEmail,
+        isAuthenticated,
         loginWithGoogleToken
     }
 })

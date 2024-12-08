@@ -16,7 +16,7 @@ export const routes = [
         children: [
             {
                 path: '',
-                name: 'sign up',
+                name: 'sign Up',
                 component: () => import('@/pages/login-page/CreateNewAccountView.vue'),
                 meta: {
                     requireAuth: false,

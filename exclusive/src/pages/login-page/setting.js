@@ -2,7 +2,10 @@ export const login = {
     title: 'Log in to Exclusive',
     subtitle: 'Enter your details below',
     buttonLogin: 'Log in',
+    buttonGoogle: 'Log in  with Google',
     forgetPass: 'Forget Password?',
+    createAcc: "Don't have an account?",
+    link: 'Sing Up',
     inputName: false
 }
 export const create = {

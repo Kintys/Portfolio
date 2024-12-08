@@ -28,7 +28,7 @@ export const useUsersStore = defineStore('users', () => {
 
     async function addUser(userData) {
         currentUser.value = await generalApiOperation({
-            operation: () => collectionDB.addItem(userData)
+            operation: () => userData
         })
     }
 

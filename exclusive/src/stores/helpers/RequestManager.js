@@ -4,12 +4,20 @@ export default class RequestManager {
 
     static http = axios
 
+    static tokenName = 'exclusive_token'
+
     static getServerRoute(path) {
         return `${RequestManager.apiBase}${path}`
     }
-
-    static isAuthenticated() {
-        return localStorage.getItem('token')
+    static saveUserToken(token) {
+        localStorage.setItem(RequestManager.tokenName, token)
+    }
+    static deleteUserToken() {
+        localStorage.removeItem('exclusive_token')
+        return true
+    }
+    static getToken() {
+        return localStorage.getItem(RequestManager.tokenName)
     }
 
     // static async onLogout() {
@@ -26,9 +34,9 @@ export default class RequestManager {
             // Налаштування заголовків запиту
             const headers = { 'Content-Type': 'application/json' }
             // Якщо маршрут потребує автентифікації і користувач виконав автентифікацію
-            if (addAuthorization && RequestManager.isAuthenticated()) {
+            if (addAuthorization && RequestManager.getToken()) {
                 // Додаємо токен до заголовків запиту
-                headers['Authorization'] = `Bearer ${localStorage.getItem('jwt_token')}`
+                headers['Authorization'] = `Bearer ${RequestManager.getToken()}`
             }
 
             // Виконання запиту
@@ -78,9 +86,8 @@ export default class RequestManager {
 
     static async getRequest(path, params, addAuthorization = true) {
         const headers = { 'Content-Type': 'application/json' }
-        if (addAuthorization && RequestManager.isAuthenticated()) {
-            console.log(localStorage.getItem('token'))
-            headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`
+        if (addAuthorization && RequestManager.getToken()) {
+            headers['Authorization'] = `Bearer ${RequestManager.getToken()}`
         }
         try {
             const response = await RequestManager.http.get(RequestManager.getServerRoute(path), {
@@ -129,62 +136,54 @@ export default class RequestManager {
     //     }
     // }
 
-    static async postRequest(path, data) {
+    static async postRequest(path, data, addAuthorization = true) {
+        const headers = { 'Content-Type': 'application/json' }
+        if (addAuthorization && RequestManager.getToken()) {
+            headers['Authorization'] = `Bearer ${RequestManager.getToken()}`
+        }
         try {
-            const response = await RequestManager.http.post(RequestManager.getServerRoute(path), {
-                data
+            const response = await RequestManager.http.post(RequestManager.getServerRoute(path), data, {
+                headers: headers
             })
-            if (!response.ok) throw new Error(response.data)
+            if (response.status >= 300 && response.status <= 500) throw new Error(response.data)
             else return response.data
         } catch (error) {
             return error
         }
-        // const headers = {}
-        // if (addAuthorization && RequestManager.isAuthenticated()) {
-        //     headers['Authorization'] = `Bearer ${localStorage.getItem('jwt_token')}`
-        // }
-        // const formData = new FormData(form)
-        // const response = await fetch(url, {
-        //     method: 'POST',
-        //     headers: headers,
-        //     body: formData
-        // })
-        // const data = await response.json()
-        // return data
     }
 
     // Загальний метод для виконання POST запиту
-    static async postRequest(route, body, addAuthorization = true) {
-        const headers = { 'Content-Type': 'application/json' }
-        if (addAuthorization && RequestManager.isAuthenticated()) {
-            headers['Authorization'] = `Bearer ${localStorage.getItem('jwt_token')}`
-        }
+    // static async postRequest(route, body, addAuthorization = true) {
+    //     const headers = { 'Content-Type': 'application/json' }
+    //     if (addAuthorization && RequestManager.isAuthenticated()) {
+    //         headers['Authorization'] = `Bearer ${localStorage.getItem('jwt_token')}`
+    //     }
 
-        const response = await fetch(route, {
-            method: 'POST',
-            headers: headers,
-            body: JSON.stringify(body)
-        })
-        const data = await response.json()
-        return data
-    }
+    //     const response = await fetch(route, {
+    //         method: 'POST',
+    //         headers: headers,
+    //         body: JSON.stringify(body)
+    //     })
+    //     const data = await response.json()
+    //     return data
+    // }
 
-    // Метод для виконання DELETE запиту
-    static async deleteRequest(route, id, addAuthorization = true) {
-        const headers = { 'Content-Type': 'application/json' }
-        if (addAuthorization && RequestManager.isAuthenticated()) {
-            headers['Authorization'] = `Bearer ${localStorage.getItem('jwt_token')}`
-        }
+    // // Метод для виконання DELETE запиту
+    // static async deleteRequest(route, id, addAuthorization = true) {
+    //     const headers = { 'Content-Type': 'application/json' }
+    //     if (addAuthorization && RequestManager.isAuthenticated()) {
+    //         headers['Authorization'] = `Bearer ${localStorage.getItem('jwt_token')}`
+    //     }
 
-        const response = await fetch(route, {
-            method: 'DELETE',
-            headers: headers,
-            body: JSON.stringify({ id })
-        })
-        const data = await response.json()
-        window.location.reload(true)
-        return data
-    }
+    //     const response = await fetch(route, {
+    //         method: 'DELETE',
+    //         headers: headers,
+    //         body: JSON.stringify({ id })
+    //     })
+    //     const data = await response.json()
+    //     window.location.reload(true)
+    //     return data
+    // }
 
     // Метод для обробки вибору файлу
     static handleFileSelect(event, imgSelector) {

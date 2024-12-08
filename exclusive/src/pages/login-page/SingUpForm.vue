@@ -1,5 +1,5 @@
 <template>
-    <div class="login-form">
+    <form class="login-form">
         <h4 class="login-form__title">{{ formParams.title }}</h4>
         <p v-if="formParams.subtitle" class="login-form__subtitle">{{ formParams.subtitle }}</p>
         <slot name="login-inputs">
@@ -40,16 +40,12 @@
                 <div class="auth__sing-up-btn">
                     <v-btn
                         type="button"
-                        @click="singUpWithEmail(email, password)"
-                        class="auth__button button-main"
+                        @click="singUpWithEmail(name, email, password)"
                         :disabled="!isValidForm"
+                        class="auth__button button-main"
                     >
                         {{ formParams.buttonCreate }}
                     </v-btn>
-                    <button type="button" @click="loginG" class="auth__button button-main button-main--trans">
-                        <IconBase width="24" height="25" viewBox="0 0 24 25"><IconGoogle /></IconBase>
-                        {{ formParams.buttonGoogle }}
-                    </button>
                 </div>
                 <div class="auth__links">
                     <p>{{ formParams.hasAcc }}</p>
@@ -59,13 +55,12 @@
         </slot>
         <SnackBar v-model:open="openSnackBar" />
         <AgreementsDialog v-model:open="openAgreementsWindows" v-model:evidence="dialogAnswer" />
-    </div>
+    </form>
 </template>
 
 <script setup>
 import { ref, computed, reactive, watch } from 'vue'
-import { useGamepadsStore } from '../../stores/gamepad.js'
-const { loginWithGoogle } = useGamepadsStore()
+
 defineProps({
     formParams: {
         type: Object,
@@ -81,6 +76,7 @@ const emailRules = reactive([
         return pattern.test(value) || 'The email is incorrect. Please make sure all fields are filled in'
     }
 ])
+
 const passwordRules = reactive([(value) => !!value || 'Required.', (v) => v.length >= 8 || 'Min 8 characters'])
 const nameRules = reactive([(value) => !!value || 'Required.'])
 
@@ -92,7 +88,7 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 import { useAuthStore } from '@/stores/auth'
-const { loginWithGoogleAccount, signUpWithWithEmailAndPassword } = useAuthStore()
+const { signInWithEmailAndPassword } = useAuthStore()
 
 const name = ref(null)
 const email = ref(null)
@@ -103,82 +99,20 @@ watch([email, password], ([new_email, new_password]) => {
     emit('update:newPass', new_password)
 })
 
-// function loginG() {
-//     // loginWithGoogle('/auth/login/google')
-
-//     const windowFeatures = 'left=100,top=100,width=620,height=620'
-//     const authWindow = window.open(`http://localhost:3000/api/v1/auth/login/google`, 'google', windowFeatures)
-
-//     const messageListener = (event) => {
-//         if (event.origin !== 'http://localhost:3000') return
-
-//         window.removeEventListener('message', messageListener)
-
-//         authWindow.close()
-//         console.log(event.data)
-//         return (userData = JSON.parse(atob(event.data)))
-//     }
-
-//     window.addEventListener('message', messageListener)
-// }
-async function loginG() {
-    try {
-        await getToken()
-        // await loginWithGoogleAccount('/auth/user')
-    } catch (error) {
-        console.log(error)
-    }
-}
-async function getToken(params) {
-    const windowFeatures = 'left=100,top=100,width=620,height=620'
-    const authWindow = window.open('http://localhost:3000/api/v1/auth/login/google', 'google', windowFeatures)
-    const interval = setInterval(async () => {
-        if (authWindow.closed) {
-            clearInterval(interval)
-        }
-
-        try {
-            const url = authWindow.location.href
-            if (url.includes('singUp')) {
-                const queryParams = new URLSearchParams(new URL(url).search)
-                const token = queryParams.get('token')
-                localStorage.setItem('token', token)
-                if (token) {
-                    authWindow.close()
-                    clearInterval(interval)
-                    await loginWithGoogleAccount('/auth/user')
-                    return true
-                }
-            }
-        } catch (err) {
-            return false
-        }
-    }, 1000)
-}
 const isValidForm = computed(() => name.value && email.value && password.value)
 
-async function singUpWithEmail(email, password) {
-    signUpWithWithEmailAndPassword(email, password).then(() => {
+async function singUpWithEmail(name, email, password) {
+    if (!isValidForm.value) return
+    signInWithEmailAndPassword({
+        username: name,
+        email: email,
+        password: password
+    }).then(() => {
         openSnackBar.value = true
-        setTimeout(() => {
-            router.push({ name: 'login' })
-        }, 3000)
+        router.push('/')
+        return
     })
 }
-async function loginWithGoogleEmailPopup() {
-    loginWithGoogleAccount()
-        .then(async () => {
-            openSnackBar.value = true
-            // await checkAcceptRules()
-        })
-        .then(() => {
-            setTimeout(() => {
-                router.back()
-            }, 2000)
-        })
-} //=====================================================================
-import IconBase from '@/components/icons/IconBase.vue'
-import IconGoogle from '@/components/icons/iconsSrc/IconGoogle.vue'
 
 //=====================================================================
 import SnackBar from '@/components/SnackBar.vue'
@@ -190,9 +124,6 @@ const openAgreementsWindows = ref(false)
 const dialogAnswer = ref(null)
 
 //=====================================================================
-import { useAgreementsStore } from '@/stores/agreements'
-import RequestManager from '@/stores/helpers/RequestManager'
-const { checkAcceptRules } = useAgreementsStore()
 </script>
 
 <style lang="scss" scoped>
@@ -241,11 +172,6 @@ const { checkAcceptRules } = useAgreementsStore()
     &__input {
         min-height: toRem(75);
     }
-
-    // .login-form__actions
-
-    &__actions {
-    }
 }
 .auth {
     display: grid;
@@ -259,8 +185,6 @@ const { checkAcceptRules } = useAgreementsStore()
         display: flex;
         flex-direction: column;
         row-gap: toRem(16);
-    }
-    &__button {
     }
     &__links {
         display: flex;
