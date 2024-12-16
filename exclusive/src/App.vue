@@ -3,6 +3,7 @@ import { onMounted } from 'vue'
 import { RouterView } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 const { loginWithGoogleToken } = useAuthStore()
+
 onMounted(() => {
     loginWithGoogleToken()
 })
@@ -13,4 +14,3 @@ onMounted(() => {
 </template>
 
 <style scoped></style>
-@/stores/gamepad.js
