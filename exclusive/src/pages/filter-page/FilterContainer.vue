@@ -35,20 +35,22 @@ const totalPage = computed(() => Math.ceil(getProductsListTotalNumber.value / fi
 
 watch(filterObject.value, (newVal) => {
     if (newVal) {
-        loadProductWithPagination(
-            newVal.pageNumber - 1,
-            newVal.prePageNumber,
-            newVal.sortOption,
-            newVal.filters.minPrice,
-            newVal.filters.maxPrice,
-            newVal.filters.search,
-            newVal.filters.rating
-        )
+        loadProductWithPagination({
+            page: newVal.pageNumber - 1,
+            prePage: newVal.prePageNumber,
+            sort: newVal.sortOption,
+            newPrice: [newVal.filters.minPrice, newVal.filters.maxPrice],
+            title: newVal.filters.search,
+            rating: newVal.filters.rating
+        })
     }
 })
 
 onBeforeMount(() => {
-    loadProductWithPagination(filterObject.value.pageNumber - 1, filterObject.value.prePageNumber)
+    loadProductWithPagination({
+        page: filterObject.value.pageNumber - 1,
+        prePage: filterObject.value.prePageNumber
+    })
 })
 
 const links = [

@@ -10,20 +10,32 @@ export const useGamepadsStore = defineStore('products', () => {
     const getProductsList = computed(() => getItemsList.value.data?.documents || getItemsList.value.data)
     const getProductsListTotalNumber = computed(() => getItemsList.value.data?.totalNumber)
 
-    async function loadProductWithPagination(page, limit, sortOpt, minValue, maxValue, search, rating) {
-        itemsList.value = await collectionDB.loadItemListWithFilterParams({
-            page: page,
-            perPage: limit,
-            sort: `newPrice:${sortOpt}`,
-            newPrice: [`gte:${minValue}`, `lte:${maxValue}`],
-            title: search,
-            rating: rating
-        })
+    async function loadProductWithPagination(filterProps) {
+        const filterParams = copyWithoutNullAndUndefined(filterProps)
+        try {
+            console.log(filterParams)
+            itemsList.value = await collectionDB.loadItemListWithFilterParams(filterParams)
+        } catch (error) {
+            return
+        }
     }
     async function loginWithGoogle(path) {
         const auth = await RequestManager.getRequest(path)
         console.log(auth)
     }
+    function copyWithoutNullAndUndefined(filterProps) {
+        const newObj = {}
+        for (const params in filterProps) {
+            if (filterProps[params] !== null && filterProps[params] !== undefined) {
+                if (Array.isArray(filterProps[params]) && params === 'newPrice')
+                    newObj[params] = [`gte:${filterProps[params][0]}`, `lte:${filterProps[params][1]}`]
+                if (params === 'sort') newObj[params] = `newPrice:${filterProps[params]}`
+                else newObj[params] = filterProps[params]
+            }
+        }
+        return newObj
+    }
+
     return {
         getProductsList,
         getProductsListTotalNumber,
