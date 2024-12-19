@@ -37,10 +37,11 @@ watch(filterObject.value, (newVal) => {
     if (newVal) {
         loadProductWithPagination({
             page: newVal.pageNumber - 1,
-            prePage: newVal.prePageNumber,
+            perPage: newVal.prePageNumber,
             sort: newVal.sortOption,
             newPrice: [newVal.filters.minPrice, newVal.filters.maxPrice],
             title: newVal.filters.search,
+            category: [...(newVal.filters.category ?? '')],
             rating: newVal.filters.rating
         })
     }
@@ -49,7 +50,7 @@ watch(filterObject.value, (newVal) => {
 onBeforeMount(() => {
     loadProductWithPagination({
         page: filterObject.value.pageNumber - 1,
-        prePage: filterObject.value.prePageNumber
+        perPage: filterObject.value.prePageNumber
     })
 })
 

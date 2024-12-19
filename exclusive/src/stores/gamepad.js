@@ -29,7 +29,7 @@ export const useGamepadsStore = defineStore('products', () => {
             if (filterProps[params] !== null && filterProps[params] !== undefined) {
                 if (Array.isArray(filterProps[params]) && params === 'newPrice')
                     newObj[params] = [`gte:${filterProps[params][0]}`, `lte:${filterProps[params][1]}`]
-                if (params === 'sort') newObj[params] = `newPrice:${filterProps[params]}`
+                if (params === 'sort') newObj[params] = `${filterProps[params].field}:${filterProps[params].value}`
                 else newObj[params] = filterProps[params]
             }
         }

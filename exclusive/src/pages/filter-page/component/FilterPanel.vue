@@ -26,7 +26,27 @@
             </div>
         </div>
         <div class="filter-panel__expansion-panels panels-expansion">
-            <v-list v-model:opened="opensPanels" class="panels-expansion__list list" active-strategy="leaf">
+            <v-list class="panels-expansion__list list">
+                <v-list-group value="Category" fluid="true" class="list__group">
+                    <template v-slot:activator="{ props }">
+                        <v-list-item
+                            v-bind="props"
+                            prepend-icon="mdi-account-circle"
+                            title="Category"
+                            class="list__item"
+                        ></v-list-item>
+                    </template>
+                    <v-list-item v-for="category in categories" :key="category.id" class="list__item">
+                        <v-checkbox
+                            :label="category.title"
+                            :value="category.value"
+                            :multiple="true"
+                            v-model="filterParams.category"
+                        ></v-checkbox>
+                    </v-list-item>
+                </v-list-group>
+            </v-list>
+            <v-list class="panels-expansion__list list" active-strategy="leaf">
                 <v-list-group value="Brand" fluid="true" class="list__group">
                     <template v-slot:activator="{ props }">
                         <v-list-item
@@ -42,59 +62,26 @@
                     </v-list-item>
                 </v-list-group>
             </v-list>
-            <v-list v-model:opened="opensPanels" class="panels-expansion__list list">
-                <v-list-group value="Rating" fluid="true" class="list__group">
-                    <template v-slot:activator="{ props }">
-                        <v-list-item
-                            v-bind="props"
-                            prepend-icon="mdi-account-circle"
-                            title="Rating"
-                            class="list__item"
-                        ></v-list-item>
-                    </template>
-                    <v-list-item v-for="(number, index) in rating" :key="index" class="list__item">
-                        <v-checkbox v-model="filterParams.rating" :value="number"
-                            ><template v-slot:label>
-                                <Rating
-                                    :model-value="number"
-                                    :length="number"
-                                    readonly
-                                    :cancel="false"
-                                    class="list__stars"
-                                >
-                                    <template #onicon>
-                                        <IconBase width="16" height="15">
-                                            <IconRatingStarYellow />
-                                        </IconBase>
-                                    </template>
-                                    <template #officon>
-                                        <IconBase width="16" height="15">
-                                            <IconRatingStarGray />
-                                        </IconBase>
-                                    </template>
-                                </Rating> </template
-                        ></v-checkbox>
-                    </v-list-item>
-                </v-list-group>
-            </v-list>
         </div>
     </aside>
 </template>
 
 <script setup>
-import IconBase from '../../../components/icons/IconBase.vue'
-import IconRatingStarYellow from '../../../components/icons/iconsSrc/IconRatingStarYellow.vue'
-import IconRatingStarGray from '../../../components/icons/iconsSrc/IconRatingStarGray.vue'
-import Rating from 'primevue/rating'
+import { v4 as uuidv4 } from 'uuid'
 import { ref, watch } from 'vue'
 const emit = defineEmits(['update:modelValue'])
-const opensPanels = ref(['Brand', 'Rating'])
+
 const brand = ref(['Management', 'Settings'])
-const rating = ref([5, 4, 3, 2])
+const categories = ref([
+    { id: uuidv4(), title: "Pc's", value: 'pcs' },
+    { id: uuidv4(), title: 'Gamepads', value: 'gamepads' },
+    { id: uuidv4(), title: 'Laptops', value: 'laptops' },
+    { id: uuidv4(), title: 'Headphones', value: 'headphones' }
+])
 const filterParams = ref({
     search: '',
     brand: [],
-    rating: 5,
+    category: [],
     minPrice: 1,
     maxPrice: 1000
 })

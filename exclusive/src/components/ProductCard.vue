@@ -32,7 +32,7 @@
                 ><span class="card__old-price">${{ productItem.oldPrice }}</span>
             </div>
             <div class="card__review">
-                <Rating v-model="rating" :stars="5" readonly :cancel="false" class="card__stars">
+                <Rating v-model="productItem.rating" :stars="5" readonly :cancel="false" class="card__stars">
                     <template #onicon>
                         <IconBase width="16" height="15">
                             <IconRatingStarYellow />
@@ -63,7 +63,6 @@ const props = defineProps({
         default: () => ({})
     }
 })
-const rating = props.productItem.rating
 </script>
 
 <style lang="scss" scoped>
@@ -73,9 +72,7 @@ const rating = props.productItem.rating
     // .card__image-card
 
     width: toRem(270);
-    min-height: toRem(360);
-    display: grid;
-    row-gap: toRem(16);
+    height: 100%;
     padding: toRem(10);
     transition: all 0.3s;
     border-radius: toRem(4);
@@ -89,9 +86,12 @@ const rating = props.productItem.rating
         display: grid;
         align-content: center;
         justify-content: center;
-        min-height: toRem(250);
+        height: toRem(350);
         background-color: #f5f5f5;
         position: relative;
+        &:not(:last-child) {
+            margin-bottom: toRem(16);
+        }
         &:hover .card__add-to-cart {
             visibility: visible;
             pointer-events: auto;

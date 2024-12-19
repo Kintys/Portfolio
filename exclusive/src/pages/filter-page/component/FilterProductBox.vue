@@ -4,6 +4,7 @@
             <v-select
                 label="Sort"
                 :items="selectedItems"
+                :return-object="true"
                 v-model="sortOption"
                 variant="outlined"
                 class="top-bar__select"
@@ -27,19 +28,15 @@ import { storeToRefs } from 'pinia'
 const emit = defineEmits(['update:modelValue'])
 
 const { getProductsList } = storeToRefs(useGamepadsStore())
-const sortOption = ref('asc')
+const sortOption = ref(null)
 
 const productData = computed(() => getProductsList.value)
 
 const selectedItems = [
-    {
-        title: 'Ascending prices',
-        value: 'asc'
-    },
-    {
-        title: 'Descending prices',
-        value: 'desc'
-    }
+    { field: 'rating', title: 'Ascending rating', value: 'asc' },
+    { field: 'rating', title: 'Descending rating', value: 'desc' },
+    { field: 'newPrice', title: 'Ascending prices', value: 'asc' },
+    { field: 'newPrice', title: 'Descending prices', value: 'desc' }
 ]
 
 watch(sortOption, (newSort) => {
