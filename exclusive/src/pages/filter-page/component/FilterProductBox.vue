@@ -21,13 +21,13 @@
 
 <script setup>
 import { ref, computed, watch, defineEmits } from 'vue'
-import { useGamepadsStore } from '@/stores/gamepad'
+import { useProductsStore } from '@/stores/products.js'
 import ProductCard from '../../../components/ProductCard.vue'
 import { storeToRefs } from 'pinia'
 
 const emit = defineEmits(['update:modelValue'])
 
-const { getProductsList } = storeToRefs(useGamepadsStore())
+const { getProductsList } = storeToRefs(useProductsStore())
 const sortOption = ref(null)
 
 const productData = computed(() => getProductsList.value)

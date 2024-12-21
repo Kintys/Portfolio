@@ -20,11 +20,11 @@
 import { ref, onBeforeMount, computed, watch } from 'vue'
 import FilterPanel from './component/FilterPanel.vue'
 import FilterProductBox from './component/FilterProductBox.vue'
-import { useGamepadsStore } from '../../stores/gamepad.js'
+import { useProductsStore } from '@/stores/products.js'
 import { storeToRefs } from 'pinia'
 
-const { loadProductWithPagination, loadItemsList } = useGamepadsStore()
-const { getProductsListTotalNumber } = storeToRefs(useGamepadsStore())
+const { loadProductWithPagination, loadBrandsList } = useProductsStore()
+const { getProductsListTotalNumber } = storeToRefs(useProductsStore())
 const filterObject = ref({
     pageNumber: 1,
     prePageNumber: 3,
@@ -39,8 +39,9 @@ watch(filterObject.value, (newVal) => {
             page: newVal.pageNumber - 1,
             perPage: newVal.prePageNumber,
             sort: newVal.sortOption,
-            newPrice: [newVal.filters.minPrice, newVal.filters.maxPrice],
+            newPrice: [...(newVal.filters.rangePrice ?? [])],
             title: newVal.filters.search,
+            brands: [...(newVal.filters.brands ?? '')],
             category: [...(newVal.filters.category ?? '')],
             rating: newVal.filters.rating
         })
@@ -51,7 +52,8 @@ onBeforeMount(() => {
     loadProductWithPagination({
         page: filterObject.value.pageNumber - 1,
         perPage: filterObject.value.prePageNumber
-    })
+    }),
+        loadBrandsList()
 })
 
 const links = [
@@ -106,3 +108,4 @@ const links = [
     }
 }
 </style>
+../../stores/product.js

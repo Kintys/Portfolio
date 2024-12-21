@@ -29,7 +29,7 @@
             <h4 class="card__title">{{ productItem.title }}</h4>
             <div class="card__costs">
                 <span class="card__new-price">${{ productItem.newPrice }}</span
-                ><span class="card__old-price">${{ productItem.oldPrice }}</span>
+                ><span v-if="productItem.oldPrice" class="card__old-price">${{ productItem.oldPrice }}</span>
             </div>
             <div class="card__review">
                 <Rating v-model="productItem.rating" :stars="5" readonly :cancel="false" class="card__stars">
@@ -71,7 +71,7 @@ const props = defineProps({
 .card {
     // .card__image-card
 
-    width: toRem(270);
+    width: toRem(250);
     height: 100%;
     padding: toRem(10);
     transition: all 0.3s;
@@ -86,7 +86,7 @@ const props = defineProps({
         display: grid;
         align-content: center;
         justify-content: center;
-        height: toRem(350);
+        height: toRem(300);
         background-color: #f5f5f5;
         position: relative;
         &:not(:last-child) {

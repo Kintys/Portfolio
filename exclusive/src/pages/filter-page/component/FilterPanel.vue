@@ -9,7 +9,17 @@
                 class="inputs__search"
             ></v-text-field>
             <div class="inputs__price price">
-                <v-text-field
+                <v-range-slider
+                    v-model="filterParams.rangePrice"
+                    :min="1"
+                    :max="1000"
+                    step="1"
+                    strict
+                    thumb-label="true"
+                    hide-details="auto"
+                ></v-range-slider>
+
+                <!-- <v-text-field
                     v-model="filterParams.minPrice"
                     label="Min"
                     type="number"
@@ -22,7 +32,7 @@
                     type="number"
                     variant="outlined"
                     class="price__input"
-                ></v-text-field>
+                ></v-text-field> -->
             </div>
         </div>
         <div class="filter-panel__expansion-panels panels-expansion">
@@ -57,8 +67,13 @@
                             class="list__item"
                         ></v-list-item>
                     </template>
-                    <v-list-item v-for="(title, i) in brand" :key="i" class="list__item">
-                        <v-checkbox :label="title" v-model="filterParams.brand" :value="title"></v-checkbox>
+                    <v-list-item v-for="brand in getBrandsList" :key="brand.id" class="list__item">
+                        <v-checkbox
+                            :multiple="true"
+                            :label="brand.name"
+                            v-model="filterParams.brands"
+                            :value="brand._id"
+                        ></v-checkbox>
                     </v-list-item>
                 </v-list-group>
             </v-list>
@@ -71,7 +86,14 @@ import { v4 as uuidv4 } from 'uuid'
 import { ref, watch } from 'vue'
 const emit = defineEmits(['update:modelValue'])
 
-const brand = ref(['Management', 'Settings'])
+//===========================================================
+
+import { useProductsStore } from '@/stores/products.js'
+import { storeToRefs } from 'pinia'
+const { getBrandsList } = storeToRefs(useProductsStore())
+
+//===========================================================
+
 const categories = ref([
     { id: uuidv4(), title: "Pc's", value: 'pcs' },
     { id: uuidv4(), title: 'Gamepads', value: 'gamepads' },
@@ -80,10 +102,9 @@ const categories = ref([
 ])
 const filterParams = ref({
     search: '',
-    brand: [],
+    brands: [],
     category: [],
-    minPrice: 1,
-    maxPrice: 1000
+    rangePrice: [1, 1000]
 })
 
 watch(filterParams.value, (newVal) => {
@@ -146,3 +167,4 @@ watch(filterParams.value, (newVal) => {
     }
 }
 </style>
+@/stores/product

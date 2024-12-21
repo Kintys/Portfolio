@@ -29,7 +29,6 @@ export const useAgreementsStore = defineStore('agreements', () => {
     }
     async function acceptUserAnswer() {
         const addRules = getCurrentUserWithNewPermissions(currentUser.value, true)
-        console.log(addRules)
         usersStore.updateUser(addRules)
     }
     async function rejectUserAnswer() {

@@ -177,3 +177,4 @@ const currentImage = computed(() => {
     }
 }
 </style>
+@/stores/product.js

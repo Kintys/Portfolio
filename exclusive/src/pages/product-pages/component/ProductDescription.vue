@@ -434,3 +434,4 @@ const currentItem = computed(() => {
     color: #fff;
 }
 </style>
+@/stores/product.js
