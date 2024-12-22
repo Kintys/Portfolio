@@ -15,9 +15,10 @@ class DbOperations {
                 })
         })
     }
-    loadItemListWithFilterParams(params) {
+    loadItemListWithFilterParams(params, path) {
         return new Promise((resolve, reject) => {
-            RequestManager.getRequest(this.dbCollection, params)
+            const addPath = path ? `/${path}` : ''
+            RequestManager.getRequest(`${this.dbCollection}${addPath}`, params)
                 .then((response) => {
                     resolve(response)
                 })

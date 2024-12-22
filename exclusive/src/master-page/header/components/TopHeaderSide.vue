@@ -28,7 +28,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 import MSelect from '@/components/MSelect.vue'
-import langParams from '../header/settings'
+import langParams from '@/master-page/header/settings'
 
 const selectedLang = ref(null)
 const text = 'Summer Sale For All Swim Suits And Free Express Delivery - OFF 50%!'

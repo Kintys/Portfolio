@@ -26,7 +26,7 @@
 import IconBase from '@/components/icons/IconBase.vue'
 import IconWishList from '@/components/icons/iconsSrc/IconWishList.vue'
 import IconCart from '@/components/icons/iconsSrc/IconCart.vue'
-import UserProfil from '@/master-page/header/UserProfil.vue'
+import UserProfil from '@/master-page/header/components/UserProfil.vue'
 </script>
 
 <style lang="scss" scoped>

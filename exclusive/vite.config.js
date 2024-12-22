@@ -5,7 +5,22 @@ import vuetify from 'vite-plugin-vuetify'
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [
-        vue(),
+        vue({
+            template: {
+                compilerOptions: {
+                    isCustomElement: (tag) =>
+                        [
+                            'dc:format',
+                            'rdf:RDF',
+                            'cc:Work',
+                            'dc:type',
+                            'swiper-container',
+                            'swiper-slide',
+                            'Icon'
+                        ].includes(tag)
+                }
+            }
+        }),
         vuetify({ styles: 'sass' }, { autoImport: true }, { styles: { configFile: 'src/style/settings.scss' } })
     ],
     resolve: {

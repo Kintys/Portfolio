@@ -33,7 +33,7 @@ const headerValue = reactive({
     scrolledUp: false
 })
 function handleScroll() {
-    emit('windowsScroll', window.scrollY)
+    emit('windowsScroll', window.scrollY, headerValue.scrolled)
     if (headerValue.lastPosition !== window.scrollY) {
         if (headerValue.lastPosition < window.scrollY && props.limitPosition < window.scrollY) {
             headerValue.startScroll = true

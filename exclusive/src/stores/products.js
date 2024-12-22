@@ -7,11 +7,21 @@ export const useProductsStore = defineStore('products', () => {
     const productsStore = getStoreTemplate('products')
     const { getItemsList, itemsList, collectionDB } = productsStore
     const brandsList = ref([])
+    const foundItemsList = ref([])
 
     const getProductsList = computed(() => getItemsList.value.data?.documents || getItemsList.value.data)
     const getProductsListTotalNumber = computed(() => getItemsList.value.data?.totalNumber)
     const getBrandsList = computed(() => brandsList.value)
+    const getFoundItemsList = computed(() => foundItemsList.value)
 
+    async function loadProductWithSearchTextFilter(searchText) {
+        const filterParams = copyWithoutNullAndUndefined(searchText)
+        try {
+            foundItemsList.value = await collectionDB.loadItemListWithFilterParams(filterParams, 'search')
+        } catch (error) {
+            return error
+        }
+    }
     async function loadProductWithPagination(filterProps) {
         const filterParams = copyWithoutNullAndUndefined(filterProps)
         try {
@@ -41,7 +51,6 @@ export const useProductsStore = defineStore('products', () => {
                 else newObj[params] = filterProps[params]
             }
         }
-        console.log(newObj)
         return newObj
     }
 
@@ -49,9 +58,11 @@ export const useProductsStore = defineStore('products', () => {
         getProductsList,
         getProductsListTotalNumber,
         getBrandsList,
+        getFoundItemsList,
         loadProductWithPagination,
         loadBrandsList,
         loginWithGoogle,
+        loadProductWithSearchTextFilter,
         ...productsStore
     }
 })

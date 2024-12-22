@@ -1,9 +1,16 @@
 <template>
-    <a class="category-card">
+    <a class="category-card" @click.prevent="$emit('click')">
         <div class="category-card__content">
             <div class="category-card__image">
-                <IconBase width="56" height="56" viewBox="0 0 56 56" icon-color="transparent" class="icon">
-                    <component :is="catCardItemData.icon" class="icon" />
+                <IconBase
+                    width="56"
+                    height="56"
+                    viewBox="0 0 56 56"
+                    icon-color="transparent"
+                    class="icon"
+                    v-bind="$attrs"
+                >
+                    <component :is="catCardItemData.icon" v-bind="$attrs" class="icon" />
                 </IconBase>
             </div>
             <h6 class="category-card__title">{{ catCardItemData.title }}</h6>
@@ -20,6 +27,7 @@ defineProps({
         default: () => ({})
     }
 })
+defineEmits(['click'])
 </script>
 
 <style lang="scss" scoped>

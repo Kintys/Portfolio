@@ -97,8 +97,8 @@ const setThumbsSwiper = (swiper) => {
 }
 //===========================================================
 import { storeToRefs } from 'pinia'
-import { useGamepadsStore } from '@/stores/gamepad.js'
-const { getItemsList } = storeToRefs(useGamepadsStore())
+import { useProductsStore } from '@/stores/products.js'
+const { getItemsList } = storeToRefs(useProductsStore())
 const currentImage = computed(() => {
     return getItemsList.value[0].images.map((img) => {
         return {
@@ -177,4 +177,3 @@ const currentImage = computed(() => {
     }
 }
 </style>
-@/stores/product.js

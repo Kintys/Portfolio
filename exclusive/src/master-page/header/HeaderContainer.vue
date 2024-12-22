@@ -11,22 +11,7 @@
             >
                 <router-link :to="{ name: 'home' }" class="header__logo logo">Exclusive</router-link>
                 <HeaderNavBar class="header__nav" :class="{ 'menu-open': showMenu }" />
-                <div class="header__search search-comp">
-                    <DynamicAdapt destination=".nav" breakpoint="790">
-                        <div class="search-comp__label">
-                            <input type="text" class="search-comp__input" placeholder="What are you looking for?" />
-                            <IconBase
-                                class="search-comp__icon"
-                                width="24"
-                                height="24"
-                                icon-name="search"
-                                view-box="0 0 24 24"
-                                icon-color="transparent"
-                                ><IconMagnifyingGlass
-                            /></IconBase>
-                        </div>
-                    </DynamicAdapt>
-                </div>
+                <SearchBar :is-scrolling="isScrolling" />
                 <HeaderActionsPanel v-if="isAuthenticated" :ref="navBar" class="header__actions" />
                 <div class="icon-menu" :class="{ 'open-icon': showMenu }" @click="activeMenu()">
                     <span></span>
@@ -37,23 +22,24 @@
 </template>
 
 <script setup>
-import TopHeaderSide from '@/master-page/header/TopHeaderSide.vue'
-import HeaderNavBar from '@/master-page/header/HeaderNavBar.vue'
-import HeaderActionsPanel from '@/master-page/header/HeaderActionsPanel.vue'
-import IconBase from '@/components/icons/IconBase.vue'
-import IconMagnifyingGlass from '@/components/icons/iconsSrc/IconMagnifyingGlass.vue'
-import DynamicAdapt from '@/components/DynamicAdapt.vue'
-import HeaderHat from '@/master-page/header/HeaderHat.vue'
+import TopHeaderSide from '@/master-page/header/components/TopHeaderSide.vue'
+import HeaderNavBar from '@/master-page/header/components/HeaderNavBar.vue'
+import HeaderActionsPanel from '@/master-page/header/components/HeaderActionsPanel.vue'
+import SearchBar from '@/master-page/header/components/search-bar/SearchBar.vue'
+import HeaderHat from '@/master-page/header/components/HeaderHat.vue'
 // ======================
 import { burgerMenu } from '@/modulesHelpers/lib/burger'
 const { showMenu, activeMenu } = burgerMenu()
 // ======================
 import { ref } from 'vue'
+const isScrolling = ref(false)
 const smallCont = ref(false)
 const navBar = ref(false)
-function onScroll(scroll) {
-    if (scroll >= 48) smallCont.value = true
-    else smallCont.value = false
+function onScroll(scroll, scrolled) {
+    if (scroll >= 48) {
+        isScrolling.value = scrolled
+        smallCont.value = true
+    } else smallCont.value = false
 }
 // ===========================
 import { storeToRefs } from 'pinia'
@@ -86,48 +72,7 @@ const { isAuthenticated } = storeToRefs(useAuthStore())
         padding-right: toRem(5);
     }
 }
-.search-comp {
-    padding: toRem(0) toRem(3);
-    @include adaptiveValue('margin-right', 19, 0, 0, $maxWidth, $tablet);
-    // .search-comp__label
 
-    &__label {
-        position: relative;
-        height: toRem(38);
-        @media (min-width: toEm($mobile)) {
-            @include adaptiveValue('width', 233, 210, 0, $maxWidth, 824);
-        }
-    }
-
-    // .search-comp__input
-
-    &__input {
-        width: 100%;
-        padding: toRem(7) toRem(36) toRem(7) toRem(20);
-        border-radius: toRem(4);
-        background: #f5f5f5;
-        position: relative;
-        &:focus {
-            outline: black solid toRem(1);
-        }
-        &::placeholder {
-            font-size: toRem(12);
-            line-height: 150%;
-        }
-    }
-
-    // .search-comp__icon
-
-    &__icon {
-        position: absolute;
-        right: 4.938272%; /* 12/243 */
-        top: 18.4%;
-        width: toRem(24);
-        height: toRem(24);
-        cursor: pointer;
-        z-index: 5;
-    }
-}
 .header-padding-scroll,
 .header-padding {
     transition: all 0.5s;

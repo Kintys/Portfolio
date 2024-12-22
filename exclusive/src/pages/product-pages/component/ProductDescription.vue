@@ -125,8 +125,8 @@ import IconRatingStarGray from '@/components/icons/iconsSrc/IconRatingStarGray.v
 
 //===========================================================
 import { storeToRefs } from 'pinia'
-import { useGamepadsStore } from '@/stores/gamepad.js'
-const { getItemsList } = storeToRefs(useGamepadsStore())
+import { useProductsStore } from '@/stores/products.js'
+const { getItemsList } = storeToRefs(useProductsStore())
 const currentItem = computed(() => {
     const adv = getItemsList.value[0].rating.reduce((acc, review) => {
         return Number(acc) + Number(review)

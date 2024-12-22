@@ -4,7 +4,7 @@
             <SectionSliderWithTitles :title-params="sectionTitle" :slider-params="sliderParams" :is-loop="true">
                 <template #main>
                     <swiper-slide v-for="(itemCard, i) in categoryData" :key="i" ref="focusesList">
-                        <CategoryCard :cat-card-item-data="itemCard" @click="onSelectedCategory(i)" />
+                        <CategoryCard :cat-card-item-data="itemCard" @click.stop="onSelectedCategory(i)" />
                     </swiper-slide>
                 </template>
             </SectionSliderWithTitles>
