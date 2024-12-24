@@ -1,10 +1,11 @@
 <template>
-    <div v-if="isSearchList" class="search-list">
-        <SearchItem v-for="product of getFoundItemsList" :key="product.id" :product-item="product" />
+    <div v-if="isSearchList && clickOutSide" v-click-outside="closeList" class="search-list">
+        <SearchItem v-for="(product, i) of getFoundItemsList" :key="i" :product-item="product" />
     </div>
 </template>
 
 <script setup>
+import { vClickOutside } from '@/directive/clickOutside.js'
 const props = defineProps({
     isList: {
         type: Boolean,
@@ -13,11 +14,20 @@ const props = defineProps({
 })
 import { storeToRefs } from 'pinia'
 import SearchItem from './SearchItem.vue'
-import { useProductsStore } from '@/stores/products.js'
-import { computed } from 'vue'
-const { getFoundItemsList } = storeToRefs(useProductsStore())
+import { useFiltersStore } from '@/stores/filters.js'
+import { computed, ref } from 'vue'
+const clickOutSide = ref(true)
+const { getFoundItemsList } = storeToRefs(useFiltersStore())
 
-const isSearchList = computed(() => (getFoundItemsList.value?.length > 0 && props.isList ? true : false))
+const isSearchList = computed(() => {
+    if (!(getFoundItemsList.value?.length > 0 && props.isList)) return false
+    clickOutSide.value = true
+    return true
+})
+
+async function closeList(close) {
+    clickOutSide.value = close
+}
 </script>
 
 <style lang="scss" scoped>
@@ -57,3 +67,4 @@ const isSearchList = computed(() => (getFoundItemsList.value?.length > 0 && prop
     }
 }
 </style>
+@/stores/filters.js

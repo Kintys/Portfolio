@@ -38,7 +38,17 @@ class DbOperations {
                 })
         })
     }
-
+    getItemById(id) {
+        return new Promise((resolve, reject) => {
+            RequestManager.getRequest(`${this.dbCollection}/item`, { id })
+                .then((response) => {
+                    resolve(response)
+                })
+                .catch((error) => {
+                    reject(error)
+                })
+        })
+    }
     addItem(item) {
         return new Promise((resolve, reject) => {
             addDoc(this.dbCollection, item)
@@ -119,19 +129,6 @@ class DbOperations {
             updateDoc(oldDocRef, data)
                 .then(() => {
                     resolve(true)
-                })
-                .catch((error) => {
-                    reject(error)
-                })
-        })
-    }
-    getItemById(itemId) {
-        return new Promise((resolve, reject) => {
-            const docRef = doc(this.dbCollection, itemId)
-            getDoc(docRef)
-                .then((docSnap) => {
-                    if (docSnap.exists()) resolve(this.getItemFormSnapshot(docSnap))
-                    else resolve({})
                 })
                 .catch((error) => {
                     reject(error)

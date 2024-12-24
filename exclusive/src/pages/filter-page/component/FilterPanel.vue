@@ -88,9 +88,9 @@ const emit = defineEmits(['update:modelValue'])
 
 //===========================================================
 
-import { useProductsStore } from '@/stores/products.js'
+import { useFiltersStore } from '@/stores/filters.js'
 import { storeToRefs } from 'pinia'
-const { getBrandsList } = storeToRefs(useProductsStore())
+const { getBrandsList } = storeToRefs(useFiltersStore())
 
 //===========================================================
 
@@ -167,4 +167,4 @@ watch(filterParams.value, (newVal) => {
     }
 }
 </style>
-@/stores/product
+@/stores/product @/stores/filters.js

@@ -3,8 +3,8 @@ import getStoreTemplate from './helpers/storeTemplate'
 import { computed, ref } from 'vue'
 import RequestManager from './helpers/RequestManager'
 
-export const useProductsStore = defineStore('products', () => {
-    const productsStore = getStoreTemplate('products')
+export const useFiltersStore = defineStore('filters', () => {
+    const productsStore = getStoreTemplate('filters')
     const { getItemsList, itemsList, collectionDB } = productsStore
     const brandsList = ref([])
     const foundItemsList = ref([])
@@ -25,7 +25,7 @@ export const useProductsStore = defineStore('products', () => {
     async function loadProductWithPagination(filterProps) {
         const filterParams = copyWithoutNullAndUndefined(filterProps)
         try {
-            itemsList.value = await collectionDB.loadItemListWithFilterParams(filterParams)
+            itemsList.value = await collectionDB.loadItemListWithFilterParams(filterParams, 'catalog')
         } catch (error) {
             return
         }

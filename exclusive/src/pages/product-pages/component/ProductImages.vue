@@ -1,5 +1,5 @@
 <template>
-    <div class="product-images">
+    <div class="product-images" v-if="currentImage">
         <div class="product-images__preview preview">
             <swiper
                 :modules="[Thumbs, Navigation]"
@@ -7,7 +7,6 @@
                 :space-between="16"
                 class="preview__thumbs-swiper"
                 @swiper="setThumbsSwiper"
-                ref="swiperRef"
                 :direction="changeSwiperDirection()"
                 :freeMode="true"
                 :breakpoints="{
@@ -32,7 +31,7 @@
         </div>
         <div class="product-images__product-photo product-photo">
             <swiper
-                :modules="Thumbs"
+                :modules="[Thumbs]"
                 :slides-per-view="1"
                 :thumbs="{ swiper: thumbsSwiper }"
                 class="product-photo__main-swiper"
@@ -66,7 +65,7 @@ import PhotoSwipeLightbox from 'photoswipe/lightbox'
 import 'photoswipe/style.css'
 
 //===========================================================
-const swiperRef = ref(null)
+
 const lightbox = ref(null)
 //===========================================================
 import { onResize } from '@/modulesHelpers/lib/resize.js'
@@ -74,7 +73,7 @@ const { currentWindowWidth: windowWidth } = onResize()
 function changeSwiperDirection() {
     return windowWidth.value <= 768 ? 'horizontal' : 'vertical'
 }
-onMounted(() => {
+onMounted(async () => {
     if (!lightbox.value) {
         lightbox.value = new PhotoSwipeLightbox({
             gallery: '#' + 'gallery',
@@ -96,11 +95,12 @@ const setThumbsSwiper = (swiper) => {
     thumbsSwiper.value = swiper
 }
 //===========================================================
+import { useProductStore } from '@/stores/product.js'
 import { storeToRefs } from 'pinia'
-import { useProductsStore } from '@/stores/products.js'
-const { getItemsList } = storeToRefs(useProductsStore())
+const { getCurrentItem } = storeToRefs(useProductStore())
+
 const currentImage = computed(() => {
-    return getItemsList.value[0].images.map((img) => {
+    return getCurrentItem.value?.images?.map((img) => {
         return {
             largeURL: img,
             thumbnailURL: img,
@@ -177,3 +177,4 @@ const currentImage = computed(() => {
     }
 }
 </style>
+@/stores/filters.js

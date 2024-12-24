@@ -20,11 +20,11 @@
 import { ref, onBeforeMount, computed, watch } from 'vue'
 import FilterPanel from './component/FilterPanel.vue'
 import FilterProductBox from './component/FilterProductBox.vue'
-import { useProductsStore } from '@/stores/products.js'
+import { useFiltersStore } from '@/stores/filters.js'
 import { storeToRefs } from 'pinia'
 
-const { loadProductWithPagination, loadBrandsList } = useProductsStore()
-const { getProductsListTotalNumber } = storeToRefs(useProductsStore())
+const { loadProductWithPagination, loadBrandsList } = useFiltersStore()
+const { getProductsListTotalNumber } = storeToRefs(useFiltersStore())
 const filterObject = ref({
     pageNumber: 1,
     prePageNumber: 3,
@@ -108,4 +108,4 @@ const links = [
     }
 }
 </style>
-../../stores/product.js
+../../stores/product.js @/stores/filters.js

@@ -1,5 +1,5 @@
 <template>
-    <section class="items-cart">
+    <section class="items-cart" v-if="cartList">
         <div class="items-cart__container">
             <div v-if="getWindowSize" class="items-cart__mobile mobile-cart">
                 <div class="mobile-cart__titles item-wrapper item-wrapper--triple item-wrapper--small-box">
@@ -38,24 +38,36 @@
                     <span>Product</span><span>Price</span><span>Quantity</span><span>Subtotal</span>
                 </div>
                 <ul class="desktop-cart__list">
-                    <li class="desktop-cart__item item-wrapper">
+                    <li
+                        v-for="cartProduct of cartList"
+                        :key="cartProduct.productId"
+                        class="desktop-cart__item item-wrapper"
+                    >
                         <span class="item-wrapper__picture">
-                            <button class="item-wrapper__delete">
+                            <button
+                                @click.prevent="deleteProductInOrderList(cartProduct.productId)"
+                                class="item-wrapper__delete"
+                            >
                                 <font-awesome-icon :icon="['fas', 'circle-xmark']" class="item-wrapper__icon" />
                             </button>
-                            <v-img :width="54" :height="54" :src="getItemsList[0].photo" class="item-wrapper__img" />LCD
-                            Monitor </span
-                        ><span>$650</span
-                        ><span class="item-wrapper__number"
-                            ><v-number-input
+                            <v-img :width="54" :height="54" :src="cartProduct.image" class="item-wrapper__img" />
+                            <span v-ellipses:10> {{ cartProduct.title }}</span>
+                        </span>
+                        <span>${{ cartProduct.price }}</span>
+                        <span class="item-wrapper__number">
+                            <v-number-input
                                 :reverse="false"
                                 controlVariant="stacked"
                                 :hideInput="false"
+                                :max="cartProduct.quantity"
+                                :min="1"
+                                v-model="cartProduct.amount"
+                                @update:modelValue="($event) => changeAmountInOrderList(cartProduct.productId, $event)"
                                 inset
                                 variant="outlined"
                             >
                             </v-number-input></span
-                        ><span>$650</span>
+                        ><span>${{ cartProduct.subtotal.toFixed(2) }}</span>
                     </li>
                 </ul>
             </div>
@@ -68,8 +80,8 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
-
+import { computed, ref } from 'vue'
+const temp = ref(0)
 //===========================================================
 import photo from '@/assets/productPage/01.png'
 
@@ -78,10 +90,27 @@ import photo from '@/assets/productPage/01.png'
 import { onResize } from '@/modulesHelpers/lib/resize.js'
 const { currentWindowWidth: windowsWidth } = onResize()
 const getWindowSize = computed(() => (windowsWidth.value <= 600 ? true : false))
+//===========================================================
 
 import { storeToRefs } from 'pinia'
-// import { useSomeProductStore } from '@/stores/someProduct.js'
-// const { getItemsList } = storeToRefs(useSomeProductStore())
+import { useCartStore } from '@/stores/cart.js'
+import { vEllipses } from '@/directive/ellipses'
+const { changeAmountInOrderList, deleteProductInOrderList } = useCartStore()
+const { getCartProductList } = storeToRefs(useCartStore())
+
+//===========================================================
+
+const cartList = computed(() =>
+    getCartProductList.value.map((product) => {
+        return { ...product, subtotal: parseFloat(product.price) * parseFloat(product.amount) }
+    })
+)
+
+const totalPrice = computed(() =>
+    cartList.value.reduce((acc, product) => {
+        return (acc += product.subtotal)
+    }, 0)
+)
 </script>
 
 <style lang="scss" scoped>

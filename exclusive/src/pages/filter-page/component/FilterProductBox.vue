@@ -21,13 +21,13 @@
 
 <script setup>
 import { ref, computed, watch, defineEmits } from 'vue'
-import { useProductsStore } from '@/stores/products.js'
+import { useFiltersStore } from '@/stores/filters.js'
 import ProductCard from '../../../components/ProductCard.vue'
 import { storeToRefs } from 'pinia'
 
 const emit = defineEmits(['update:modelValue'])
 
-const { getProductsList } = storeToRefs(useProductsStore())
+const { getProductsList } = storeToRefs(useFiltersStore())
 const sortOption = ref(null)
 
 const productData = computed(() => getProductsList.value)
@@ -79,3 +79,4 @@ watch(sortOption, (newSort) => {
     }
 }
 </style>
+@/stores/filters.js

@@ -1,5 +1,5 @@
 <template>
-    <a class="card" v-if="productItem">
+    <a @click.prevent="goToDetailsProduct" class="card" v-if="productItem">
         <div class="card__image-card">
             <div class="card__img"><v-img :src="productItem?.image" /></div>
             <span v-if="productItem.discount" class="card__discount">{{ productItem.discount }}</span>
@@ -23,7 +23,7 @@
                     </div>
                 </button>
             </div>
-            <v-btn class="card__add-to-cart">Add to Cart</v-btn>
+            <v-btn @click.stop="addToCartList()" class="card__add-to-cart">Add to Cart</v-btn>
         </div>
         <div class="card__description">
             <h4 class="card__title">{{ productItem.title }}</h4>
@@ -56,6 +56,7 @@ import IconShow from '@/components/icons/iconsSrc/IconShow.vue'
 import IconRatingStarYellow from '../components/icons/iconsSrc/IconRatingStarYellow.vue'
 import IconRatingStarGray from '../components/icons/iconsSrc/IconRatingStarGray.vue'
 import Rating from 'primevue/rating'
+import { useRouter } from 'vue-router'
 
 const props = defineProps({
     productItem: {
@@ -63,6 +64,32 @@ const props = defineProps({
         default: () => ({})
     }
 })
+const router = useRouter()
+function goToDetailsProduct() {
+    router.push({
+        name: 'product',
+        params: {
+            id: props.productItem._id
+        }
+    })
+}
+//===========================================================
+import { useCartStore } from '@/stores/cart.js'
+const { addProductToOrders } = useCartStore()
+async function addToCartList() {
+    try {
+        await addProductToOrders({
+            productId: props.productItem._id,
+            image: props.productItem.image,
+            price: props.productItem.newPrice,
+            title: props.productItem.title,
+            quantity: props.productItem.quantity,
+            amount: 1
+        })
+    } catch (error) {
+        console.error(error.massage)
+    }
+}
 </script>
 
 <style lang="scss" scoped>

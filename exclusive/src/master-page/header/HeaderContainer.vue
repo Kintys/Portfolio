@@ -12,7 +12,7 @@
                 <router-link :to="{ name: 'home' }" class="header__logo logo">Exclusive</router-link>
                 <HeaderNavBar class="header__nav" :class="{ 'menu-open': showMenu }" />
                 <SearchBar :is-scrolling="isScrolling" />
-                <HeaderActionsPanel v-if="isAuthenticated" :ref="navBar" class="header__actions" />
+                <HeaderActionsPanel class="header__actions" />
                 <div class="icon-menu" :class="{ 'open-icon': showMenu }" @click="activeMenu()">
                     <span></span>
                 </div>
@@ -34,17 +34,12 @@ const { showMenu, activeMenu } = burgerMenu()
 import { ref } from 'vue'
 const isScrolling = ref(false)
 const smallCont = ref(false)
-const navBar = ref(false)
 function onScroll(scroll, scrolled) {
     if (scroll >= 48) {
         isScrolling.value = scrolled
         smallCont.value = true
     } else smallCont.value = false
 }
-// ===========================
-import { storeToRefs } from 'pinia'
-import { useAuthStore } from '@/stores/auth'
-const { isAuthenticated } = storeToRefs(useAuthStore())
 </script>
 
 <style lang="scss" scoped>

@@ -1,5 +1,5 @@
 <template>
-    <div class="product-description">
+    <div class="product-description" v-if="currentItem">
         <header class="product-description__header">
             <h4 class="product-description__title">{{ currentItem.title }}</h4>
             <div class="product-description__subtitle">
@@ -15,13 +15,14 @@
                                 <IconBase width="16" height="15">
                                     <IconRatingStarGray />
                                 </IconBase>
-                            </template> </Rating
-                        ><span class="review__number">{{ currentItem.review }}</span>
+                            </template>
+                        </Rating>
+                        <span class="review__number">{{ currentItem.evaluation }}</span>
                     </div>
                 </div>
                 <div v-if="currentItem.quantity" class="product-description__availability">In Stock</div>
             </div>
-            <div class="product-description__price">${{ currentItem.prices.newPrice }}</div>
+            <div class="product-description__price">${{ currentItem.newPrice }}</div>
             <div class="product-description__text">
                 {{ currentItem.description }}
             </div>
@@ -125,18 +126,20 @@ import IconRatingStarGray from '@/components/icons/iconsSrc/IconRatingStarGray.v
 
 //===========================================================
 import { storeToRefs } from 'pinia'
-import { useProductsStore } from '@/stores/products.js'
-const { getItemsList } = storeToRefs(useProductsStore())
-const currentItem = computed(() => {
-    const adv = getItemsList.value[0].rating.reduce((acc, review) => {
-        return Number(acc) + Number(review)
-    })
-    return {
-        ...getItemsList.value[0],
-        rating: adv / getItemsList.value[0].rating.length,
-        review: getItemsList.value[0].rating.length
-    }
-})
+import { useProductStore } from '@/stores/product.js'
+const { getCurrentItem } = storeToRefs(useProductStore())
+
+const currentItem = computed(() => getCurrentItem.value)
+// const currentItem = computed(() => {
+//     const adv = getItemsList.value[0].rating.reduce((acc, review) => {
+//         return parseInt(acc) + parseInt(review)
+//     })
+//     return {
+//         ...getItemsList.value[0],
+//         rating: adv / getItemsList.value[0].rating.length,
+//         review: getItemsList.value[0].rating.length
+//     }
+// })
 </script>
 
 <style lang="scss" scoped>
@@ -149,6 +152,9 @@ const currentItem = computed(() => {
     &__header {
         border-bottom: toRem(1) solid rgba(0, 0, 0, 0.5);
         padding-bottom: toRem(24);
+        &:not(:last-child) {
+            margin-bottom: toRem(15);
+        }
     }
 
     // .product-description__title
@@ -241,7 +247,7 @@ const currentItem = computed(() => {
             }
         }
         &:not(:last-child) {
-            margin-bottom: toRem(8);
+            margin-bottom: toRem(15);
         }
     }
 
@@ -434,4 +440,4 @@ const currentItem = computed(() => {
     color: #fff;
 }
 </style>
-@/stores/product.js
+@/stores/product.js @/stores/filters.js

@@ -53,12 +53,12 @@ export const routes = [
         }
     },
     {
-        path: '/product',
+        path: '/product:id',
         name: 'product',
         component: () => import('@/pages/product-pages/ProductView.vue'),
         meta: {
             requireAuth: false,
-            useInMenu: true
+            useInMenu: false
         }
     },
     {
@@ -67,7 +67,7 @@ export const routes = [
         component: () => import('@/pages/cart-pages/CartView.vue'),
         meta: {
             requireAuth: false,
-            useInMenu: true
+            useInMenu: false
         }
     },
 

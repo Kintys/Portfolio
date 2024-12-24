@@ -24,18 +24,18 @@ const props = defineProps({
 import SearchList from './SearchList.vue'
 import IconBase from '@/components/icons/IconBase.vue'
 import IconMagnifyingGlass from '@/components/icons/iconsSrc/IconMagnifyingGlass.vue'
-import { useProductsStore } from '@/stores/products.js'
+import { useFiltersStore } from '@/stores/filters.js'
 import { ref, watch, toRef } from 'vue'
 const isScrolling = toRef(props, 'isScrolling')
 
-const { loadProductWithSearchTextFilter } = useProductsStore()
+const { loadProductWithSearchTextFilter } = useFiltersStore()
 const showList = ref(false)
 async function search($event) {
     try {
         const searchText = $event.target.value
         if (searchText.length >= 2) {
             showList.value = true
-            loadProductWithSearchTextFilter({
+            await loadProductWithSearchTextFilter({
                 search: searchText
             })
         } else {
@@ -111,3 +111,4 @@ watch(isScrolling, (newVal) => {
     }
 }
 </style>
+@/stores/filters.js

@@ -5,7 +5,7 @@
                 <v-avatar v-if="!getCurrentUser.avatar" size="34" color="secondary">
                     {{ userAvatar }}
                 </v-avatar>
-                <v-avatar v-else :image="getCurrentUser.avatar" size="34"> </v-avatar>
+                <v-avatar v-else :image="getCurrentUser?.avatar" size="34"> </v-avatar>
             </v-btn>
         </template>
         <v-list bg-color="#000" class="card" tile="false">

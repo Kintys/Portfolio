@@ -2,6 +2,7 @@
     <MainMasterPage>
         <FilterContainer></FilterContainer>
     </MainMasterPage>
+    {{ getCurrentItem }}
 </template>
 
 <script setup>

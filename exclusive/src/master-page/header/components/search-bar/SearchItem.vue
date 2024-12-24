@@ -1,6 +1,6 @@
 <template>
     <!-- router link -->
-    <div class="search-item">
+    <a @click.prevent="goToDetailsProduct()" class="search-item">
         <div class="search-item__body item-search">
             <v-img
                 :src="productItem.image"
@@ -11,7 +11,9 @@
                 :alt="productItem.title"
             />
             <div class="item-search__content">
-                <h2 v-ellipses:23.keep-word class="item-search__title">{{ productItem.title }}</h2>
+                <h2 v-ellipses:23.keep-word :key="uniqueKey" class="item-search__title">
+                    {{ productItem.title }}
+                </h2>
                 <section class="item-search__rating">
                     <Rating v-model="productItem.rating" :stars="5" readonly :cancel="false" class="item-search__stars">
                         <template #onicon>
@@ -28,21 +30,37 @@
                 </section>
             </div>
         </div>
-    </div>
+    </a>
 </template>
 
 <script setup>
-defineProps({
+const props = defineProps({
     productItem: {
         type: Object,
         default: () => ({})
     }
 })
+
 import { vEllipses } from '../../../../directive/ellipses'
 import Rating from 'primevue/rating'
 import IconBase from '@/components/icons/IconBase.vue'
 import IconRatingStarYellow from '@/components/icons/iconsSrc/IconRatingStarYellow.vue'
 import IconRatingStarGray from '@/components/icons/iconsSrc/IconRatingStarGray.vue'
+import { watchEffect, ref } from 'vue'
+import { useRouter } from 'vue-router'
+const uniqueKey = ref(1)
+watchEffect(() => {
+    if (props.productItem) uniqueKey.value++
+})
+const router = useRouter()
+function goToDetailsProduct() {
+    router.push({
+        name: 'product',
+        params: {
+            id: props.productItem._id
+        }
+    })
+}
 </script>
 
 <style lang="scss" scoped>
