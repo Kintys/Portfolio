@@ -73,7 +73,7 @@
             </div>
             <div class="items-cart__actions">
                 <v-btn class="items-cart__btn button-main">Return To Shop</v-btn>
-                <v-btn class="items-cart__btn button-main">Update Cart</v-btn>
+                <v-btn @click="saveUserOrder()" class="items-cart__btn button-main">Update Cart</v-btn>
             </div>
         </div>
     </section>
@@ -95,7 +95,7 @@ const getWindowSize = computed(() => (windowsWidth.value <= 600 ? true : false))
 import { storeToRefs } from 'pinia'
 import { useCartStore } from '@/stores/cart.js'
 import { vEllipses } from '@/directive/ellipses'
-const { changeAmountInOrderList, deleteProductInOrderList } = useCartStore()
+const { changeAmountInOrderList, deleteProductInOrderList, saveUserOrder } = useCartStore()
 const { getCartProductList } = storeToRefs(useCartStore())
 
 //===========================================================

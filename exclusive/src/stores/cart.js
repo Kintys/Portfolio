@@ -1,10 +1,12 @@
-import { defineStore } from 'pinia'
+import { defineStore, storeToRefs } from 'pinia'
 import { v4 as uuidv4 } from 'uuid'
 import { computed, ref } from 'vue'
 import { useUsersStore } from './users'
+
+import RequestManager from './helpers/RequestManager'
 export const useCartStore = defineStore('cart', () => {
     //state
-    const userStore = useUsersStore()
+    const { getCurrentUser } = storeToRefs(useUsersStore())
     const userOrder = ref({
         email: '',
         orderId: '',
@@ -66,16 +68,36 @@ export const useCartStore = defineStore('cart', () => {
     }
 
     async function sendUserOrder() {
-        const userEmail = userStore.getCurrentUser.value?.email ?? ''
-        if (!userEmail) return
-        else {
-            userOrder.value['email'] = userEmail
-            await deleteOrderId()
-        }
+        const userEmail = getCurrentUser.value?.email ?? ''
+
+        userOrder.value['email'] = userEmail
+        await deleteOrderId()
+    }
+
+    async function saveUserOrder() {
+        // const id = 'e59141ac-65fa-468f-b2a5-6bf74c62b899'
+        // const status = await RequestManager.deleteRequest('/cart', { orderId: id })
+        // console.log(status)
+        try {
+            const userEmail = getCurrentUser?.value?.email ?? ''
+            const cartList = {
+                ...getCartList.value,
+                email: userEmail,
+                cartProductList: getCartProductList.value.map((product) => {
+                    return { productId: product.productId, amount: product.amount }
+                })
+            }
+            if (!cartList.orderId) return
+            const status = await RequestManager.postRequest('/cart/save', cartList)
+        } catch (error) {}
     }
     async function loadUserOrderById() {
         const orderId = localStorage.getItem('orderId')
-        if (orderId) userOrder.value.orderId = orderId
+        if (!orderId) return
+
+        // const userCart = await RequestManager.getRequest('/cart', { orderId })
+
+        // console.log(userCart)
     }
     async function changeAmountInOrderList(productId, value) {
         try {
@@ -93,6 +115,7 @@ export const useCartStore = defineStore('cart', () => {
     }
     return {
         getCartProductList,
+        saveUserOrder,
         addProductToOrders,
         loadUserOrderById,
         changeAmountInOrderList,

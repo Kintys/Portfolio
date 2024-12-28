@@ -169,6 +169,24 @@ export default class RequestManager {
     // }
 
     // // Метод для виконання DELETE запиту
+
+    static async deleteRequest(path, data, addAuthorization = true) {
+        const headers = { 'Content-Type': 'application/json' }
+        if (addAuthorization && RequestManager.getToken()) {
+            headers['Authorization'] = `Bearer ${RequestManager.getToken()}`
+        }
+        try {
+            const response = await RequestManager.http.delete(RequestManager.getServerRoute(path), {
+                headers: headers,
+                params: data
+            })
+            if (response.status >= 300 && response.status <= 500) throw new Error(response.data)
+            else return response.data
+        } catch (error) {
+            return error
+        }
+    }
+
     // static async deleteRequest(route, id, addAuthorization = true) {
     //     const headers = { 'Content-Type': 'application/json' }
     //     if (addAuthorization && RequestManager.isAuthenticated()) {
