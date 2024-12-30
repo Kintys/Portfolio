@@ -3,7 +3,7 @@
         <div class="card__image-card">
             <div class="card__img"><v-img :src="productItem?.image" /></div>
             <span v-if="productItem.discount" class="card__discount">{{ productItem.discount }}</span>
-            <div class="card__actions">
+            <div v-if="showActionsBtn" class="card__actions">
                 <button class="card__wish-list-btn">
                     <div class="card__circle">
                         <IconBase width="20" height="20" viewBox="4 2 24 24" icon-color="transparent" class="card__icon"
@@ -23,7 +23,7 @@
                     </div>
                 </button>
             </div>
-            <v-btn @click.stop="addToCartList()" class="card__add-to-cart">Add to Cart</v-btn>
+            <v-btn v-if="showAddBtn" @click.stop="addToCartList()" class="card__add-to-cart">Add to Cart</v-btn>
         </div>
         <div class="card__description">
             <h4 class="card__title">{{ productItem.title }}</h4>
@@ -31,20 +31,22 @@
                 <span class="card__new-price">${{ productItem.newPrice }}</span
                 ><span v-if="productItem.oldPrice" class="card__old-price">${{ productItem.oldPrice }}</span>
             </div>
-            <div class="card__review">
-                <Rating v-model="productItem.rating" :stars="5" readonly :cancel="false" class="card__stars">
-                    <template #onicon>
-                        <IconBase width="16" height="15">
-                            <IconRatingStarYellow />
-                        </IconBase>
-                    </template>
-                    <template #officon>
-                        <IconBase width="16" height="15">
-                            <IconRatingStarGray />
-                        </IconBase>
-                    </template> </Rating
-                ><span class="card__review-number">({{ productItem.evaluation }})</span>
-            </div>
+            <slot name="cart-butt">
+                <div class="card__review">
+                    <Rating v-model="productItem.rating" :stars="5" readonly :cancel="false" class="card__stars">
+                        <template #onicon>
+                            <IconBase width="16" height="15">
+                                <IconRatingStarYellow />
+                            </IconBase>
+                        </template>
+                        <template #officon>
+                            <IconBase width="16" height="15">
+                                <IconRatingStarGray />
+                            </IconBase>
+                        </template> </Rating
+                    ><span class="card__review-number">({{ productItem.evaluation }})</span>
+                </div>
+            </slot>
         </div>
     </a>
 </template>
@@ -62,6 +64,14 @@ const props = defineProps({
     productItem: {
         type: Object,
         default: () => ({})
+    },
+    showAddBtn: {
+        type: Boolean,
+        default: true
+    },
+    showActionsBtn: {
+        type: Boolean,
+        default: true
     }
 })
 const router = useRouter()
@@ -106,7 +116,7 @@ async function addToCartList() {
     @media (any-hover: hover) {
         &:hover {
             //
-            background: rgba(255, 166, 0, 0.236);
+            background: rgba(128, 128, 128, 0.253);
         }
     }
     &__image-card {

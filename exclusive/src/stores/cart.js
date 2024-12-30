@@ -89,6 +89,7 @@ export const useCartStore = defineStore('cart', () => {
             }
             if (!cartList.orderId) return
             const status = await RequestManager.postRequest('/cart/save', cartList)
+            console.log(status)
         } catch (error) {}
     }
     async function loadUserOrderById() {

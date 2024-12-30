@@ -80,6 +80,17 @@ export const routes = [
             useInMenu: true
         }
     },
+
+    {
+        path: '/admin',
+        name: 'admin',
+        component: () => import('../pages/admin-page/AdminPage.vue'),
+        meta: {
+            requireAuth: false,
+            useInMenu: true
+        }
+    },
+
     {
         path: '/:path(.*)*',
         name: 'pageNotFound',

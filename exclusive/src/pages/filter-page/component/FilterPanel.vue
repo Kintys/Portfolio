@@ -18,21 +18,6 @@
                     thumb-label="true"
                     hide-details="auto"
                 ></v-range-slider>
-
-                <!-- <v-text-field
-                    v-model="filterParams.minPrice"
-                    label="Min"
-                    type="number"
-                    variant="outlined"
-                    class="price__input"
-                ></v-text-field>
-                <v-text-field
-                    v-model="filterParams.maxPrice"
-                    label="Max"
-                    type="number"
-                    variant="outlined"
-                    class="price__input"
-                ></v-text-field> -->
             </div>
         </div>
         <div class="filter-panel__expansion-panels panels-expansion">
