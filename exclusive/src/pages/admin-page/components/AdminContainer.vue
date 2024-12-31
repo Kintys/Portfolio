@@ -14,6 +14,9 @@
 
 <script setup>
 import AdminNavBar from '@/pages/admin-page/components/AdminNavBar.vue'
+import { useFiltersStore } from '@/stores/filters.js'
+const { loadBrandsList } = useFiltersStore()
+import { onBeforeMount } from 'vue'
 import { ref, defineAsyncComponent, watchEffect } from 'vue'
 const components = new Map([
     ['AdminProductsList', () => defineAsyncComponent(() => import('./AdminProductsList.vue'))],
@@ -30,6 +33,9 @@ function changeComponents(nameComp) {
     const loadComponent = components.get(nameComp)
     if (loadComponent) activeComponents.value = loadComponent()
 }
+onBeforeMount(async () => {
+    await loadBrandsList()
+})
 </script>
 
 <style lang="scss" scoped>

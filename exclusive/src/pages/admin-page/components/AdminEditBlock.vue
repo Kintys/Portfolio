@@ -2,89 +2,224 @@
     <div class="editor-product">
         <header class="editor-product__header header-editor">
             <h2 class="header-editor__title">Add New Product</h2>
-            <section class="header-editor__actions">
-                <v-btn class="header-editor__btn button-main button-main--small">Save</v-btn>
-            </section>
         </header>
-        <div class="editor-product__body product-editor">
-            <section class="product-editor__info">
-                <header class="product-editor__header">
-                    <h4 class="product-editor__title">Basic</h4>
-                </header>
-                <div class="product-editor__body input-product">
-                    <v-text-field
-                        v-model="input"
-                        required
-                        class="input-product__input title-input"
-                        label="Product title"
-                        variant="outlined"
-                    >
-                    </v-text-field>
-                    <v-text-field
-                        v-model="input"
-                        required
-                        class="input-product__input quantity-input"
-                        label="Product title"
-                        variant="outlined"
-                    >
-                    </v-text-field>
-                    <v-textarea
-                        v-model="input"
-                        autocomplete="email"
-                        label="Full description"
-                        :height="200"
-                        auto-grow
-                        rows="9"
-                        variant="outlined"
-                    ></v-textarea>
+
+        <v-form class="editor-product__body product-editor" ref="form">
+            <div class="product-editor__wrapper">
+                <section class="product-editor__info">
+                    <header class="product-editor__header">
+                        <h4 class="product-editor__title">Basic</h4>
+                    </header>
+                    <div class="product-editor__body input-product">
+                        <v-text-field
+                            v-model="inputValues.title"
+                            required
+                            class="input-product__input title-input"
+                            label="Product title"
+                            variant="outlined"
+                            :rules="[
+                                (v) => !!v || 'Item is required',
+                                (v) => (v && v.length >= 2) || 'Name must be 2 characters or less'
+                            ]"
+                        >
+                        </v-text-field>
+                        <div class="input-product__selects">
+                            <v-select
+                                label="Brands"
+                                :items="selectItems"
+                                :return-object="true"
+                                hide-details="auto"
+                                v-model="inputValues.brand"
+                                variant="outlined"
+                                class="input-product__select"
+                                :rules="[(v) => !!v || 'Item is required']"
+                            ></v-select>
+                            <v-text-field
+                                v-model="inputValues.quantity"
+                                required
+                                class="input-product__input new-price-input"
+                                label="Quantity"
+                                variant="outlined"
+                                :rules="[
+                                    (v) => !!v || 'Item is required',
+                                    (v) => !isNaN(Number(v)) || 'Item must be number'
+                                ]"
+                            >
+                            </v-text-field>
+                        </div>
+                        <v-textarea
+                            v-model="inputValues.description"
+                            autocomplete="email"
+                            label="Full description"
+                            :height="200"
+                            auto-grow
+                            rows="9"
+                            variant="outlined"
+                            :rules="[
+                                (v) => !!v || 'Item is required',
+                                (v) => (v && v.length >= 10) || 'Minimum length is 10 characters'
+                            ]"
+                        ></v-textarea>
+                    </div>
+                </section>
+                <section class="product-editor__info input-product">
                     <div class="input-product__prices">
                         <v-text-field
-                            v-model="input"
+                            v-model="inputValues.oldPrice"
                             required
-                            class="input-product__input discount-input"
-                            label="Product title"
+                            class="input-product__input price-input"
+                            label="Old price"
                             variant="outlined"
+                            :rules="[(v) => !isNaN(Number(v)) || 'Item must be number']"
                         >
                         </v-text-field>
                         <v-text-field
-                            v-model="input"
+                            v-model="inputValues.newPrice"
+                            required
+                            class="input-product__input price-input"
+                            label="New price"
+                            variant="outlined"
+                            :rules="[
+                                (v) => !!v || 'Item is required',
+                                (v) => !isNaN(Number(v)) || 'Item must be number'
+                            ]"
+                        >
+                        </v-text-field>
+                    </div>
+                </section>
+                <section class="product-editor__info input-product">
+                    <div class="input-product__rating">
+                        <v-select
+                            label="Rating"
+                            :items="[1, 2, 3, 4, 5]"
+                            v-model="inputValues.rating"
+                            variant="outlined"
+                            class="input-product__select"
+                            hide-details="auto"
+                            persistent-hint="true"
+                            :rules="[(v) => !!v || 'Item is required']"
+                        >
+                            ></v-select
+                        >
+                        <v-text-field
+                            v-model="inputValues.evaluation"
                             required
                             class="input-product__input old-price-input"
-                            label="Product title"
-                            variant="outlined"
-                        >
-                        </v-text-field>
-                        <v-text-field
-                            v-model="input"
-                            required
-                            class="input-product__input new-price-input"
-                            label="Product title"
+                            label="Evaluation"
                             variant="outlined"
                         >
                         </v-text-field>
                     </div>
-
-                    <!-- <v-text-field
-                        v-model="input"
-                        required
-                        class="input-product__input brand-input"
-                        label="Product title"
-                        variant="outlined"
-                    >
-                    </v-text-field> -->
-                </div>
-            </section>
+                </section>
+            </div>
             <aside class="product-editor__file-rider file-editor">
                 <h4 class="file-editor__title">Media</h4>
+                <div class="file-editor__upload">
+                    <v-file-upload
+                        accept="image/png, image/jpeg, image/bmp"
+                        density="compact"
+                        :icon="upload"
+                        variant="compact"
+                        counter
+                        :title="false"
+                        :clearable="true"
+                        :multiple="true"
+                        width="100%"
+                        height="250"
+                        hide-details="auto"
+                        v-model="images"
+                        :rules="[
+                            (v) => !!v || 'Item is required',
+                            (v) => (v && v.length === 4) || 'Image must be 5 characters'
+                        ]"
+                    >
+                        <template #icon>
+                            <div class="file-editor__icon">
+                                <IconBase width="200" height="300" view-box="0 0 512 512">
+                                    <IconUpload />
+                                </IconBase>
+                            </div>
+                        </template>
+                    </v-file-upload>
+                    <small class="error-massage" :class="{ 'error-massage__show': errorMessages }">{{
+                        errorMessages
+                    }}</small>
+                </div>
             </aside>
-        </div>
+
+            <v-btn color="success" @click="validate()"> Validate </v-btn>
+        </v-form>
     </div>
 </template>
-
 <script setup>
-import { ref } from 'vue'
-const input = ref('')
+import { ref, computed } from 'vue'
+import IconBase from '@/components/icons/IconBase.vue'
+import IconUpload from '@/components/icons/iconsSrc/IconUpload.vue'
+import RequestManager from '@/stores/helpers/RequestManager'
+import { useFiltersStore } from '@/stores/filters'
+import { watchEffect } from 'vue'
+import { storeToRefs } from 'pinia'
 
+const { getBrandsList } = storeToRefs(useFiltersStore())
+
+const selectItems = computed(() =>
+    getBrandsList.value.map((brand) => {
+        return {
+            title: brand.name,
+            value: brand.id
+        }
+    })
+)
+const errorMessages = ref('')
+const images = ref([])
+const massage = ref('')
+const form = ref('')
+const inputValues = ref({
+    title: '',
+    quantity: null,
+    description: '',
+    oldPrice: null,
+    newPrice: null,
+    evaluation: null,
+    rating: null,
+    brand: null
+})
+
+function checkFile() {
+    if (!images.value || images.value.length === 0) {
+        errorMessages.value = 'Item is required'
+        return false
+    }
+
+    if (images.value.length < 5) {
+        errorMessages.value = 'You must upload at least 5 images'
+        return false
+    }
+
+    errorMessages.value = ''
+    return true
+}
+watchEffect(() => {
+    if (images.value) errorMessages.value = ''
+})
+async function validate() {
+    console.log(await form.value.validate())
+    const validFileUpload = checkFile()
+    const { valid } = await form.value.validate()
+    if (valid && validFileUpload) alert('Form is valid')
+}
+
+async function sendForm() {
+    try {
+        let formData = new FormData()
+
+        images.value.forEach((file) => formData.append('images', file))
+        const result = await RequestManager.postFormRequest('/products/add', formData)
+        massage.value = result
+    } catch (err) {
+        massage.value = err.massage
+    }
+}
 const testData = {
     _id: 'fd4cd2c6-bb20-11ef-ac6c-d8f3bc34',
     title: 'CyberPowerPC Gamer Xtreme VR Gaming PC, Intel Core i5-13400F 2.5GHz, GeForce RTX 4060 8GB, 16GB DDR5, 1TB PCIe Gen4 SSD, WiFi Ready & Windows 11 Home (GXiVR8060A24)',
@@ -156,8 +291,12 @@ const testData = {
 }
 .product-editor {
     display: grid;
-    grid-template-columns: toRem(600) toRem(250);
+    grid-template-columns: toRem(600) toRem(350);
     gap: toRem(30);
+    &__wrapper {
+        display: grid;
+        gap: toRem(30);
+    }
 
     // .product-editor__info
 
@@ -217,7 +356,9 @@ const testData = {
 
 .file-editor {
     border-radius: toRem(4);
+
     box-shadow: 0 0.0625rem 0.8125rem 0 rgba(0, 0, 0, 0.05);
+
     // .file-editor__title
 
     &__title {
@@ -228,8 +369,17 @@ const testData = {
         padding: toRem(20.8) toRem(20.8);
         border-bottom: toRem(1) solid rgba(222, 226, 230, 0.7);
     }
-}
+    // .file-editor__icon
+    &__upload {
+        // position: relative;
+        // min-height: toRem(270);
+    }
 
+    &__icon {
+        overflow: hidden;
+    }
+}
+// width='200' height='300'
 .input-product {
     // .input-product__input
 
@@ -238,16 +388,44 @@ const testData = {
     &__prices {
         display: flex;
         gap: toRem(20);
+        justify-content: space-between;
+    }
+    // .input-product__selects
+
+    &__selects {
+        display: flex;
+        gap: toRem(10);
+        justify-content: space-between;
+        &:not(:last-child) {
+            margin-bottom: toRem(20);
+        }
+    }
+    &__rating {
+        display: flex;
+        justify-content: space-between;
+        gap: toRem(10);
+    }
+    // .input-product__select
+
+    &__select {
+        max-width: toRem(200);
     }
 }
-.title-input {
+
+.price-input {
+    max-width: toRem(200);
 }
-.discount-input {
-}
-.old-price-input {
-}
-.new-price-input {
-}
-.quantity-input {
+
+.error-massage {
+    padding-left: toRem(15);
+    color: #b40d2b;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s;
+    &__show {
+        bottom: 0;
+        opacity: 1;
+        visibility: visible;
+    }
 }
 </style>

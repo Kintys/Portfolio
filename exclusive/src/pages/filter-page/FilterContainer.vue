@@ -24,7 +24,7 @@ import { useFiltersStore } from '@/stores/filters.js'
 import { storeToRefs } from 'pinia'
 
 const { loadProductWithPagination, loadBrandsList } = useFiltersStore()
-const { getProductsListTotalNumber } = storeToRefs(useFiltersStore())
+const { getProductsListTotalNumber, getBrandsList } = storeToRefs(useFiltersStore())
 const filterObject = ref({
     pageNumber: 1,
     prePageNumber: 3,
@@ -52,8 +52,8 @@ onBeforeMount(() => {
     loadProductWithPagination({
         page: filterObject.value.pageNumber - 1,
         perPage: filterObject.value.prePageNumber
-    }),
-        loadBrandsList()
+    })
+    loadBrandsList()
 })
 
 const links = [

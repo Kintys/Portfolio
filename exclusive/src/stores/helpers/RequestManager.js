@@ -103,18 +103,38 @@ export default class RequestManager {
             return error
         }
     }
-    // const headers = {}
-    // if (addAuthorization && RequestManager.isAuthenticated()) {
-    //     headers['Authorization'] = `Bearer ${localStorage.getItem('jwt_token')}`
+    static async postFormRequest(path, body, addAuthorization = true) {
+        const headers = {}
+        //    const headers = { 'Content-Type': 'multipart/form-data' }
+        if (addAuthorization && RequestManager.getToken()) {
+            headers['Authorization'] = `Bearer ${RequestManager.getToken()}`
+        }
+        try {
+            const response = await RequestManager.http.post(RequestManager.getServerRoute(path), body, {
+                headers: headers
+            })
+            if (response.status >= 300 && response.status <= 500) throw new Error(response.data)
+            else return response.data
+        } catch (error) {
+            return error
+        }
+    }
+
+    // static async postFormRequest(url, form, addAuthorization = true) {
+    //     const headers = {}
+    //     if (addAuthorization && RequestManager.isAuthenticated()) {
+    //         headers['Authorization'] = `Bearer ${localStorage.getItem('jwt_token')}`
+    //     }
+
+    //     const formData = new FormData(form)
+    //     const response = await fetch(url, {
+    //         method: 'POST',
+    //         headers: headers,
+    //         body: formData
+    //     })
+    //     const data = await response.json()
+    //     return data
     // }
-    // const formData = new FormData(form)
-    // const response = await fetch(url, {
-    //     method: 'POST',
-    //     headers: headers,
-    //     body: formData
-    // })
-    // const data = await response.json()
-    // return data
 
     // static async getRequest(path, params, addAuthorization = true) {
     //     const headers = { 'Content-Type': 'application/json' }
@@ -136,13 +156,13 @@ export default class RequestManager {
     //     }
     // }
 
-    static async postRequest(path, data, addAuthorization = true) {
+    static async postRequest(path, body, addAuthorization = true) {
         const headers = { 'Content-Type': 'application/json' }
         if (addAuthorization && RequestManager.getToken()) {
             headers['Authorization'] = `Bearer ${RequestManager.getToken()}`
         }
         try {
-            const response = await RequestManager.http.post(RequestManager.getServerRoute(path), data, {
+            const response = await RequestManager.http.post(RequestManager.getServerRoute(path), body, {
                 headers: headers
             })
             if (response.status >= 300 && response.status <= 500) throw new Error(response.data)

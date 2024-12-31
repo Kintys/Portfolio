@@ -26,9 +26,11 @@ const app = createApp(App)
 import vuetify from '@/plugins/vuetify.js'
 import { createVuetify } from 'vuetify'
 import { VNumberInput } from 'vuetify/labs/VNumberInput'
+import { VFileUpload } from 'vuetify/labs/VFileUpload'
 const VNumberComp = createVuetify({
     components: {
-        VNumberInput
+        VNumberInput,
+        VFileUpload
     }
 })
 app.use(VNumberComp)
