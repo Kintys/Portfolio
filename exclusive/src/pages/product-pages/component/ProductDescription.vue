@@ -28,7 +28,7 @@
             </div>
         </header>
         <div class="product-description__options">
-            <div class="product-description__colors">
+            <div v-if="currentItem.colors" class="product-description__colors">
                 <v-radio-group label="Colours:" v-model="color" inline :height="8" :width="8">
                     <v-radio
                         v-for="(color, index) in currentItem.colors"

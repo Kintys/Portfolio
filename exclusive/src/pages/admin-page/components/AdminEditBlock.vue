@@ -3,7 +3,6 @@
         <header class="editor-product__header header-editor">
             <h2 class="header-editor__title">Add New Product</h2>
         </header>
-
         <v-form class="editor-product__body product-editor" ref="form">
             <div class="product-editor__wrapper">
                 <section class="product-editor__info">
@@ -29,23 +28,22 @@
                                 :items="selectItems"
                                 :return-object="true"
                                 hide-details="auto"
-                                v-model="inputValues.brand"
+                                v-model="inputValues.brands_id"
                                 variant="outlined"
                                 class="input-product__select"
                                 :rules="[(v) => !!v || 'Item is required']"
                             ></v-select>
-                            <v-text-field
-                                v-model="inputValues.quantity"
-                                required
-                                class="input-product__input new-price-input"
-                                label="Quantity"
+                            <v-select
+                                v-if="!productId"
+                                label="Category"
+                                :items="categoryProps"
+                                :return-object="true"
+                                hide-details="auto"
+                                v-model="category"
                                 variant="outlined"
-                                :rules="[
-                                    (v) => !!v || 'Item is required',
-                                    (v) => !isNaN(Number(v)) || 'Item must be number'
-                                ]"
-                            >
-                            </v-text-field>
+                                class="input-product__select"
+                                :rules="[(v) => !!v || 'Item is required']"
+                            ></v-select>
                         </div>
                         <v-textarea
                             v-model="inputValues.description"
@@ -60,6 +58,18 @@
                                 (v) => (v && v.length >= 10) || 'Minimum length is 10 characters'
                             ]"
                         ></v-textarea>
+                        <v-text-field
+                            v-model="inputValues.quantity"
+                            required
+                            class="input-product__input new-price-input"
+                            label="Quantity"
+                            variant="outlined"
+                            :rules="[
+                                (v) => !!v || 'Item is required',
+                                (v) => !isNaN(Number(v)) || 'Item must be number'
+                            ]"
+                        >
+                        </v-text-field>
                     </div>
                 </section>
                 <section class="product-editor__info input-product">
@@ -96,7 +106,6 @@
                             variant="outlined"
                             class="input-product__select"
                             hide-details="auto"
-                            persistent-hint="true"
                             :rules="[(v) => !!v || 'Item is required']"
                         >
                             ></v-select
@@ -104,7 +113,7 @@
                         <v-text-field
                             v-model="inputValues.evaluation"
                             required
-                            class="input-product__input old-price-input"
+                            class="input-product__input evaluation-input"
                             label="Evaluation"
                             variant="outlined"
                         >
@@ -118,10 +127,9 @@
                     <v-file-upload
                         accept="image/png, image/jpeg, image/bmp"
                         density="compact"
-                        :icon="upload"
                         variant="compact"
                         counter
-                        :title="false"
+                        title=" "
                         :clearable="true"
                         :multiple="true"
                         width="100%"
@@ -146,30 +154,41 @@
                     }}</small>
                 </div>
             </aside>
-
-            <v-btn color="success" @click="validate()"> Validate </v-btn>
+            <v-btn color="success" @click="validate()"> {{ buttonText }}</v-btn>
         </v-form>
     </div>
 </template>
+
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watchEffect, onMounted, onBeforeMount, onUpdated, onUnmounted } from 'vue'
 import IconBase from '@/components/icons/IconBase.vue'
 import IconUpload from '@/components/icons/iconsSrc/IconUpload.vue'
 import RequestManager from '@/stores/helpers/RequestManager'
 import { useFiltersStore } from '@/stores/filters'
-import { watchEffect } from 'vue'
 import { storeToRefs } from 'pinia'
 
 const { getBrandsList } = storeToRefs(useFiltersStore())
 
-const selectItems = computed(() =>
-    getBrandsList.value.map((brand) => {
-        return {
-            title: brand.name,
-            value: brand.id
-        }
-    })
-)
+import { useProductStore } from '@/stores/product.js'
+const { loadItemById } = useProductStore()
+const { getCurrentItem } = storeToRefs(useProductStore())
+const props = defineProps({
+    productId: {
+        type: String
+    }
+})
+
+onBeforeMount(async () => {
+    if (props.productId) await loadItemById(props.productId)
+})
+onUnmounted(() => {
+    props.productId = ''
+})
+// onUpdated(async () => {
+//     await loadItemById(productId.value)
+// })
+
+const category = ref(null)
 const errorMessages = ref('')
 const images = ref([])
 const massage = ref('')
@@ -182,8 +201,20 @@ const inputValues = ref({
     newPrice: null,
     evaluation: null,
     rating: null,
-    brand: null
+    brands_id: null
 })
+const categoryProps = ['gamepads', 'pcs', 'laptops', 'headphones']
+
+const buttonText = computed(() => (props.productId ? 'Update' : 'Add new'))
+const selectItems = computed(
+    () =>
+        getBrandsList.value.map((brand) => {
+            return {
+                title: brand.name,
+                value: brand._id
+            }
+        }) ?? []
+)
 
 function checkFile() {
     if (!images.value || images.value.length === 0) {
@@ -191,7 +222,7 @@ function checkFile() {
         return false
     }
 
-    if (images.value.length < 5) {
+    if (images.value.length < 4) {
         errorMessages.value = 'You must upload at least 5 images'
         return false
     }
@@ -199,47 +230,45 @@ function checkFile() {
     errorMessages.value = ''
     return true
 }
-watchEffect(() => {
-    if (images.value) errorMessages.value = ''
-})
+
 async function validate() {
-    console.log(await form.value.validate())
     const validFileUpload = checkFile()
     const { valid } = await form.value.validate()
-    if (valid && validFileUpload) alert('Form is valid')
+    if (valid && validFileUpload) await sendForm()
 }
 
 async function sendForm() {
     try {
         let formData = new FormData()
-
+        formData.append('data', JSON.stringify({ ...inputValues.value, brands_id: inputValues.value.brands_id.value }))
+        formData.append('category', JSON.stringify(category.value))
         images.value.forEach((file) => formData.append('images', file))
+
         const result = await RequestManager.postFormRequest('/products/add', formData)
         massage.value = result
     } catch (err) {
-        massage.value = err.massage
+        massage.value = err
     }
 }
-const testData = {
-    _id: 'fd4cd2c6-bb20-11ef-ac6c-d8f3bc34',
-    title: 'CyberPowerPC Gamer Xtreme VR Gaming PC, Intel Core i5-13400F 2.5GHz, GeForce RTX 4060 8GB, 16GB DDR5, 1TB PCIe Gen4 SSD, WiFi Ready & Windows 11 Home (GXiVR8060A24)',
-    images: [
-        'https://m.media-amazon.com/images/I/71CE5f1By6L._AC_SX466_.jpg',
-        'https://m.media-amazon.com/images/I/710V7zQzQLL._AC_SX466_.jpg',
-        'https://m.media-amazon.com/images/I/71ieoJBWnUL._AC_SX466_.jpg',
-        'https://m.media-amazon.com/images/I/81WjqVa7VSL._AC_SX466_.jpg'
-    ],
-    discount: '',
-    brand: 'Asus',
-    oldPrice: null,
-    newPrice: '900.00',
-    quantity: 10,
-    rating: 2,
-    description:
-        'System: Intel Core i5-13400F 2.5GHz 6+4 Cores | Intel B760 Chipset | 16GB DDR5 | 1TB PCIe Gen4 NVMe SSD | Windows 11 Home 64-bit\r\nGraphics: NVIDIA GeForce RTX 4060 8GB Graphics | 1x HDMI | 2x DisplayPort\r\nConnectivity: 5 x USB 3.1 | 4 x USB 2.0 | 1 x LAN 1G | WiFi 5 | Bluetooth 4.2 | 7.1 Channel Audio | Keyboard and Mouse\r\nTempered Side Case Panel | Custom RGB Lighting\r\n1 Year Parts & Labor Warranty, Free Lifetime Tech Support',
-    evaluation: 24,
-    colors: ['#A1887F', '#FF7043', '#E65100']
-}
+
+watchEffect(() => {
+    if (images.value) errorMessages.value = ''
+})
+watchEffect(() => {
+    if (getCurrentItem.value) {
+        const brands_id = getBrandsList.value.find((brand) => brand.name === getCurrentItem.value.brand)?._id
+        inputValues.value = {
+            title: getCurrentItem.value.title,
+            quantity: getCurrentItem.value.quantity,
+            description: getCurrentItem.value.description,
+            oldPrice: getCurrentItem.value.oldPrice,
+            newPrice: getCurrentItem.value.newPrice,
+            evaluation: getCurrentItem.value.evaluation,
+            rating: getCurrentItem.value.rating,
+            brands_id
+        }
+    }
+})
 </script>
 
 <style lang="scss" scoped>
@@ -370,19 +399,16 @@ const testData = {
         border-bottom: toRem(1) solid rgba(222, 226, 230, 0.7);
     }
     // .file-editor__icon
-    &__upload {
-        // position: relative;
-        // min-height: toRem(270);
-    }
 
     &__icon {
         overflow: hidden;
     }
 }
-// width='200' height='300'
+
 .input-product {
     // .input-product__input
-
+    display: grid;
+    gap: toRem(10);
     &__input {
     }
     &__prices {
@@ -396,6 +422,7 @@ const testData = {
         display: flex;
         gap: toRem(10);
         justify-content: space-between;
+        min-height: toRem(78);
         &:not(:last-child) {
             margin-bottom: toRem(20);
         }
@@ -411,7 +438,13 @@ const testData = {
         max-width: toRem(200);
     }
 }
-
+.evaluation-input {
+    :deep() {
+        .v-field__outline {
+            height: toRem(67);
+        }
+    }
+}
 .price-input {
     max-width: toRem(200);
 }

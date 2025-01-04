@@ -13,10 +13,19 @@
         </header>
         <section class="product-admin-list__items-product product-items">
             <template v-for="cardProduct of testProduct" :key="cardProduct._id">
-                <ProductCard :productItem="cardProduct" :showAddBtn="false" :showActionsBtn="false">
+                <ProductCard
+                    :productItem="cardProduct"
+                    :showAddBtn="false"
+                    :showActionsBtn="false"
+                    :is-move-to-ref="false"
+                >
                     <template #cart-butt>
                         <div class="product-items edit-actions">
-                            <v-btn class="edit-actions__btn-edit button-main button-main--tiny">Edit</v-btn>
+                            <v-btn
+                                @click="editProduct(cardProduct._id)"
+                                class="edit-actions__btn-edit button-main button-main--tiny"
+                                >Edit</v-btn
+                            >
                             <v-btn class="edit-actions__btn-delete button-main button-main--tiny">Delete</v-btn>
                         </div>
                     </template>
@@ -42,6 +51,11 @@ const selectedItems = [
     { field: 'newPrice', title: 'Ascending prices', value: 'asc' },
     { field: 'newPrice', title: 'Descending prices', value: 'desc' }
 ]
+const emit = defineEmits(['update:modelValue'])
+function editProduct(id) {
+    emit('update:modelValue', id)
+}
+
 const testProduct = [
     {
         _id: '3fa0194f-bfc5-11ef-ae33-d8f3bc341a96',

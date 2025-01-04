@@ -165,10 +165,28 @@ export default class RequestManager {
             const response = await RequestManager.http.post(RequestManager.getServerRoute(path), body, {
                 headers: headers
             })
-            if (response.status >= 300 && response.status <= 500) throw new Error(response.data)
+            if (response.status >= 300 && response.status <= 500) return response.data.errors
             else return response.data
         } catch (error) {
-            return error
+            if (error.response) {
+                return {
+                    status: error.response.status,
+                    message: error.response.data?.message || 'An error occurred',
+                    errors: error.response.data?.errors || []
+                }
+            } else if (error.request) {
+                return {
+                    status: 0,
+                    message: 'No response received from server',
+                    errors: []
+                }
+            } else {
+                return {
+                    status: -1,
+                    message: error.message,
+                    errors: []
+                }
+            }
         }
     }
 

@@ -72,10 +72,15 @@ const props = defineProps({
     showActionsBtn: {
         type: Boolean,
         default: true
+    },
+    isMoveToRef: {
+        type: Boolean,
+        default: true
     }
 })
 const router = useRouter()
 function goToDetailsProduct() {
+    if (!props.isMoveToRef) return
     router.push({
         name: 'product',
         params: {
