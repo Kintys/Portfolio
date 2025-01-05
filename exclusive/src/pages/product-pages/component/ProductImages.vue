@@ -1,14 +1,16 @@
+<!--    @swiper="setThumbsSwiper()" -->
 <template>
     <div class="product-images" v-if="currentImage">
         <div class="product-images__preview preview">
             <swiper
-                :modules="[Thumbs, Navigation]"
+                :modules="[Thumbs]"
                 :slides-per-view="4"
                 :space-between="16"
+                watch-slides-progress
                 class="preview__thumbs-swiper"
-                @swiper="setThumbsSwiper"
                 :direction="changeSwiperDirection()"
                 :freeMode="true"
+                @click="testClick($event)"
                 :breakpoints="{
                     320: {
                         slidesPerView: 1.5
@@ -29,6 +31,8 @@
                 </swiper-slide>
             </swiper>
         </div>
+        <!--   :direction="changeSwiperDirection()"
+            :freeMode="true" -->
         <div class="product-images__product-photo product-photo">
             <swiper
                 :modules="[Thumbs]"
@@ -42,7 +46,6 @@
                             :href="slide.largeURL"
                             :data-pswp-width="slide.width"
                             :data-pswp-height="slide.height"
-                            target="_blank"
                             rel="noreferrer"
                         >
                             <img :src="slide.thumbnailURL" />
@@ -53,17 +56,31 @@
         </div>
     </div>
 </template>
+// target="_blank"
 <script setup>
 import { ref, onMounted, onUnmounted, computed } from 'vue'
+// Import Swiper Vue.js components
+// import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
-import { Thumbs, Navigation } from 'swiper/modules'
-import 'swiper/css'
-import 'swiper/css/thumbs'
-import 'swiper/css/navigation'
+import { Thumbs } from 'swiper'
+import 'swiper/swiper-bundle.css'
+// SwiperCore.use([Navigation, Thumbs])
+// import 'swiper/css'
+// import 'swiper/css/navigation'
+// import 'swiper/css/pagination'
+// import 'swiper/css/scrollbar'
+// import 'swiper/swiper-bundle.css'
+// Import Swiper styles
+// import 'swiper/swiper.scss'
+// import 'swiper/components/navigation/navigation.scss'
+// import 'swiper/components/thumbs/thumbs.scss'
+
+// install Swiper components
 
 import PhotoSwipeLightbox from 'photoswipe/lightbox'
 import 'photoswipe/style.css'
 
+//    :modules="[Thumbs, Navigation]"
 //===========================================================
 
 const lightbox = ref(null)
@@ -89,9 +106,12 @@ onUnmounted(() => {
         lightbox.value = null
     }
 })
-
+function testClick(swiper) {
+    console.log(swiper)
+}
 const thumbsSwiper = ref(null)
 const setThumbsSwiper = (swiper) => {
+    console.log(swiper)
     thumbsSwiper.value = swiper
 }
 //===========================================================
@@ -109,6 +129,35 @@ const currentImage = computed(() => {
         }
     })
 })
+//   <!-- <div class="product-images__preview preview">
+//             <swiper
+//                 :modules="[Thumbs, Navigation]"
+//                 :slides-per-view="4"
+//                 :space-between="16"
+//                 class="preview__thumbs-swiper"
+//                 @swiper="setThumbsSwiper"
+//                 :direction="changeSwiperDirection()"
+//                 :freeMode="true"
+//                 :breakpoints="{
+//                     320: {
+//                         slidesPerView: 1.5
+//                     },
+//                     450: {
+//                         slidesPerView: 2.5
+//                     },
+//                     600: {
+//                         slidesPerView: 3.5
+//                     },
+//                     768: {
+//                         slidesPerView: 4
+//                     }
+//                 }"
+//             >
+//                 <swiper-slide v-for="(slide, index) in currentImage" :key="index">
+//                     <div class="preview__thumbs-photo"><img :src="slide.thumbnailURL" /></div>
+//                 </swiper-slide>
+//             </swiper>
+//         </div> -->
 </script>
 
 <style lang="scss" scoped>

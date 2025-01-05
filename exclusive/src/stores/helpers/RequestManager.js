@@ -224,6 +224,23 @@ export default class RequestManager {
             return error
         }
     }
+    static async getRequestWithBlob(path, addAuthorization = true) {
+        const headers = {}
+        if (addAuthorization && RequestManager.getToken()) {
+            headers['Authorization'] = `Bearer ${RequestManager.getToken()}`
+        }
+        try {
+            const response = await RequestManager.http.get(path, {
+                headers,
+                responseType: 'blob'
+            })
+
+            if (response.status >= 300 && response.status <= 500) throw new Error(response.data)
+            return await response.data
+        } catch (error) {
+            return error
+        }
+    }
 
     // static async deleteRequest(route, id, addAuthorization = true) {
     //     const headers = { 'Content-Type': 'application/json' }

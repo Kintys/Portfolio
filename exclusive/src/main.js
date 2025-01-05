@@ -33,6 +33,11 @@ const VNumberComp = createVuetify({
         VFileUpload
     }
 })
+
+// import 'swiper/css'
+// import 'swiper/css/thumbs'
+// import 'swiper/css/navigation'
+
 app.use(VNumberComp)
 app.use(createPinia())
 app.use(router)

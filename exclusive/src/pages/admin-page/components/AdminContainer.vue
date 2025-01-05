@@ -4,9 +4,7 @@
         <AdminNavBar v-model:active="selectedComponent" />
         <div class="admin__container">
             <transition>
-                <keep-alive>
-                    <component :is="activeComponents" v-model="event" :productId="productId" />
-                </keep-alive>
+                <component :is="activeComponents" v-model:active="selectedComponent" />
             </transition>
         </div>
     </div>
@@ -17,9 +15,7 @@ import AdminNavBar from '@/pages/admin-page/components/AdminNavBar.vue'
 import { useFiltersStore } from '@/stores/filters.js'
 const { loadBrandsList } = useFiltersStore()
 import { onBeforeMount } from 'vue'
-import { ref, defineAsyncComponent, watchEffect, watch } from 'vue'
-const event = ref(null)
-const productId = ref(null)
+import { ref, defineAsyncComponent, watchEffect } from 'vue'
 
 const components = new Map([
     ['AdminProductsList', () => defineAsyncComponent(() => import('./AdminProductsList.vue'))],
@@ -31,11 +27,6 @@ const activeComponents = ref('')
 const selectedComponent = ref('')
 watchEffect(() => {
     changeComponents(selectedComponent?.value[0])
-})
-watchEffect(() => {
-    productId.value = event.value
-    changeComponents('AdminEditBlock')
-    productId.value = null
 })
 
 function changeComponents(nameComp) {

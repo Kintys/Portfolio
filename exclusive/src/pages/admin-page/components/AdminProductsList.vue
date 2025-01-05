@@ -3,16 +3,16 @@
         <header class="product-admin-list__header">
             <v-select
                 label="All Category"
-                :items="selectedItems"
+                :items="categoryProps"
                 :return-object="true"
-                v-model="sortOption"
+                v-model="filterObject.categoryOptions"
                 variant="outlined"
                 class="product-admin-list__select"
                 hide-details="false"
             ></v-select>
         </header>
         <section class="product-admin-list__items-product product-items">
-            <template v-for="cardProduct of testProduct" :key="cardProduct._id">
+            <template v-for="cardProduct of productData" :key="cardProduct._id">
                 <ProductCard
                     :productItem="cardProduct"
                     :showAddBtn="false"
@@ -33,8 +33,8 @@
             </template>
         </section>
         <v-pagination
-            v-model="temp"
-            :length="3"
+            v-model="filterObject.pageNumber"
+            :length="totalPage"
             active-color="#db4444"
             class="product-admin-list__pagination"
         ></v-pagination>
@@ -43,105 +43,54 @@
 
 <script setup>
 import ProductCard from '../../../components/ProductCard.vue'
-import { ref } from 'vue'
-const sortOption = ref(null)
-const selectedItems = [
-    { field: 'rating', title: 'Ascending rating', value: 'asc' },
-    { field: 'rating', title: 'Descending rating', value: 'desc' },
-    { field: 'newPrice', title: 'Ascending prices', value: 'asc' },
-    { field: 'newPrice', title: 'Descending prices', value: 'desc' }
+import { ref, onBeforeMount, computed, watch } from 'vue'
+
+// const categoryProps = ['gamepads', 'pcs', 'laptops', 'headphones']
+const categoryProps = [
+    { title: 'All product', value: [] },
+    { title: 'gamepads', value: 'gamepads' },
+    { title: 'pcs', value: 'pcs' },
+    { title: 'laptops', value: 'laptops' },
+    { title: 'headphones', value: 'headphones' }
 ]
-const emit = defineEmits(['update:modelValue'])
-function editProduct(id) {
-    emit('update:modelValue', id)
+import { useAdminStore } from '@/stores/admin.js'
+const { loadProductItemById } = useAdminStore()
+
+import { useFiltersStore } from '@/stores/filters'
+import { storeToRefs } from 'pinia'
+const { getProductsListTotalNumber, getProductsList } = storeToRefs(useFiltersStore())
+const { loadProductWithPagination } = useFiltersStore()
+const productData = computed(() => getProductsList.value)
+const totalPage = computed(() => Math.ceil(getProductsListTotalNumber.value / filterObject.value.prePageNumber))
+
+const filterObject = ref({
+    pageNumber: 1,
+    prePageNumber: 3,
+    categoryOptions: null
+})
+
+const emit = defineEmits(['update:active'])
+async function editProduct(id) {
+    await loadProductItemById(id)
+    emit('update:active', ['AdminEditBlock'])
 }
 
-const testProduct = [
-    {
-        _id: '3fa0194f-bfc5-11ef-ae33-d8f3bc341a96',
-        title: 'Havic HV G-92 Gamepad',
-        image: 'https://firebasestorage.googleapis.com/v0/b/exclusive-shop-c0f66.appspot.com/o/Gamepad%2F2023120115561510ba16954.png?alt=media&token=5572e4d7-9865-4794-b5dd-e389fd77e264',
-        discount: '-18%',
-        brand: 'Samsung',
-        oldPrice: '180.00',
-        newPrice: '158.00',
-        quantity: 10,
-        rating: 5,
-        description:
-            'PlayStation 5 Controller Skin High quality vinyl with air channel adhesive for easy bubble free install & mess free removal Pressure sensitive.',
-        evaluation: 15
-    },
-    {
-        _id: '3fa0194f-bfc5-11ef-ae33-d8f3bc341a96',
-        title: 'Havic HV G-92 Gamepad',
-        image: 'https://firebasestorage.googleapis.com/v0/b/exclusive-shop-c0f66.appspot.com/o/Gamepad%2F2023120115561510ba16954.png?alt=media&token=5572e4d7-9865-4794-b5dd-e389fd77e264',
-        discount: '-18%',
-        brand: 'Samsung',
-        oldPrice: '180.00',
-        newPrice: '158.00',
-        quantity: 10,
-        rating: 5,
-        description:
-            'PlayStation 5 Controller Skin High quality vinyl with air channel adhesive for easy bubble free install & mess free removal Pressure sensitive.',
-        evaluation: 15
-    },
-    {
-        _id: '3fa0194f-bfc5-11ef-ae33-d8f3bc341a96',
-        title: 'Havic HV G-92 Gamepad',
-        image: 'https://firebasestorage.googleapis.com/v0/b/exclusive-shop-c0f66.appspot.com/o/Gamepad%2F2023120115561510ba16954.png?alt=media&token=5572e4d7-9865-4794-b5dd-e389fd77e264',
-        discount: '-18%',
-        brand: 'Samsung',
-        oldPrice: '180.00',
-        newPrice: '158.00',
-        quantity: 10,
-        rating: 5,
-        description:
-            'PlayStation 5 Controller Skin High quality vinyl with air channel adhesive for easy bubble free install & mess free removal Pressure sensitive.',
-        evaluation: 15
-    },
-    {
-        _id: '3fa0194f-bfc5-11ef-ae33-d8f3bc341a96',
-        title: 'Havic HV G-92 Gamepad',
-        image: 'https://firebasestorage.googleapis.com/v0/b/exclusive-shop-c0f66.appspot.com/o/Gamepad%2F2023120115561510ba16954.png?alt=media&token=5572e4d7-9865-4794-b5dd-e389fd77e264',
-        discount: '-18%',
-        brand: 'Samsung',
-        oldPrice: '180.00',
-        newPrice: '158.00',
-        quantity: 10,
-        rating: 5,
-        description:
-            'PlayStation 5 Controller Skin High quality vinyl with air channel adhesive for easy bubble free install & mess free removal Pressure sensitive.',
-        evaluation: 15
-    },
-    {
-        _id: '3fa0194f-bfc5-11ef-ae33-d8f3bc341a96',
-        title: 'Havic HV G-92 Gamepad',
-        image: 'https://firebasestorage.googleapis.com/v0/b/exclusive-shop-c0f66.appspot.com/o/Gamepad%2F2023120115561510ba16954.png?alt=media&token=5572e4d7-9865-4794-b5dd-e389fd77e264',
-        discount: '-18%',
-        brand: 'Samsung',
-        oldPrice: '180.00',
-        newPrice: '158.00',
-        quantity: 10,
-        rating: 5,
-        description:
-            'PlayStation 5 Controller Skin High quality vinyl with air channel adhesive for easy bubble free install & mess free removal Pressure sensitive.',
-        evaluation: 15
-    },
-    {
-        _id: '3fa0194f-bfc5-11ef-ae33-d8f3bc341a96',
-        title: 'Havic HV G-92 Gamepad',
-        image: 'https://firebasestorage.googleapis.com/v0/b/exclusive-shop-c0f66.appspot.com/o/Gamepad%2F2023120115561510ba16954.png?alt=media&token=5572e4d7-9865-4794-b5dd-e389fd77e264',
-        discount: '-18%',
-        brand: 'Samsung',
-        oldPrice: '180.00',
-        newPrice: '158.00',
-        quantity: 10,
-        rating: 5,
-        description:
-            'PlayStation 5 Controller Skin High quality vinyl with air channel adhesive for easy bubble free install & mess free removal Pressure sensitive.',
-        evaluation: 15
+watch(filterObject.value, (newVal) => {
+    if (newVal) {
+        loadProductWithPagination({
+            page: newVal.pageNumber - 1,
+            perPage: newVal.prePageNumber,
+            category: [newVal.categoryOptions?.value]
+        })
     }
-]
+})
+
+onBeforeMount(async () => {
+    await loadProductWithPagination({
+        page: filterObject.value.pageNumber - 1,
+        perPage: filterObject.value.prePageNumber
+    })
+})
 </script>
 
 <style lang="scss" scoped>
@@ -182,6 +131,7 @@ const testProduct = [
     display: grid;
     grid-template-columns: repeat(5, auto);
     justify-items: center;
+
     gap: toRem(10);
 }
 .edit-actions {

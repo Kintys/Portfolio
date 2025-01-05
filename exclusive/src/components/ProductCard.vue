@@ -28,9 +28,12 @@
         <div class="card__description">
             <h4 class="card__title">{{ productItem.title }}</h4>
             <div class="card__costs">
-                <span class="card__new-price">${{ productItem.newPrice }}</span
-                ><span v-if="productItem.oldPrice" class="card__old-price">${{ productItem.oldPrice }}</span>
+                <p class="card__price">
+                    <span class="card__new-price">${{ productItem.newPrice }}</span
+                    ><span v-if="productItem.oldPrice" class="card__old-price">${{ productItem.oldPrice }}</span>
+                </p>
             </div>
+
             <slot name="cart-butt">
                 <div class="card__review">
                     <Rating v-model="productItem.rating" :stars="5" readonly :cancel="false" class="card__stars">
@@ -114,7 +117,7 @@ async function addToCartList() {
     // .card__image-card
 
     width: toRem(250);
-    height: 100%;
+    max-height: toRem(580);
     padding: toRem(10);
     transition: all 0.3s;
     border-radius: toRem(4);
@@ -215,6 +218,7 @@ async function addToCartList() {
         display: flex;
         flex-direction: column;
         row-gap: toRem(8);
+        height: toRem(240);
         font-weight: 500;
         line-height: 150%; /* 150% */
     }
@@ -223,6 +227,12 @@ async function addToCartList() {
 
     &__costs {
         display: flex;
+        flex-grow: 1;
+        column-gap: toRem(12);
+    }
+    &__price {
+        display: flex;
+        align-items: flex-start;
         column-gap: toRem(12);
     }
 

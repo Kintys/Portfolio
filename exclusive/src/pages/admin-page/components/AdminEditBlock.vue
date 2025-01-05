@@ -34,7 +34,7 @@
                                 :rules="[(v) => !!v || 'Item is required']"
                             ></v-select>
                             <v-select
-                                v-if="!productId"
+                                v-if="!isProduct"
                                 label="Category"
                                 :items="categoryProps"
                                 :return-object="true"
@@ -135,7 +135,7 @@
                         width="100%"
                         height="250"
                         hide-details="auto"
-                        v-model="images"
+                        v-model="files"
                         :rules="[
                             (v) => !!v || 'Item is required',
                             (v) => (v && v.length === 4) || 'Image must be 5 characters'
@@ -160,39 +160,29 @@
 </template>
 
 <script setup>
-import { ref, computed, watchEffect, onMounted, onBeforeMount, onUpdated, onUnmounted } from 'vue'
+import { ref, computed, watchEffect, onUnmounted, onMounted } from 'vue'
 import IconBase from '@/components/icons/IconBase.vue'
 import IconUpload from '@/components/icons/iconsSrc/IconUpload.vue'
-import RequestManager from '@/stores/helpers/RequestManager'
+
 import { useFiltersStore } from '@/stores/filters'
 import { storeToRefs } from 'pinia'
 
 const { getBrandsList } = storeToRefs(useFiltersStore())
 
-import { useProductStore } from '@/stores/product.js'
-const { loadItemById } = useProductStore()
-const { getCurrentItem } = storeToRefs(useProductStore())
-const props = defineProps({
-    productId: {
-        type: String
-    }
-})
+import { useAdminStore } from '@/stores/admin.js'
 
-onBeforeMount(async () => {
-    if (props.productId) await loadItemById(props.productId)
-})
-onUnmounted(() => {
-    props.productId = ''
-})
-// onUpdated(async () => {
-//     await loadItemById(productId.value)
-// })
+import { useRouter } from 'vue-router'
+const router = useRouter()
+
+const { clearProductItem, sendProduct, urlToFile } = useAdminStore()
+const { getProductItem } = storeToRefs(useAdminStore())
 
 const category = ref(null)
 const errorMessages = ref('')
-const images = ref([])
-const massage = ref('')
+const files = ref([])
+const isProduct = ref(null)
 const form = ref('')
+
 const inputValues = ref({
     title: '',
     quantity: null,
@@ -205,7 +195,7 @@ const inputValues = ref({
 })
 const categoryProps = ['gamepads', 'pcs', 'laptops', 'headphones']
 
-const buttonText = computed(() => (props.productId ? 'Update' : 'Add new'))
+const buttonText = computed(() => (isProduct.value ? 'Update' : 'Add new'))
 const selectItems = computed(
     () =>
         getBrandsList.value.map((brand) => {
@@ -217,12 +207,12 @@ const selectItems = computed(
 )
 
 function checkFile() {
-    if (!images.value || images.value.length === 0) {
+    if (!files.value || files.value.length === 0) {
         errorMessages.value = 'Item is required'
         return false
     }
 
-    if (images.value.length < 4) {
+    if (!files.value.length < 4) {
         errorMessages.value = 'You must upload at least 5 images'
         return false
     }
@@ -242,31 +232,39 @@ async function sendForm() {
         let formData = new FormData()
         formData.append('data', JSON.stringify({ ...inputValues.value, brands_id: inputValues.value.brands_id.value }))
         formData.append('category', JSON.stringify(category.value))
-        images.value.forEach((file) => formData.append('images', file))
+        files.value.forEach((file) => formData.append('images', file))
 
-        const result = await RequestManager.postFormRequest('/products/add', formData)
-        massage.value = result
+        const result = await sendProduct(formData)
+        if (result) router.back()
     } catch (err) {
-        massage.value = err
+        console.error(err)
     }
 }
 
 watchEffect(() => {
-    if (images.value) errorMessages.value = ''
+    if (files.value) errorMessages.value = ''
 })
-watchEffect(() => {
-    if (getCurrentItem.value) {
-        const brands_id = getBrandsList.value.find((brand) => brand.name === getCurrentItem.value.brand)?._id
-        inputValues.value = {
-            title: getCurrentItem.value.title,
-            quantity: getCurrentItem.value.quantity,
-            description: getCurrentItem.value.description,
-            oldPrice: getCurrentItem.value.oldPrice,
-            newPrice: getCurrentItem.value.newPrice,
-            evaluation: getCurrentItem.value.evaluation,
-            rating: getCurrentItem.value.rating,
-            brands_id
-        }
+onMounted(async () => {
+    isProduct.value = await getProductItem.value
+    if (isProduct.value) {
+        const { title, quantity, description, oldPrice, newPrice, evaluation, rating, brands_id, images } =
+            isProduct.value
+        inputValues.value = { title, quantity, description, oldPrice, newPrice, evaluation, rating, brands_id }
+        files.value = images
+    }
+})
+onUnmounted(async () => {
+    await clearProductItem()
+    inputValues.value = {
+        title: '',
+        quantity: null,
+        description: '',
+        oldPrice: null,
+        newPrice: null,
+        evaluation: null,
+        rating: null,
+        brands_id: null,
+        images: []
     }
 })
 </script>
