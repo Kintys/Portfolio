@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import getStoreTemplate from './helpers/storeTemplate'
 import { computed, ref } from 'vue'
-import RequestManager from './helpers/RequestManager'
 
 export const useFiltersStore = defineStore('filters', () => {
     const productsStore = getStoreTemplate('filters')
@@ -37,10 +36,6 @@ export const useFiltersStore = defineStore('filters', () => {
             return
         }
     }
-    async function loginWithGoogle(path) {
-        const auth = await RequestManager.getRequest(path)
-        console.log(auth)
-    }
     function copyWithoutNullAndUndefined(filterProps) {
         const newObj = {}
         for (const params in filterProps) {
@@ -61,7 +56,6 @@ export const useFiltersStore = defineStore('filters', () => {
         getFoundItemsList,
         loadProductWithPagination,
         loadBrandsList,
-        loginWithGoogle,
         loadProductWithSearchTextFilter,
         ...productsStore
     }

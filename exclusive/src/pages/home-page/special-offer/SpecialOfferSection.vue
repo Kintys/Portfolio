@@ -13,9 +13,9 @@ const offerData = {
     category: 'categories',
     title: 'Enhance Your Music Experience',
     timer: {
-        propsYear: 2024,
-        propsMonth: 6,
-        propsDay: 10,
+        propsYear: 2025,
+        propsMonth: 0,
+        propsDay: 29,
         propsHour: 8,
         propsMinutes: 20,
         propsSeconds: 10,

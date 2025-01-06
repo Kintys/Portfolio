@@ -2,7 +2,7 @@
     <section class="todays-section">
         <div class="todays-section__container">
             <SectionSliderWithTitles
-                :product-data="productArr"
+                :product-data="getItemsList"
                 :title-params="sectionTitle"
                 :slider-params="sliderParams"
                 :show-action="true"
@@ -10,8 +10,8 @@
                 <template #timer>
                     <CounterComponent
                         :add-time="{
-                            propsYear: 2024,
-                            propsMonth: 5,
+                            propsYear: 2025,
+                            propsMonth: 0,
                             propsDay: 24,
                             propsHour: 10,
                             propsMinutes: 30,
@@ -32,138 +32,12 @@ const sectionTitle = {
     cat: "today's",
     title: 'flash sales'
 }
-const productArr = [
-    {
-        img: img,
-        discount: '-40%',
-        title: 'HAVIT HV-G92 Gamepa',
-        prices: {
-            newPrice: '120',
-            oldPrice: '160'
-        },
-        review: {
-            rating: '5',
-            evaluation: '88'
-        }
-    },
-    {
-        img: img,
-        discount: '-40%',
-        title: 'HAVIT HV-G92 Gamepa',
-        prices: {
-            newPrice: '120',
-            oldPrice: '160'
-        },
-        review: {
-            rating: 4,
-            evaluation: '88'
-        }
-    },
-    {
-        img: img,
-        discount: '-40%',
-        title: 'HAVIT HV-G92 Gamepa',
-        prices: {
-            newPrice: '120',
-            oldPrice: '160'
-        },
-        review: {
-            rating: 4,
-            evaluation: '88'
-        }
-    },
-    {
-        img: img,
-        discount: '-40%',
-        title: 'HAVIT HV-G92 Gamepa',
-        prices: {
-            newPrice: '120',
-            oldPrice: '160'
-        },
-        review: {
-            rating: '4',
-            evaluation: '88'
-        }
-    },
-    {
-        img: img,
-        discount: '-40%',
-        title: 'HAVIT HV-G92 Gamepa',
-        prices: {
-            newPrice: '120',
-            oldPrice: '160'
-        },
-        review: {
-            rating: 4,
-            evaluation: '88'
-        }
-    },
-    {
-        img: img,
-        discount: '-40%',
-        title: 'HAVIT HV-G92 Gamepa',
-        prices: {
-            newPrice: '120',
-            oldPrice: '160'
-        },
-        review: {
-            rating: 4,
-            evaluation: '88'
-        }
-    },
-    {
-        img: img,
-        discount: '-40%',
-        title: 'HAVIT HV-G92 Gamepa',
-        prices: {
-            newPrice: '120',
-            oldPrice: '160'
-        },
-        review: {
-            rating: 4,
-            evaluation: '88'
-        }
-    },
-    {
-        img: img,
-        discount: '-40%',
-        title: 'HAVIT HV-G92 Gamepa',
-        prices: {
-            newPrice: '120',
-            oldPrice: '160'
-        },
-        review: {
-            rating: 4,
-            evaluation: 88
-        }
-    },
-    {
-        img: img,
-        discount: '-40%',
-        title: 'HAVIT HV-G92 Gamepa',
-        prices: {
-            newPrice: '120',
-            oldPrice: '160'
-        },
-        review: {
-            rating: 4,
-            evaluation: 88
-        }
-    },
-    {
-        img: img,
-        discount: '-40%',
-        title: 'HAVIT HV-G92 Gamepa',
-        prices: {
-            newPrice: '120',
-            oldPrice: '160'
-        },
-        review: {
-            rating: 4,
-            evaluation: 88
-        }
-    }
-]
+
+import { usePcStore } from '@/stores/pc'
+import { storeToRefs } from 'pinia'
+
+const { getItemsList } = storeToRefs(usePcStore())
+
 const sliderParams = {
     sliderPerView: 4,
     sliderBetween: 30,

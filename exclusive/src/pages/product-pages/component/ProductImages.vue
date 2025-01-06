@@ -1,16 +1,14 @@
-<!--    @swiper="setThumbsSwiper()" -->
 <template>
     <div class="product-images" v-if="currentImage">
         <div class="product-images__preview preview">
-            <swiper
-                :modules="[Thumbs]"
-                :slides-per-view="4"
-                :space-between="16"
-                watch-slides-progress
+            <swiper-container
                 class="preview__thumbs-swiper"
+                slides-per-view="4"
+                space-between="26"
+                watch-slides-progress
+                height="600"
+                freeMode="true"
                 :direction="changeSwiperDirection()"
-                :freeMode="true"
-                @click="testClick($event)"
                 :breakpoints="{
                     320: {
                         slidesPerView: 1.5
@@ -27,93 +25,50 @@
                 }"
             >
                 <swiper-slide v-for="(slide, index) in currentImage" :key="index">
-                    <div class="preview__thumbs-photo"><img :src="slide.thumbnailURL" /></div>
+                    <!-- width="120" height="120"  -->
+                    <div class="preview__thumbs-photo">
+                        <v-img :src="slide.thumbnailURL" width="120" height="120" />
+                    </div>
                 </swiper-slide>
-            </swiper>
+            </swiper-container>
         </div>
-        <!--   :direction="changeSwiperDirection()"
-            :freeMode="true" -->
+
         <div class="product-images__product-photo product-photo">
-            <swiper
-                :modules="[Thumbs]"
-                :slides-per-view="1"
-                :thumbs="{ swiper: thumbsSwiper }"
+            <swiper-container
+                style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff"
                 class="product-photo__main-swiper"
+                thumbs-swiper=".preview__thumbs-swiper"
+                :slides-per-view="1"
+                :space-between="16"
+                watch-slides-progress
+                effect="fade"
             >
                 <swiper-slide v-for="(slide, index) in currentImage" :key="index" id="gallery">
                     <div class="product-photo__main-photo">
-                        <a
-                            :href="slide.largeURL"
-                            :data-pswp-width="slide.width"
-                            :data-pswp-height="slide.height"
-                            rel="noreferrer"
-                        >
-                            <img :src="slide.thumbnailURL" />
+                        <a :href="slide.largeURL" target="_blank" rel="noreferrer">
+                            <v-img :src="slide.thumbnailURL" :width="520" :height="520" class="product-photo__img" />
                         </a>
                     </div>
                 </swiper-slide>
-            </swiper>
+            </swiper-container>
         </div>
     </div>
 </template>
-// target="_blank"
+
 <script setup>
-import { ref, onMounted, onUnmounted, computed } from 'vue'
-// Import Swiper Vue.js components
-// import { Swiper, SwiperSlide } from 'swiper/vue'
-import { Swiper, SwiperSlide } from 'swiper/vue'
-import { Thumbs } from 'swiper'
-import 'swiper/swiper-bundle.css'
-// SwiperCore.use([Navigation, Thumbs])
-// import 'swiper/css'
-// import 'swiper/css/navigation'
-// import 'swiper/css/pagination'
-// import 'swiper/css/scrollbar'
-// import 'swiper/swiper-bundle.css'
-// Import Swiper styles
-// import 'swiper/swiper.scss'
-// import 'swiper/components/navigation/navigation.scss'
-// import 'swiper/components/thumbs/thumbs.scss'
+import { computed } from 'vue'
 
-// install Swiper components
+import { register } from 'swiper/element/bundle'
 
-import PhotoSwipeLightbox from 'photoswipe/lightbox'
-import 'photoswipe/style.css'
+register()
 
-//    :modules="[Thumbs, Navigation]"
-//===========================================================
-
-const lightbox = ref(null)
 //===========================================================
 import { onResize } from '@/modulesHelpers/lib/resize.js'
 const { currentWindowWidth: windowWidth } = onResize()
 function changeSwiperDirection() {
     return windowWidth.value <= 768 ? 'horizontal' : 'vertical'
 }
-onMounted(async () => {
-    if (!lightbox.value) {
-        lightbox.value = new PhotoSwipeLightbox({
-            gallery: '#' + 'gallery',
-            children: 'a',
-            pswpModule: () => import('photoswipe')
-        })
-        lightbox.value.init()
-    }
-})
-onUnmounted(() => {
-    if (lightbox.value) {
-        lightbox.value.destroy()
-        lightbox.value = null
-    }
-})
-function testClick(swiper) {
-    console.log(swiper)
-}
-const thumbsSwiper = ref(null)
-const setThumbsSwiper = (swiper) => {
-    console.log(swiper)
-    thumbsSwiper.value = swiper
-}
+
 //===========================================================
 import { useProductStore } from '@/stores/product.js'
 import { storeToRefs } from 'pinia'
@@ -129,35 +84,6 @@ const currentImage = computed(() => {
         }
     })
 })
-//   <!-- <div class="product-images__preview preview">
-//             <swiper
-//                 :modules="[Thumbs, Navigation]"
-//                 :slides-per-view="4"
-//                 :space-between="16"
-//                 class="preview__thumbs-swiper"
-//                 @swiper="setThumbsSwiper"
-//                 :direction="changeSwiperDirection()"
-//                 :freeMode="true"
-//                 :breakpoints="{
-//                     320: {
-//                         slidesPerView: 1.5
-//                     },
-//                     450: {
-//                         slidesPerView: 2.5
-//                     },
-//                     600: {
-//                         slidesPerView: 3.5
-//                     },
-//                     768: {
-//                         slidesPerView: 4
-//                     }
-//                 }"
-//             >
-//                 <swiper-slide v-for="(slide, index) in currentImage" :key="index">
-//                     <div class="preview__thumbs-photo"><img :src="slide.thumbnailURL" /></div>
-//                 </swiper-slide>
-//             </swiper>
-//         </div> -->
 </script>
 
 <style lang="scss" scoped>
@@ -168,7 +94,7 @@ const currentImage = computed(() => {
     flex-direction: column-reverse;
     @media (min-width: toEm($mobile)) {
         display: grid;
-        grid-template-columns: toRem(170) toRem(500);
+        grid-template-columns: toRem(170) toRem(650);
         grid-template-rows: toRem(600);
     }
 
@@ -197,18 +123,22 @@ const currentImage = computed(() => {
         border-radius: toRem(4);
         background-color: #f5f5f5;
         @include adaptiveValue('height', 600, 400, 0, 480, 320);
-        // height: toRem(600);
-        padding: toRem(20);
+        padding: toRem(4);
         img {
             width: 100%;
         }
+    }
+    // .product-photo__img
+
+    &__img {
+        padding: toRem(10);
     }
 }
 .preview {
     // .preview__thumbs-swiper
 
     &__thumbs-swiper {
-        max-height: toRem(600);
+        // max-height: toRem(600);
     }
 
     // .preview__thumbs-photo
@@ -226,4 +156,3 @@ const currentImage = computed(() => {
     }
 }
 </style>
-@/stores/filters.js

@@ -15,7 +15,7 @@
                     variant="underlined"
                 ></v-text-field>
                 <v-text-field
-                    label="Email or Phone Number"
+                    label="Email"
                     hide-details="auto"
                     :rules="emailRules"
                     v-model="email"
