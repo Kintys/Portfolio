@@ -57,7 +57,7 @@
                     <span class="quantity-inp__number">{{ numberProduct }}</span
                     ><button class="quantity-inp__plus" @click="onIncreasingNumberOfProducts">+</button>
                 </div>
-                <v-btn class="product-description__buy-now button-main">Buy Now</v-btn>
+                <v-btn @click="addToCartList()" class="product-description__buy-now button-main">Buy Now</v-btn>
                 <button class="product-description__wish-list-button">
                     <IconBase width="32" height="32" viewBox="0 0 32 30" icon-color="transparent"
                         ><IconWishList
@@ -130,16 +130,22 @@ import { useProductStore } from '@/stores/product.js'
 const { getCurrentItem } = storeToRefs(useProductStore())
 
 const currentItem = computed(() => getCurrentItem.value)
-// const currentItem = computed(() => {
-//     const adv = getItemsList.value[0].rating.reduce((acc, review) => {
-//         return parseInt(acc) + parseInt(review)
-//     })
-//     return {
-//         ...getItemsList.value[0],
-//         rating: adv / getItemsList.value[0].rating.length,
-//         review: getItemsList.value[0].rating.length
-//     }
-// })
+import { useCartStore } from '@/stores/cart.js'
+const { addProductToOrders } = useCartStore()
+async function addToCartList() {
+    try {
+        await addProductToOrders({
+            productId: currentItem.value._id,
+            image: currentItem.value.images[0],
+            price: currentItem.value.newPrice,
+            title: currentItem.value.title,
+            quantity: currentItem.value.quantity,
+            amount: numberProduct.value
+        })
+    } catch (error) {
+        console.error(error.massage)
+    }
+}
 </script>
 
 <style lang="scss" scoped>

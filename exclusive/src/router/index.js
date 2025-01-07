@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../pages/home-page/HomeView.vue'
 
-import { isAuthenticated, isRouteAvailable } from '@/router/userPermissions.js'
+import { isAuth, isRouteAvailable } from '@/router/userPermissions.js'
 export const routes = [
     {
         path: '/',
@@ -57,7 +57,7 @@ export const routes = [
         name: 'product',
         component: () => import('@/pages/product-pages/ProductView.vue'),
         meta: {
-            requireAuth: false,
+            requireAuth: true,
             useInMenu: false
         }
     },
@@ -76,7 +76,7 @@ export const routes = [
         name: 'catalog',
         component: () => import('@/pages/filter-page/FilterPage.vue'),
         meta: {
-            requireAuth: false,
+            requireAuth: true,
             useInMenu: true
         }
     },
@@ -87,7 +87,7 @@ export const routes = [
         component: () => import('../pages/admin-page/AdminPage.vue'),
         meta: {
             requireAuth: false,
-            useInMenu: true
+            useInMenu: false
         }
     },
 
@@ -109,9 +109,10 @@ const router = createRouter({
 
 router.beforeEach(async (to) => {
     if (to.meta?.requireAuth) {
-        if (!isAuthenticated())
+        if (!isAuth())
             return {
-                name: 'login'
+                name: 'login',
+                redirect: to.fullPath
             }
         if (!isRouteAvailable(to)) {
             return {

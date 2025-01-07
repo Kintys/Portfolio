@@ -2,7 +2,7 @@
     <section class="our-product">
         <div class="our-product__container">
             <SectionSliderWithTitles
-                :product-data="productArr"
+                :product-data="getItemsList"
                 :title-params="sectionTitle"
                 :slider-params="sliderParams"
                 :show-action="true"
@@ -14,143 +14,16 @@
 
 <script setup>
 import SectionSliderWithTitles from '@/components/SectionSliderWithTitles.vue'
-import img from '@/assets/01.png'
+import { useHeadphonesStore } from '@/stores/headphone.js'
+import { storeToRefs } from 'pinia'
+
+const { getItemsList } = storeToRefs(useHeadphonesStore())
+
 const sectionTitle = {
     cat: 'Our Products',
     title: 'Explore Our Products '
 }
-const productArr = [
-    {
-        img: img,
-        discount: '-40%',
-        title: 'HAVIT HV-G92 Gamepa',
-        prices: {
-            newPrice: '120',
-            oldPrice: '160'
-        },
-        review: {
-            rating: '5',
-            evaluation: '88'
-        }
-    },
-    {
-        img: img,
-        discount: '-40%',
-        title: 'HAVIT HV-G92 Gamepa',
-        prices: {
-            newPrice: '120',
-            oldPrice: '160'
-        },
-        review: {
-            rating: 4,
-            evaluation: '88'
-        }
-    },
-    {
-        img: img,
-        discount: '-40%',
-        title: 'HAVIT HV-G92 Gamepa',
-        prices: {
-            newPrice: '120',
-            oldPrice: '160'
-        },
-        review: {
-            rating: 4,
-            evaluation: '88'
-        }
-    },
-    {
-        img: img,
-        discount: '-40%',
-        title: 'HAVIT HV-G92 Gamepa',
-        prices: {
-            newPrice: '120',
-            oldPrice: '160'
-        },
-        review: {
-            rating: '4',
-            evaluation: '88'
-        }
-    },
-    {
-        img: img,
-        discount: '-40%',
-        title: 'HAVIT HV-G92 Gamepa',
-        prices: {
-            newPrice: '120',
-            oldPrice: '160'
-        },
-        review: {
-            rating: 4,
-            evaluation: '88'
-        }
-    },
-    {
-        img: img,
-        discount: '-40%',
-        title: 'HAVIT HV-G92 Gamepa',
-        prices: {
-            newPrice: '120',
-            oldPrice: '160'
-        },
-        review: {
-            rating: 4,
-            evaluation: '88'
-        }
-    },
-    {
-        img: img,
-        discount: '-40%',
-        title: 'HAVIT HV-G92 Gamepa',
-        prices: {
-            newPrice: '120',
-            oldPrice: '160'
-        },
-        review: {
-            rating: 4,
-            evaluation: '88'
-        }
-    },
-    {
-        img: img,
-        discount: '-40%',
-        title: 'HAVIT HV-G92 Gamepa',
-        prices: {
-            newPrice: '120',
-            oldPrice: '160'
-        },
-        review: {
-            rating: 4,
-            evaluation: 88
-        }
-    },
-    {
-        img: img,
-        discount: '-40%',
-        title: 'HAVIT HV-G92 Gamepa',
-        prices: {
-            newPrice: '120',
-            oldPrice: '160'
-        },
-        review: {
-            rating: 4,
-            evaluation: 88
-        }
-    },
-    {
-        img: img,
-        discount: '-40%',
-        title: 'HAVIT HV-G92 Gamepa',
-        prices: {
-            newPrice: '120',
-            oldPrice: '160'
-        },
-        review: {
-            rating: 4,
-            evaluation: 88
-        }
-    }
-]
+
 const sliderParams = {
     sliderPerView: 4,
     sliderBetween: 30,

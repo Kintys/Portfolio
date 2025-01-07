@@ -52,6 +52,7 @@ const cartNumber = computed(() => getCartProductList.value?.length)
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    padding: toRem(10);
 
     @include adaptiveValue('column-gap', 8, 2, 0, 1200, 768);
     &__profile {

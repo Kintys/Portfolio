@@ -27,7 +27,6 @@
 <script setup>
 import SectionSliderWithTitles from '@/components/SectionSliderWithTitles.vue'
 import CounterComponent from '@/components/CounterComponent.vue'
-import img from '@/assets/01.png'
 const sectionTitle = {
     cat: "today's",
     title: 'flash sales'

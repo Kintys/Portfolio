@@ -78,7 +78,7 @@ const props = defineProps({
     },
     isMoveToRef: {
         type: Boolean,
-        default: true
+        default: false
     }
 })
 const router = useRouter()

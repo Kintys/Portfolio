@@ -13,7 +13,7 @@
         </div>
         <div class="filter-product__list-product">
             <template v-for="product of productData" :key="product._id"
-                ><ProductCard :product-item="product"></ProductCard
+                ><ProductCard :product-item="product" :is-move-to-ref="true"></ProductCard
             ></template>
         </div>
     </section>
@@ -61,8 +61,9 @@ watch(sortOption, (newSort) => {
 
     &__list-product {
         display: grid;
-        grid-template-columns: repeat(3, auto);
-        gap: toRem(20);
+        grid-template-columns: repeat(auto-fit, minmax(250px, auto));
+        gap: toRem(5);
+        justify-content: center;
     }
 }
 
@@ -79,4 +80,3 @@ watch(sortOption, (newSort) => {
     }
 }
 </style>
-@/stores/filters.js

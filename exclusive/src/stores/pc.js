@@ -2,8 +2,10 @@ import { defineStore } from 'pinia'
 import getStoreTemplate from './helpers/storeTemplate'
 
 export const usePcStore = defineStore('pc', () => {
-    const pcStore = getStoreTemplate('products/pcs')
+    const { getItemsList, itemsList, loadItemsList } = getStoreTemplate('products/pcs')
     return {
-        ...pcStore
+        getItemsList,
+        itemsList,
+        loadItemsList
     }
 })

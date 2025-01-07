@@ -27,7 +27,7 @@
             </template>
         </SingUpForm>
     </SingUpPage>
-    <SnackBar v-model:open="openSnackBar" />
+    <SnackBar v-model:open="openSnackBar" :error="isError" :massage="massage" />
 </template>
 
 <script setup>
@@ -40,13 +40,37 @@ import { useAuthStore } from '@/stores/auth'
 const { loginWithGoogleAccount, loginEmail } = useAuthStore()
 
 //===========================================================
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
+const route = useRoute()
 const router = useRouter()
+const isError = ref(null)
+const massage = ref('Welcome!')
 function loginWithEmail(email, password) {
     loginEmail({
         email: email,
         password: password
     })
+        .then((answer) => {
+            console.log(answer)
+            if (answer) {
+                openSnackBar.value = true
+                massage.value = 'Welcome!'
+                return
+            }
+        })
+        .then(() => {
+            router.push({
+                path: route.redirectedFrom.fullPath
+            })
+        })
+        .catch((error) => {
+            if (error) {
+                openSnackBar.value = true
+                isError.value = true
+                massage.value =
+                    'The email address or password entered is incorrect. Please verify your credentials and try again.'
+            }
+        })
 }
 
 async function loginWithGooglePopUp() {
@@ -54,11 +78,22 @@ async function loginWithGooglePopUp() {
         .then((answer) => {
             if (answer) {
                 openSnackBar.value = true
+                massage.value = 'Welcome!'
                 return
             }
         })
         .then(() => {
-            router.back()
+            router.push({
+                path: route.redirectedFrom.fullPath
+            })
+        })
+        .catch((error) => {
+            if (error) {
+                openSnackBar.value = true
+                isError.value = true
+                massage.value =
+                    'The email address or password entered is incorrect. Please verify your credentials and try again.'
+            }
         })
 }
 const email = ref(null)

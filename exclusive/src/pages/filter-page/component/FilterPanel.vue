@@ -1,7 +1,6 @@
 <template>
     <aside class="filter-panel">
         <div class="filter-panel__inputs-search inputs">
-            <v-btn class="inputs__btn button-main">Apply</v-btn>
             <v-text-field
                 v-model="filterParams.search"
                 label="Search.."
@@ -9,8 +8,9 @@
                 class="inputs__search"
             ></v-text-field>
             <div class="inputs__price price">
+                <label class="price__label">Price</label>
                 <v-range-slider
-                    v-model="filterParams.rangePrice"
+                    v-model="rangePrice"
                     :min="1"
                     :max="1000"
                     step="1"
@@ -18,6 +18,7 @@
                     thumb-label="true"
                     hide-details="auto"
                 ></v-range-slider>
+                <v-btn @click="applyRangePrice()" class="inputs__btn button-main">Apply</v-btn>
             </div>
         </div>
         <div class="filter-panel__expansion-panels panels-expansion">
@@ -88,15 +89,20 @@ const categories = ref([
 const filterParams = ref({
     search: '',
     brands: [],
-    category: [],
-    rangePrice: [1, 1000]
+    category: []
 })
+const rangePrice = ref([1, 1000])
 
 watch(filterParams.value, (newVal) => {
     if (newVal) {
         emit('update:modelValue', newVal)
     }
 })
+function applyRangePrice() {
+    emit('update:modelValue', {
+        rangePrice: rangePrice.value
+    })
+}
 </script>
 
 <style lang="scss" scoped>
@@ -105,8 +111,10 @@ watch(filterParams.value, (newVal) => {
 .filter-panel {
     display: flex;
     flex-direction: column;
-    max-width: toRem(300);
     row-gap: toRem(10);
+    @media (min-width: toEm(870)) {
+        max-width: toRem(300);
+    }
 }
 .inputs {
     display: grid;
@@ -144,9 +152,12 @@ watch(filterParams.value, (newVal) => {
 }
 .price {
     display: flex;
-    column-gap: toRem(8);
+    flex-direction: column;
+    gap: toRem(8);
     // .price__input
-
+    &__label {
+        padding-left: toRem(16);
+    }
     &__input {
         margin: toRem(2);
     }

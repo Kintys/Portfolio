@@ -27,7 +27,7 @@ const { loadProductWithPagination, loadBrandsList } = useFiltersStore()
 const { getProductsListTotalNumber, getBrandsList } = storeToRefs(useFiltersStore())
 const filterObject = ref({
     pageNumber: 1,
-    prePageNumber: 3,
+    prePageNumber: 8,
     sortOption: null,
     filters: {}
 })
@@ -86,8 +86,10 @@ const links = [
 
     &__content {
         display: grid;
-        grid-template-columns: toRem(300) 1fr;
-        column-gap: toRem(30);
+        gap: toRem(20);
+        @media (min-width: toEm(870)) {
+            grid-template-columns: toRem(300) 1fr;
+        }
     }
 
     // .filter__pagination
@@ -108,4 +110,3 @@ const links = [
     }
 }
 </style>
-../../stores/product.js @/stores/filters.js

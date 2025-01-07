@@ -42,7 +42,7 @@
         >
             <slot name="main">
                 <swiper-slide v-for="item in productData" :key="item.id">
-                    <ProductCard :product-item="item" />
+                    <ProductCard :product-item="item" :is-move-to-ref="true" />
                 </swiper-slide>
             </slot>
         </swiper-container>

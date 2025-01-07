@@ -81,6 +81,7 @@ const visibleMenuItems = computed(() => {
         padding: toRem(0) toRem(5);
         flex-wrap: wrap;
         justify-content: center;
+        gap: toRem(10);
         @include adaptiveValue('column-gap', 48, 10, 0, $maxWidth, $mobile);
         @media (max-width: toEm(790)) {
             flex-direction: column;

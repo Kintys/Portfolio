@@ -5,8 +5,8 @@
                 <MainTitleBlock :title-text="sectionTitle" class="items-related__titles-block" />
             </div>
             <div class="items-related__content">
-                <div class="items-related__card" v-for="relatedItem in relatedItemList" :key="relatedItem.title">
-                    <ProductCard :product-item="relatedItem" />
+                <div class="items-related__card" v-for="relatedItem in bestProductList" :key="relatedItem._id">
+                    <ProductCard :product-item="relatedItem" :is-move-to-ref="true" />
                 </div>
             </div>
         </div>
@@ -14,69 +14,20 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
 import MainTitleBlock from '@/components/MainTitleBlock.vue'
 import ProductCard from '@/components/ProductCard.vue'
-import img from '@/assets/01.png'
+import { useHeadphonesStore } from '@/stores/headphone'
+import { storeToRefs } from 'pinia'
+
+const { getItemsList } = storeToRefs(useHeadphonesStore())
+const bestProductList = computed(() => getItemsList.value.slice(0, 4))
 //===========================================================
 
 const sectionTitle = {
     cat: 'This Month',
     title: 'Best Selling Products '
 }
-const relatedItemList = [
-    {
-        img: img,
-        discount: '-40%',
-        title: 'HAVIT HV-G92 Gamepa',
-        prices: {
-            newPrice: '120',
-            oldPrice: '160'
-        },
-        review: {
-            rating: '5',
-            evaluation: '88'
-        }
-    },
-    {
-        img: img,
-        discount: '-40%',
-        title: 'HAVIT HV-G92 Gamepa',
-        prices: {
-            newPrice: '120',
-            oldPrice: '160'
-        },
-        review: {
-            rating: 4,
-            evaluation: '88'
-        }
-    },
-    {
-        img: img,
-        discount: '-40%',
-        title: 'HAVIT HV-G92 Gamepa',
-        prices: {
-            newPrice: '120',
-            oldPrice: '160'
-        },
-        review: {
-            rating: 4,
-            evaluation: '88'
-        }
-    },
-    {
-        img: img,
-        discount: '-40%',
-        title: 'HAVIT HV-G92 Gamepa',
-        prices: {
-            newPrice: '120',
-            oldPrice: '160'
-        },
-        review: {
-            rating: '4',
-            evaluation: '88'
-        }
-    }
-]
 </script>
 
 <style lang="scss" scoped>
