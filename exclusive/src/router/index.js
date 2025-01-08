@@ -66,7 +66,7 @@ export const routes = [
         name: 'cart',
         component: () => import('@/pages/cart-pages/CartView.vue'),
         meta: {
-            requireAuth: false,
+            requireAuth: true,
             useInMenu: false
         }
     },

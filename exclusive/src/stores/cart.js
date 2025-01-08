@@ -75,9 +75,6 @@ export const useCartStore = defineStore('cart', () => {
     }
 
     async function saveUserOrder() {
-        // const id = 'e59141ac-65fa-468f-b2a5-6bf74c62b899'
-        // const status = await RequestManager.deleteRequest('/cart', { orderId: id })
-        // console.log(status)
         try {
             const userEmail = getCurrentUser?.value?.email ?? ''
             const cartList = {
@@ -93,12 +90,19 @@ export const useCartStore = defineStore('cart', () => {
         } catch (error) {}
     }
     async function loadUserOrderById() {
-        const orderId = localStorage.getItem('orderId')
-        if (!orderId) return
-
-        // const userCart = await RequestManager.getRequest('/cart', { orderId })
-
-        // console.log(userCart)
+        try {
+            const orderId = localStorage.getItem('orderId')
+            if (!orderId) return
+            const userCart = await RequestManager.getRequest('/cart', { orderId })
+            console.log(userCart)
+            if (userCart.data)
+                userOrder.value = {
+                    ...userCart,
+                    orderId: await createOrderId()
+                }
+        } catch (error) {
+            console.error(error)
+        }
     }
     async function changeAmountInOrderList(productId, value) {
         try {

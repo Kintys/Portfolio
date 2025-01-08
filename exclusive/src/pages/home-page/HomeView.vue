@@ -1,4 +1,5 @@
 <script setup>
+import { onUnmounted } from 'vue'
 import MainMasterPage from '@/master-page/MainMasterPage.vue'
 import WelcomeSection from '@/pages/home-page/welcome-section/WelcomeSection.vue'
 import TodaysSection from '@/pages/home-page/todays-section/TodaysSection.vue'

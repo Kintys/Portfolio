@@ -1,5 +1,5 @@
 <template>
-    <section class="items-cart" v-if="cartList">
+    <section class="items-cart">
         <div class="items-cart__container">
             <div v-if="getWindowSize" class="items-cart__mobile mobile-cart">
                 <div class="mobile-cart__titles item-wrapper item-wrapper--triple item-wrapper--small-box">
@@ -7,14 +7,22 @@
                 </div>
                 <ul class="mobile-cart__list">
                     <li class="mobile-cart__items">
-                        <div class="mobile-cart__item item-wrapper item-wrapper--triple">
+                        <div
+                            v-for="cartProduct of cartList"
+                            :key="cartProduct.productId"
+                            class="mobile-cart__item item-wrapper item-wrapper--triple"
+                        >
                             <span class="item-wrapper__picture">
-                                <button class="item-wrapper__delete">
+                                <button
+                                    @click.prevent="deleteProductInOrderList(cartProduct.productId)"
+                                    class="item-wrapper__delete"
+                                >
                                     <font-awesome-icon :icon="['fas', 'circle-xmark']" class="item-wrapper__icon" />
                                 </button>
-                                <v-img :width="54" :height="54" :src="photo" class="item-wrapper__img" />LCD Monitor
+                                <v-img :width="54" :height="54" :src="cartProduct.image" class="item-wrapper__img" />
+                                <span v-ellipses:10>{{ cartProduct.title }} </span>
                             </span>
-                            <span>$650</span
+                            <span>${{ cartProduct.price }}</span
                             ><span class="item-wrapper__number"
                                 ><v-number-input
                                     :reverse="false"
@@ -28,7 +36,7 @@
                             ></span>
                         </div>
                         <div class="mobile-cart__item item-wrapper item-wrapper--small-box item-wrapper--double">
-                            <span>Subtotal</span><span>${{ 650 }}</span>
+                            <span>Subtotal</span><span>${{ totalPrice }}</span>
                         </div>
                     </li>
                 </ul>
@@ -73,17 +81,14 @@
             </div>
             <div class="items-cart__actions">
                 <v-btn class="items-cart__btn button-main">Return To Shop</v-btn>
-                <v-btn @click="saveUserOrder()" class="items-cart__btn button-main">Update Cart</v-btn>
+                <v-btn class="items-cart__btn button-main">Update Cart</v-btn>
             </div>
         </div>
     </section>
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
-const temp = ref(0)
-//===========================================================
-import photo from '@/assets/productPage/01.png'
+import { computed } from 'vue'
 
 //===========================================================
 
@@ -95,19 +100,19 @@ const getWindowSize = computed(() => (windowsWidth.value <= 600 ? true : false))
 import { storeToRefs } from 'pinia'
 import { useCartStore } from '@/stores/cart.js'
 import { vEllipses } from '@/directive/ellipses'
-const { changeAmountInOrderList, deleteProductInOrderList, saveUserOrder } = useCartStore()
+const { changeAmountInOrderList, deleteProductInOrderList } = useCartStore()
 const { getCartProductList } = storeToRefs(useCartStore())
 
 //===========================================================
 
 const cartList = computed(() =>
-    getCartProductList.value.map((product) => {
+    getCartProductList.value?.map((product) => {
         return { ...product, subtotal: parseFloat(product.price) * parseFloat(product.amount) }
     })
 )
 
 const totalPrice = computed(() =>
-    cartList.value.reduce((acc, product) => {
+    cartList.value?.reduce((acc, product) => {
         return (acc += product.subtotal)
     }, 0)
 )
