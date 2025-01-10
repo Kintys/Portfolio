@@ -23,23 +23,14 @@ import WelcomeMainSlider from '@/pages/home-page/welcome-section/WelcomeMainSlid
         display: grid;
         grid-template-columns: toRem(233) auto;
         @include adaptiveValue('column-gap', 58, 20, 0, 1400, 1200);
+        position: relative;
     }
 
     // .welcome-section__menu
 
     &__menu {
         display: grid;
-        grid-template-columns: 1fr auto;
         position: relative;
-        &::after {
-            content: '';
-            width: toRem(0.3);
-            height: 150%;
-            background: rgba(0, 0, 0, 0.3);
-            position: absolute;
-            top: -50%;
-            right: 0;
-        }
     }
 }
 </style>

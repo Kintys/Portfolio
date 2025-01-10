@@ -45,7 +45,6 @@
 import ProductCard from '../../../components/ProductCard.vue'
 import { ref, onBeforeMount, computed, watch } from 'vue'
 
-// const categoryProps = ['gamepads', 'pcs', 'laptops', 'headphones']
 const categoryProps = [
     { title: 'All product', value: [] },
     { title: 'gamepads', value: 'gamepads' },
@@ -65,7 +64,7 @@ const totalPage = computed(() => Math.ceil(getProductsListTotalNumber.value / fi
 
 const filterObject = ref({
     pageNumber: 1,
-    prePageNumber: 3,
+    prePageNumber: 10,
     categoryOptions: null
 })
 

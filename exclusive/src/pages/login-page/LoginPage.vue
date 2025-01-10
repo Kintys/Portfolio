@@ -50,18 +50,21 @@ function loginWithEmail(email, password) {
         email: email,
         password: password
     })
-        .then((answer) => {
-            console.log(answer)
-            if (answer) {
-                openSnackBar.value = true
-                massage.value = 'Welcome!'
-                return
-            }
+        .then(() => {
+            openSnackBar.value = true
+            massage.value = 'Welcome!'
+            return
         })
         .then(() => {
-            router.push({
-                path: route.redirectedFrom.fullPath
-            })
+            const fullPath = route.redirectedFrom?.fullPath
+            if (fullPath) {
+                router.push({
+                    path: route.redirectedFrom.fullPath
+                })
+            } else
+                router.push({
+                    name: 'home'
+                })
         })
         .catch((error) => {
             if (error) {
@@ -75,17 +78,20 @@ function loginWithEmail(email, password) {
 
 async function loginWithGooglePopUp() {
     await loginWithGoogleAccount()
-        .then((answer) => {
-            if (answer) {
-                openSnackBar.value = true
-                massage.value = 'Welcome!'
-                return
-            }
+        .then(() => {
+            openSnackBar.value = true
+            massage.value = 'Welcome!'
         })
         .then(() => {
-            router.push({
-                path: route.redirectedFrom.fullPath
-            })
+            const fullPath = route.redirectedFrom?.fullPath
+            if (fullPath) {
+                router.push({
+                    path: route.redirectedFrom.fullPath
+                })
+            } else
+                router.push({
+                    name: 'home'
+                })
         })
         .catch((error) => {
             if (error) {

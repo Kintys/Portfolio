@@ -63,7 +63,7 @@ watch(sortOption, (newSort) => {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(250px, auto));
         gap: toRem(5);
-        justify-content: center;
+        justify-items: center;
     }
 }
 

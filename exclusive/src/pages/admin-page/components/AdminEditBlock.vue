@@ -174,7 +174,7 @@ import { useAdminStore } from '@/stores/admin.js'
 import { useRouter } from 'vue-router'
 const router = useRouter()
 
-const { clearProductItem, sendProduct, urlToFile } = useAdminStore()
+const { clearProductItem, sendProduct } = useAdminStore()
 const { getProductItem } = storeToRefs(useAdminStore())
 
 const category = ref(null)
@@ -212,8 +212,8 @@ function checkFile() {
         return false
     }
 
-    if (!files.value.length < 4) {
-        errorMessages.value = 'You must upload at least 5 images'
+    if (files.value.length < 4) {
+        errorMessages.value = 'You must upload at least 4 images'
         return false
     }
 

@@ -74,7 +74,7 @@ export const useCartStore = defineStore('cart', () => {
         await deleteOrderId()
     }
 
-    async function saveUserOrder() {
+    async function saveUserOrderWithSendBeacon() {
         try {
             const userEmail = getCurrentUser?.value?.email ?? ''
             const cartList = {
@@ -85,8 +85,15 @@ export const useCartStore = defineStore('cart', () => {
                 })
             }
             if (!cartList.orderId) return
-            const status = await RequestManager.postRequest('/cart/save', cartList)
-            console.log(status)
+
+            const payload = JSON.stringify(cartList)
+
+            const endpoint = RequestManager.getServerRoute('/cart/save')
+            const isSuccess = navigator.sendBeacon(endpoint, payload)
+
+            if (!isSuccess) {
+                console.error('SendBeacon failed to send data.')
+            }
         } catch (error) {}
     }
     async function loadUserOrderById() {
@@ -94,8 +101,7 @@ export const useCartStore = defineStore('cart', () => {
             const orderId = localStorage.getItem('orderId')
             if (!orderId) return
             const userCart = await RequestManager.getRequest('/cart', { orderId })
-            console.log(userCart)
-            if (userCart.data)
+            if (userCart)
                 userOrder.value = {
                     ...userCart,
                     orderId: await createOrderId()
@@ -120,11 +126,11 @@ export const useCartStore = defineStore('cart', () => {
     }
     return {
         getCartProductList,
-        saveUserOrder,
         addProductToOrders,
         loadUserOrderById,
         changeAmountInOrderList,
         deleteProductInOrderList,
+        saveUserOrderWithSendBeacon,
         userOrder
     }
 })

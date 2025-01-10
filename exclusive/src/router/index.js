@@ -86,8 +86,10 @@ export const routes = [
         name: 'admin',
         component: () => import('../pages/admin-page/AdminPage.vue'),
         meta: {
-            requireAuth: false,
-            useInMenu: false
+            requireAuth: true,
+            hasAccess: (permissions) => permissions,
+
+            useInMenu: true
         }
     },
 

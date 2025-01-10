@@ -17,7 +17,7 @@ const items = [
         href: '/'
     },
     {
-        title: 'cart',
+        title: 'Cart',
         disabled: false,
         href: 'cart',
         active: true

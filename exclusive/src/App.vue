@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, onUnmounted, ref } from 'vue'
+import { onMounted, onUnmounted } from 'vue'
 import { RouterView } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { useCartStore } from '@/stores/cart'
@@ -9,7 +9,7 @@ import { useHeadphonesStore } from './stores/headphone'
 const { loadItemsList: loadHeadphoneList } = useHeadphonesStore()
 const { loadItemsList: loadLaptopsList } = useLaptopsStore()
 const { loadItemsList: loadPcList } = usePcStore()
-const { loadUserOrderById, saveUserOrder } = useCartStore()
+const { loadUserOrderById, saveUserOrderWithSendBeacon } = useCartStore()
 const { loginWithGoogleToken } = useAuthStore()
 
 onMounted(async () => {
@@ -22,7 +22,7 @@ onMounted(async () => {
 })
 
 const handleBeforeUnload = (event) => {
-    saveUserOrder()
+    saveUserOrderWithSendBeacon()
     event.returnValue = ''
 }
 

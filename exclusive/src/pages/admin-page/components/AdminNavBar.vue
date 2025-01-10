@@ -2,7 +2,7 @@
     <v-layout>
         <v-navigation-drawer expand-on-hover rail>
             <v-list-item
-                prepend-avatar="https://lh3.googleusercontent.com/a/ACg8ocIt5QbT3CZUveUZosUTuauGuW8e6B1vbKNUqETSvWwlUAFv6g=s360-c-no"
+                prepend-avatar="https://img.redro.pl/obrazy/admin-icon-vector-male-user-person-profile-avatar-symbol-for-business-in-a-flat-color-glyph-pictogram-sign-illustration-700-292788184.jpg"
                 title="Admin"
                 nav
             >
