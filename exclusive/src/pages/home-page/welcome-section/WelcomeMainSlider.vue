@@ -10,10 +10,6 @@
                 clickable: true,
                 el: '.slider__bullet'
             }"
-            :autoplay="{
-                delay: 4000,
-                pauseOnMouseEnter: true
-            }"
             :breakpoints="{
                 // 768: {
                 //     slidesPerView: 3
@@ -25,10 +21,16 @@
                 <component :is="slide.img" />
             </swiper-slide>
         </swiper-container>
-        <div class="slider__bullet"></div>
+
+        <div class="slider__pagination">
+            <div class="slider__bullet"></div>
+        </div>
     </div>
 </template>
-
+<!--   :autoplay="{
+                delay: 4000,
+                pauseOnMouseEnter: true
+            }" -->
 <script setup>
 import { shallowRef } from 'vue'
 import IphoneBanner from '@/components/banners/IphoneBanner.vue'
@@ -59,7 +61,7 @@ const sliderData = shallowRef([
 <style lang="scss" scoped>
 @import '@/style/lib/adaptive';
 .slider {
-    @include adaptiveValue('width', 892, 692, 0, 1180, 992);
+    @include adaptiveValue('width', 892, 310, 0, 1180, 320);
     position: relative;
     display: flex;
     flex-direction: column;
@@ -68,11 +70,18 @@ const sliderData = shallowRef([
 
     &__box {
     }
+
+    // .slider__pagination
+
+    &__pagination {
+    }
+
     &__bullet {
-        position: absolute;
-        bottom: 0;
-        left: 45%;
+        display: flex;
+        justify-content: center;
+        position: relative;
         transform: translate(0, -50%);
+        padding-bottom: toRem(8);
         z-index: 2;
         :deep() {
             .swiper-pagination-bullet {

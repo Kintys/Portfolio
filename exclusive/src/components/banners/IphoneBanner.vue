@@ -31,16 +31,19 @@ import appleLogo from '@/assets/homePage/welcomeSection/icon/Apple_gray_logo.png
 @import '@/style/lib/variables';
 @import '@/style/lib/hover-link';
 .banner {
-    max-width: toRem(892);
-    @include adaptiveValue('width', 892, 682, 0, 1180, 992);
     max-height: toRem(344);
     background: $mainColor;
     color: #fafafa;
     display: grid;
-    // 50%; /* 446/892 */
-    grid-template-columns: toRem(294) 50%;
-    padding-top: toRem(38);
-    padding-bottom: toRem(31);
+    grid-template-columns: minmax(toRem(150), toRem(294)) 50%;
+    @media (max-width: toEm($mobile)) {
+        grid-template-columns: auto;
+        justify-items: center;
+        text-align: center;
+        justify-content: center;
+        padding: toRem(20);
+    }
+    padding: toRem(40);
     justify-content: end;
     @include adaptiveValue('column-gap', 93, 5, 0, 1180, 992);
 
@@ -56,7 +59,7 @@ import appleLogo from '@/assets/homePage/welcomeSection/icon/Apple_gray_logo.png
 
     &__text {
         font-family: $interFont;
-        @include adaptiveValue('font-size', 48, 30);
+        @include adaptiveValue('font-size', 48, 30, 0, 992, $mobile);
         font-weight: 600;
         line-height: 125%; /* 125% */
         letter-spacing: toRem(1.92);
@@ -74,6 +77,9 @@ import appleLogo from '@/assets/homePage/welcomeSection/icon/Apple_gray_logo.png
     display: flex;
     align-items: center;
     column-gap: toRem(24);
+    @media (max-width: toEm($mobile)) {
+        justify-content: center;
+    }
 
     // .hat-banner__title
 
@@ -86,6 +92,9 @@ import appleLogo from '@/assets/homePage/welcomeSection/icon/Apple_gray_logo.png
 .link-banner {
     display: flex;
     align-items: center;
+    @media (max-width: toEm($mobile)) {
+        justify-content: center;
+    }
     column-gap: toRem(8);
 
     // .link-banner__text-link

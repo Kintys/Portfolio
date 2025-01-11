@@ -1,10 +1,13 @@
 <template>
     <div class="menu-welcome">
-        <ul class="menu-welcome__list">
-            <li v-for="item in itemParams" :key="item.titleLink" class="menu-welcome__item">
-                <WelcomeMenuItem :item-data="item" />
-            </li>
-        </ul>
+        <font-awesome-icon class="menu-welcome__icon" :icon="['fas', 'list']" />
+        <div class="menu-welcome__body">
+            <ul class="menu-welcome__list">
+                <li v-for="item in itemParams" :key="item.titleLink" class="menu-welcome__item">
+                    <WelcomeMenuItem :item-data="item" />
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
 
@@ -66,40 +69,46 @@ const itemParams = [
 <style lang="scss" scoped>
 @import '@/style/lib/adaptive';
 .menu-welcome {
-    // max-width: toRem(217);
-    position: relative;
-    top: 0;
-    left: 0;
-    overflow: hidden;
-    text-wrap: nowrap;
-    width: 14px;
-    // &::before {
-    //     position: absolute;
-    //     content: '';
-    //     left: 0;
-    //     top: 0;
-    //     height: 100%;
-    //     background: #fff;
-    // }
-    transition: width 0.3s;
-    &::after {
-        content: '';
-        width: toRem(0.3);
-        height: 150%;
-        background: rgba(0, 0, 0, 0.3);
-        position: absolute;
-        top: -50%;
-        right: 0;
-        z-index: 10;
+    @media (max-width: toEm($mobile)) {
+        transition: all 0.3s;
+        width: toRem(30);
+        height: toRem(30);
     }
-    &:hover {
-        width: 217px;
+    &__body {
+        padding-top: toRem(10);
+        padding-bottom: toRem(10);
+        padding-left: toRem(35);
+        padding-right: toRem(10);
+        position: relative;
+        @media (min-width: toEm($mobile)) {
+            width: toRem(250);
+            height: 100%;
+            &::after {
+                content: '';
+                width: toRem(0.3);
+                height: 150%;
+                background: rgba(0, 0, 0, 0.3);
+                position: absolute;
+                top: -50%;
+                right: 0.2px;
+                z-index: 10;
+            }
+        }
     }
-    // @media (any-hover: hover) {
-    //     &:hover {
-    //         width: 217px;
-    //     }
-    // }
+
+    &__show {
+        width: toRem(250);
+    }
+
+    // .menu-welcome__icon
+
+    &__icon {
+        font-size: toRem(30);
+        display: none;
+        @media (max-width: toEm($mobile)) {
+            display: block;
+        }
+    }
     &__list {
         display: grid;
         row-gap: toRem(20);
