@@ -69,19 +69,18 @@ const itemParams = [
 <style lang="scss" scoped>
 @import '@/style/lib/adaptive';
 .menu-welcome {
-    @media (max-width: toEm($mobile)) {
+    @media (max-width: toEm($tablet)) {
         transition: all 0.3s;
         width: toRem(30);
         height: toRem(30);
     }
     &__body {
-        padding-top: toRem(10);
-        padding-bottom: toRem(10);
-        padding-left: toRem(35);
-        padding-right: toRem(10);
+        padding: toRem(10);
         position: relative;
-        @media (min-width: toEm($mobile)) {
-            width: toRem(250);
+        @media (max-width: toEm($tablet)) {
+            padding-left: toRem(35);
+        }
+        @media (min-width: toEm($tablet)) {
             height: 100%;
             &::after {
                 content: '';
@@ -97,7 +96,10 @@ const itemParams = [
     }
 
     &__show {
-        width: toRem(250);
+        @media (max-width: toEm($tablet)) {
+            height: 100%;
+            width: toRem(250);
+        }
     }
 
     // .menu-welcome__icon
@@ -105,7 +107,7 @@ const itemParams = [
     &__icon {
         font-size: toRem(30);
         display: none;
-        @media (max-width: toEm($mobile)) {
+        @media (max-width: toEm($tablet)) {
             display: block;
         }
     }

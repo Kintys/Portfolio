@@ -6,19 +6,23 @@ import { useCartStore } from '@/stores/cart'
 import { usePcStore } from '@/stores/pc'
 import { useLaptopsStore } from './stores/laptops'
 import { useHeadphonesStore } from './stores/headphone'
+import { watchEffect } from 'vue'
+import { storeToRefs } from 'pinia'
 const { loadItemsList: loadHeadphoneList } = useHeadphonesStore()
 const { loadItemsList: loadLaptopsList } = useLaptopsStore()
 const { loadItemsList: loadPcList } = usePcStore()
 const { loadUserOrderById, saveUserOrderWithSendBeacon } = useCartStore()
 const { loginWithGoogleToken } = useAuthStore()
-
+const { isAuthenticated } = storeToRefs(useAuthStore())
 onMounted(async () => {
     loadHeadphoneList()
     loadLaptopsList()
     loadPcList()
     loginWithGoogleToken()
-    loadUserOrderById()
     window.addEventListener('beforeunload', handleBeforeUnload)
+})
+watchEffect(() => {
+    if (isAuthenticated.value) loadUserOrderById()
 })
 
 const handleBeforeUnload = (event) => {

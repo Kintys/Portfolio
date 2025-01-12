@@ -1,5 +1,5 @@
 <template>
-    <nav class="nav">
+    <nav ref="nav" class="nav">
         <ul class="nav__list">
             <li v-for="route in visibleMenuItems" :key="route.name" class="nav__item">
                 <router-link class="nav__link hover-link" :to="{ name: `${route.name}` }">{{ route.name }}</router-link>
@@ -36,15 +36,17 @@ const visibleMenuItems = computed(() => {
 @import '@/style/lib/variables';
 @import '@/style/lib/hover-link';
 .nav {
-    display: grid;
-    align-items: center;
-    justify-content: center;
+    @media (min-width: toEm(790)) {
+        display: grid;
+        align-items: center;
+        justify-content: center;
+    }
     @media (max-width: toEm(790)) {
         overflow: auto;
         position: fixed;
         background-color: #f74242fb;
         color: white;
-        width: 40%;
+        width: 50%;
         height: 100vh;
         z-index: 10;
         top: 0;
@@ -55,24 +57,13 @@ const visibleMenuItems = computed(() => {
         &::before {
             content: '';
             position: fixed;
-            width: 40%;
+            width: 50%;
             height: toRem(48);
             top: 0;
             left: -100%;
             background-color: f74242fb(137, 46, 46, 0.815);
             z-index: -1;
         }
-        // &::after {
-        //     content: '';
-        //     position: fixed;
-        //     width: 100%;
-        //     height: 100vh;
-        //     top: 0;
-        //     left: -100%;
-        //     background-color: rgba(0, 0, 0, 0.007);
-        //     z-index: -1;
-        //     @include adaptiveValue('min-height', 120, 50);
-        // }
     }
     // .nav__list
 
@@ -80,8 +71,8 @@ const visibleMenuItems = computed(() => {
         display: flex;
         padding: toRem(0) toRem(5);
         flex-wrap: wrap;
-        justify-content: center;
         gap: toRem(10);
+        @include adaptiveValue('padding-top', 70, 50, 1, $mobile, $mobileSmall);
         @include adaptiveValue('column-gap', 48, 10, 0, $maxWidth, $mobile);
         @media (max-width: toEm(790)) {
             flex-direction: column;

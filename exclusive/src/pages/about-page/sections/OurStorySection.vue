@@ -28,22 +28,26 @@ const breadcrumbsLinks = [
     {
         title: 'Home',
         disabled: false,
-        href: '/'
+        href: '/',
+        active: true
     },
     {
         title: 'About',
-        disabled: false,
-        href: 'About',
-        active: true
+        disabled: true,
+        href: '#'
     }
 ]
 </script>
 
 <style lang="scss" scoped>
 @import '@/style/lib/adaptive';
+@import '@/style/lib/variables';
 .our-story {
     // .our-story__container
     @include adaptiveValue('padding-top', 140, 80);
+    &:not(:last-child) {
+        margin-bottom: toRem(40);
+    }
     &__container {
         position: relative;
         min-height: toRem(609+42);
@@ -61,7 +65,10 @@ const breadcrumbsLinks = [
 
     &__content {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        gap: toRem(20);
+        @media (min-width: toEm(1100)) {
+            grid-template-columns: repeat(2, 1fr);
+        }
         column-gap: toRem(25);
     }
 
@@ -90,12 +97,17 @@ const breadcrumbsLinks = [
         &:not(:last-child) {
             margin-bottom: toRem(24);
         }
+        @media (max-width: toEm(1100)) {
+            text-align: center;
+        }
     }
 
     // .our-story__picture
 
     &__picture {
-        position: absolute;
+        @media (min-width: toEm(1100)) {
+            position: absolute;
+        }
         z-index: -1;
         padding-right: toRem(15);
         @media (min-width: toEm(900)) {

@@ -47,6 +47,7 @@ defineProps({
 @import '@/style/lib/hover-link';
 .specialist-card {
     // .specialist-card__image
+
     max-width: toRem(370);
     display: flex;
     flex-direction: column;

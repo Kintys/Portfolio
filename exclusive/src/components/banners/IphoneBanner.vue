@@ -36,6 +36,7 @@ import appleLogo from '@/assets/homePage/welcomeSection/icon/Apple_gray_logo.png
     color: #fafafa;
     display: grid;
     grid-template-columns: minmax(toRem(150), toRem(294)) 50%;
+
     @media (max-width: toEm($mobile)) {
         grid-template-columns: auto;
         justify-items: center;

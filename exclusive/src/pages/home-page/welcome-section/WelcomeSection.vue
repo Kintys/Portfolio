@@ -16,7 +16,6 @@
                     />
                 </div>
             </div>
-
             <div class="welcome-section__slider"><WelcomeMainSlider /></div>
         </div>
     </section>
@@ -66,8 +65,9 @@ function handleTouchEnd() {
 
     &__container {
         display: grid;
-        @media (min-width: toEm($mobile)) {
-            grid-template-columns: toRem(233) auto;
+        @media (min-width: toEm($tablet)) {
+            grid-template-columns: minmax(200px, 233px) auto;
+            // grid-template-columns: toRem(233) auto;
         }
         justify-content: center;
         @include adaptiveValue('column-gap', 58, 20, 0, 1400, 1200);
@@ -87,7 +87,7 @@ function handleTouchEnd() {
     // .welcome-section__menu
 
     &__menu {
-        @media (max-width: toEm($mobile)) {
+        @media (max-width: toEm($tablet)) {
             background-color: #fff;
             overflow: hidden;
             z-index: 10;
@@ -97,16 +97,6 @@ function handleTouchEnd() {
             position: absolute;
             top: 0;
             left: 0;
-            @media (any-hover: hover) {
-                &:hover .menu-welcome {
-                    height: 100%;
-                    width: 250px;
-                }
-            }
-            .menu-welcome__show {
-                height: 100%;
-                width: 250px;
-            }
         }
     }
 }

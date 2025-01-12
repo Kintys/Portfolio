@@ -162,10 +162,11 @@ const specialistData = [
 @import '@/style/lib/adaptive';
 
 .specialist {
+    @include adaptiveValue('padding-bottom', 140, 80);
     // .specialist__container
 
     &__container {
-        @include adaptiveValue('padding-top', 140, 80);
+        @include adaptiveValue('padding-top', 80, 40);
     }
 
     // .specialist__wrapper

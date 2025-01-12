@@ -10,10 +10,9 @@
                 clickable: true,
                 el: '.slider__bullet'
             }"
-            :breakpoints="{
-                // 768: {
-                //     slidesPerView: 3
-                // }
+            :autoplay="{
+                delay: 4000,
+                pauseOnMouseEnter: true
             }"
             :modules="Pagination"
         >
@@ -27,10 +26,7 @@
         </div>
     </div>
 </template>
-<!--   :autoplay="{
-                delay: 4000,
-                pauseOnMouseEnter: true
-            }" -->
+
 <script setup>
 import { shallowRef } from 'vue'
 import IphoneBanner from '@/components/banners/IphoneBanner.vue'

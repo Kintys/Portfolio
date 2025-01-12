@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../pages/home-page/HomeView.vue'
 
 import { isAuth, isRouteAvailable } from '@/router/userPermissions.js'
+import { useBurgerMenu } from '@/modulesHelpers/lib/burger'
+const { toggleClass } = useBurgerMenu()
 export const routes = [
     {
         path: '/',
@@ -110,6 +112,7 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to) => {
+    toggleClass('remove')
     if (to.meta?.requireAuth) {
         if (!isAuth())
             return {

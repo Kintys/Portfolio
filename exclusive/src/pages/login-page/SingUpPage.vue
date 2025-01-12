@@ -27,7 +27,7 @@ import { create } from '@/pages/login-page/setting.js'
     // .login__container
 
     &__container {
-        @include adaptiveValue('padding-top', 122, 80);
+        @include adaptiveValue('padding-top', 140, 100);
         @include adaptiveValue('padding-bottom', 140, 50);
         display: grid;
         grid-template-columns: minmax(200px, 700px) auto;

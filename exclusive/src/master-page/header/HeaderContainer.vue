@@ -13,7 +13,7 @@
                 <HeaderNavBar class="header__nav" :class="{ 'menu-open': showMenu }" />
                 <SearchBar :is-scrolling="isScrolling" />
                 <HeaderActionsPanel class="header__actions" />
-                <div class="icon-menu" :class="{ 'open-icon': showMenu }" @click="activeMenu()">
+                <div ref="icon" class="icon-menu" :class="{ 'open-icon': showMenu }" @click="toggleMenu">
                     <span></span>
                 </div>
             </div>
@@ -22,16 +22,21 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import TopHeaderSide from '@/master-page/header/components/TopHeaderSide.vue'
 import HeaderNavBar from '@/master-page/header/components/HeaderNavBar.vue'
 import HeaderActionsPanel from '@/master-page/header/components/HeaderActionsPanel.vue'
 import SearchBar from '@/master-page/header/components/search-bar/SearchBar.vue'
 import HeaderHat from '@/master-page/header/components/HeaderHat.vue'
+
 // ======================
-import { burgerMenu } from '@/modulesHelpers/lib/burger'
-const { showMenu, activeMenu } = burgerMenu()
+const icon = ref(null)
+import { useBurgerMenu } from '@/modulesHelpers/lib/burger'
+
+const { showMenu, toggleMenu } = useBurgerMenu()
+
 // ======================
-import { ref } from 'vue'
+
 const isScrolling = ref(false)
 const smallCont = ref(false)
 function onScroll(scroll, scrolled) {

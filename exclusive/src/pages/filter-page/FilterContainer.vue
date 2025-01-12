@@ -60,13 +60,12 @@ const links = [
     {
         title: 'Home',
         disabled: false,
-        href: '/'
+        href: '/',
+        active: true
     },
     {
         title: 'Catalog',
-        disabled: false,
-        href: '/catalog',
-        active: true
+        disabled: true
     }
 ]
 </script>

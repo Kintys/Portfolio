@@ -1,18 +1,27 @@
-import { ref } from "vue";
+import { ref, watch } from 'vue'
 
-export function burgerMenu() {
-    const showMenu = ref(false);
-    const html = ref(document.querySelector("html"));
-    function activeMenu() {
-        showMenu.value = !showMenu.value;
-        setTimeout(() => {
-            showMenu.value
-                ? html.value.classList.add("lock")
-                : html.value.classList.remove("lock");
-        }, 500);
+export function useBurgerMenu(targetElement = 'html', lockClass = 'lock') {
+    const showMenu = ref(false)
+    const element = ref(document.querySelector(targetElement))
+
+    const toggleMenu = () => {
+        showMenu.value = !showMenu.value
     }
+    const toggleClass = (action) => {
+        element.value.classList[`${action}`](lockClass)
+    }
+    watch(showMenu, (isOpen) => {
+        if (!element.value) return
+        if (isOpen) {
+            toggleClass('add')
+        } else {
+            toggleClass('remove')
+        }
+    })
+
     return {
-        activeMenu,
         showMenu,
-    };
+        toggleMenu,
+        toggleClass
+    }
 }

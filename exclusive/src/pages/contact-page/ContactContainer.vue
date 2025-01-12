@@ -15,13 +15,12 @@ const items = [
     {
         title: 'Home',
         disabled: false,
-        href: '/'
+        href: '/',
+        active: true
     },
     {
         title: 'Contact',
-        disabled: false,
-        href: 'contact',
-        active: true
+        disabled: true
     }
 ]
 </script>

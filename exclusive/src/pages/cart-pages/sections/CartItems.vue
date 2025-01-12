@@ -1,55 +1,15 @@
 <template>
     <section class="items-cart">
-        <div class="items-cart__container">
-            <div v-if="getWindowSize" class="items-cart__mobile mobile-cart">
-                <div class="mobile-cart__titles item-wrapper item-wrapper--triple item-wrapper--small-box">
-                    <span>Product</span><span>Price</span><span>Quantity</span>
-                </div>
-                <ul class="mobile-cart__list">
-                    <li class="mobile-cart__items">
-                        <div
-                            v-for="cartProduct of cartList"
-                            :key="cartProduct.productId"
-                            class="mobile-cart__item item-wrapper item-wrapper--triple"
-                        >
-                            <span class="item-wrapper__picture">
-                                <button
-                                    @click.prevent="deleteProductInOrderList(cartProduct.productId)"
-                                    class="item-wrapper__delete"
-                                >
-                                    <font-awesome-icon :icon="['fas', 'circle-xmark']" class="item-wrapper__icon" />
-                                </button>
-                                <v-img :width="54" :height="54" :src="cartProduct.image" class="item-wrapper__img" />
-                                <span v-ellipses:10>{{ cartProduct.title }} </span>
-                            </span>
-                            <span>${{ cartProduct.price }}</span
-                            ><span class="item-wrapper__number"
-                                ><v-number-input
-                                    :reverse="false"
-                                    controlVariant="stacked"
-                                    label=""
-                                    :hideInput="false"
-                                    inset
-                                    variant="outlined"
-                                >
-                                </v-number-input
-                            ></span>
-                        </div>
-                        <div class="mobile-cart__item item-wrapper item-wrapper--small-box item-wrapper--double">
-                            <span>Subtotal</span><span>${{ totalPrice }}</span>
-                        </div>
-                    </li>
-                </ul>
+        <div v-if="getWindowSize" class="items-cart__mobile mobile-cart">
+            <div class="mobile-cart__titles item-wrapper item-wrapper--triple item-wrapper--small-box">
+                <span>Product</span><span>Price</span><span>Quantity</span>
             </div>
-            <div v-else class="items-cart__desktop desktop-cart">
-                <div class="desktop-cart__titles item-wrapper item-wrapper--small-box">
-                    <span>Product</span><span>Price</span><span>Quantity</span><span>Subtotal</span>
-                </div>
-                <ul class="desktop-cart__list">
-                    <li
+            <ul class="mobile-cart__list">
+                <li class="mobile-cart__items">
+                    <div
                         v-for="cartProduct of cartList"
                         :key="cartProduct.productId"
-                        class="desktop-cart__item item-wrapper"
+                        class="mobile-cart__item item-wrapper item-wrapper--triple"
                     >
                         <span class="item-wrapper__picture">
                             <button
@@ -59,30 +19,68 @@
                                 <font-awesome-icon :icon="['fas', 'circle-xmark']" class="item-wrapper__icon" />
                             </button>
                             <v-img :width="54" :height="54" :src="cartProduct.image" class="item-wrapper__img" />
-                            <span v-ellipses:10> {{ cartProduct.title }}</span>
+                            <span v-ellipses:10>{{ cartProduct.title }} </span>
                         </span>
-                        <span>${{ cartProduct.price }}</span>
-                        <span class="item-wrapper__number">
-                            <v-number-input
+                        <span>${{ cartProduct.price }}</span
+                        ><span class="item-wrapper__number"
+                            ><v-number-input
                                 :reverse="false"
                                 controlVariant="stacked"
+                                label=""
                                 :hideInput="false"
-                                :max="cartProduct.quantity"
-                                :min="1"
-                                v-model="cartProduct.amount"
-                                @update:modelValue="($event) => changeAmountInOrderList(cartProduct.productId, $event)"
                                 inset
                                 variant="outlined"
                             >
-                            </v-number-input></span
-                        ><span>${{ cartProduct.subtotal.toFixed(2) }}</span>
-                    </li>
-                </ul>
+                            </v-number-input
+                        ></span>
+                    </div>
+                    <div class="mobile-cart__item item-wrapper item-wrapper--small-box item-wrapper--double">
+                        <span>Subtotal</span><span>${{ totalPrice }}</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div v-else class="items-cart__desktop desktop-cart">
+            <div class="desktop-cart__titles item-wrapper item-wrapper--small-box">
+                <span>Product</span><span>Price</span><span>Quantity</span><span>Subtotal</span>
             </div>
-            <div class="items-cart__actions">
-                <v-btn class="items-cart__btn button-main">Return To Shop</v-btn>
-                <v-btn @click="saveUserOrderWithSendBeacon()" class="items-cart__btn button-main">Update Cart</v-btn>
-            </div>
+            <ul class="desktop-cart__list">
+                <li
+                    v-for="cartProduct of cartList"
+                    :key="cartProduct.productId"
+                    class="desktop-cart__item item-wrapper"
+                >
+                    <span class="item-wrapper__picture">
+                        <button
+                            @click.prevent="deleteProductInOrderList(cartProduct.productId)"
+                            class="item-wrapper__delete"
+                        >
+                            <font-awesome-icon :icon="['fas', 'circle-xmark']" class="item-wrapper__icon" />
+                        </button>
+                        <v-img :width="54" :height="54" :src="cartProduct.image" class="item-wrapper__img" />
+                        <span v-ellipses:10> {{ cartProduct.title }}</span>
+                    </span>
+                    <span>${{ cartProduct.price }}</span>
+                    <span class="item-wrapper__number">
+                        <v-number-input
+                            :reverse="false"
+                            controlVariant="stacked"
+                            :hideInput="false"
+                            :max="cartProduct.quantity"
+                            :min="1"
+                            v-model="cartProduct.amount"
+                            @update:modelValue="($event) => changeAmountInOrderList(cartProduct.productId, $event)"
+                            inset
+                            variant="outlined"
+                        >
+                        </v-number-input></span
+                    ><span>${{ cartProduct.subtotal.toFixed(2) }}</span>
+                </li>
+            </ul>
+        </div>
+        <div class="items-cart__actions">
+            <v-btn class="items-cart__btn button-main">Return To Shop</v-btn>
+            <v-btn @click="saveUserOrderWithSendBeacon()" class="items-cart__btn button-main">Update Cart</v-btn>
         </div>
     </section>
 </template>
@@ -125,17 +123,8 @@ const totalPrice = computed(() =>
     // .items-cart__container
 
     &__container {
-        @include adaptiveValue('padding-top', 140, 80);
-        line-height: 150%; /* 150% */
     }
 
-    // .items-cart__breadcrumbs
-
-    &__breadcrumbs {
-        &:not(:last-child) {
-            margin-bottom: toRem(80);
-        }
-    }
     // .items-cart__actions
 
     &__actions {

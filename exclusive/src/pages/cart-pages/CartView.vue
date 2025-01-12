@@ -1,8 +1,10 @@
 <template>
     <MainMasterPage>
         <div class="cart">
-            <v-breadcrumbs :items="items" color="#00000080" class="items-cart__breadcrumbs"></v-breadcrumbs>
-            <CartItems />
+            <div class="cart__container">
+                <v-breadcrumbs :items="items" color="#00000080" class="cart__breadcrumbs"></v-breadcrumbs>
+                <CartItems />
+            </div>
         </div>
     </MainMasterPage>
 </template>
@@ -14,29 +16,30 @@ const items = [
     {
         title: 'Home',
         disabled: false,
-        href: '/'
+        href: '/',
+        active: true
     },
     {
         title: 'Cart',
-        disabled: false,
-        href: 'cart',
-        active: true
+        disabled: true,
+        href: '#'
     }
 ]
 </script>
 
-<style lang="scss" scoped></style>
-<!-- <v-breadcrumbs :items="items" color="#00000080" class="items-cart__breadcrumbs"></v-breadcrumbs> -->
-<!-- const items = [
-    {
-        title: 'Home',
-        disabled: false,
-        href: '/'
-    },
-    {
-        title: 'Contact',
-        disabled: false,
-        href: 'contact',
-        active: true
+<style lang="scss" scoped>
+@import '@/style/lib/adaptive.scss';
+.cart {
+    // .cart__container
+
+    &__container {
+        @include adaptiveValue('padding-top', 140, 80);
+        @include adaptiveValue('padding-bottom', 140, 80);
     }
-] -->
+    &__breadcrumbs {
+        &:not(:last-child) {
+            margin-bottom: toRem(80);
+        }
+    }
+}
+</style>
