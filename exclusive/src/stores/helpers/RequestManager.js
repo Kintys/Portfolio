@@ -1,6 +1,6 @@
 import axios from 'axios'
 export default class RequestManager {
-    static apiBase = 'http://localhost:3000/api/v1'
+    static apiBase = 'https://exclusive-ed8a.onrender.com/api/v1'
 
     static http = axios
 
